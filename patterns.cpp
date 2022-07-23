@@ -538,3 +538,110 @@
 
 //     return 0;
 // }
+
+// FIBONACCI SERIES
+// #include <iostream>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+//     cout << " enter upto which you want" << endl;
+//     int ss;
+//     cin >> ss;
+//     int a = 0;
+//     int b = 1;
+//     cout << a << " " << b << " ";
+//     int c;
+//     int i = 0;
+//     while (i != ss)
+//     {
+//         c = a + b;
+//         cout << c << " ";
+//         a = b;
+//         b = c;
+//         i++;
+//     }
+
+//     return 0;
+// }
+
+// SUM AND PRODUCT OF DIGITS--
+// #include <iostream>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+
+//     int n;
+//     cout << " enter the number to find out " << endl;
+//     cin >> n;
+//     int d;
+//     int sum = 0;
+//     int mul = 1;
+//     int nn = n;
+//     while (nn != 0)
+//     {
+//         d = nn % 10;
+//         sum = sum + (d);
+//         mul *= d;
+//         nn /= 10;
+//     }
+//     cout << " Sum is " << sum << endl;
+//     cout << " product is " << mul;
+
+//     return 0;
+// }
+
+// COUNTING NUMBER OF 1's IN BINARY
+// #include <iostream>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+//     cout << " enter the number " << endl;
+//     int n;
+//     int count = 0;
+//     cin >> n;
+//     int arr[30];
+//     int rem;
+//     int i = 0;
+//     while (n != 0)
+//     {
+//         rem = n % 2;
+//         if (rem == 1)
+//         {
+//             count++;
+//         }
+//         arr[i] = rem;
+//         n /= 2;
+//         i++;
+//     }
+
+//     cout << " the count is " << count << endl;
+//     return 0;
+// }
+
+// BINARY TO DECIMAL--
+// #include <iostream>
+// #include <math.h>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+//     cout << " enter the number to convert to binary " << endl;
+//     int bit;
+//     int sum = 0;
+//     int i = 0;
+//     int a;
+//     cin >> a;
+//     while (a != 0)
+//     {
+//         bit = a % 10;
+//         sum = sum + (bit * pow(2, i));
+//         i++;
+//         a /= 10;
+//     }
+//     cout << " the number is " << sum;
+//     return 0;
+// }
+
