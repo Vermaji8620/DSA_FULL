@@ -1,72 +1,52 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class llist
+void go(int *arr, int sz, int k, vector<int> &vctr)
 {
-public:
-    int data;
-    llist *next = NULL;
-
-    llist(int data)
+    int i = 0;
+    int j = 0;
+    int maxx = INT_MIN;
+    int minn = INT_MAX;
+    while (j <= sz)
     {
-        this->data = data;
-        this->next = NULL;
-    }
-};
-
-void insertnode(llist *&fcopy, int dataa)
-{
-    llist *ptr = new llist(dataa);
-    ptr->next = fcopy;
-    fcopy = ptr;
-}
-
-void printallnode(llist *fcopy)
-{
-    llist *ff = fcopy;
-    while (ff != NULL)
-    {
-        cout << ff->data << " ";
-        ff = ff->next;
-    }
-}
-
-void removeduplicatesinsortedlist(llist *&fcopy)
-{
-    llist *first = fcopy;
-    llist *second = fcopy;
-    while (first->next != NULL)
-    {
-        first = first->next;
-        if ((first->data) != (second->data))
+        if (j - i + 1 <= k)
         {
-            second = first;
+            maxx = max(maxx, arr[j]);
+            minn = min(minn, arr[j]);
+            j++;
         }
         else
         {
-            llist *third = first;
-            second->next = third->next;
-            first = second;
-            delete[] third;
+            vctr.push_back(maxx + minn);
+            i++;
+            for (int p = i; p <= j; p++)
+            {
+                maxx = max(maxx, arr[j]);
+                minn = min(minn, arr[j]);
+            }
+            j++;
         }
     }
+}
+
+int prit(vector<int> vcr, int count)
+{
+    for (auto i : vcr)
+    {
+        count += i;
+    }
+    return count;
 }
 
 int main()
 {
-    llist *first = new llist(4);
-    llist *firstcopy = first;
-    insertnode(firstcopy, 3);
-    insertnode(firstcopy, 3);
-    insertnode(firstcopy, 3);
-    insertnode(firstcopy, 3);
-    insertnode(firstcopy, 2);
-    insertnode(firstcopy, 2);
-    insertnode(firstcopy, 1);
-    printallnode(firstcopy);
-    cout << endl;
-    // printallnode(reversellist(firstcopy));
-    removeduplicatesinsortedlist(firstcopy);
-    printallnode(firstcopy);
+    int arr[7] = {2, 5, -1, 7, -3, -1, -2};
+    int size = 7;
+    int k = 4;
+    vector<int> vctr;
+    go(arr, size, k, vctr);
+    int count = 0;
+    cout << prit(vctr, count);
     return 0;
 }

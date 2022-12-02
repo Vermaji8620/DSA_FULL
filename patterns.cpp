@@ -3352,7 +3352,7 @@
 //     return 0;
 // }
 
-// SUBSTRITNG QUESTION ---
+// SUBSTRING QUESTION ---
 // #include <iostream>
 // #include <vector>
 // using namespace std;
@@ -3388,7 +3388,6 @@
 //     {
 //         cout << *itert << " ";
 //     }
-
 //     return 0;
 // }
 
@@ -5619,7 +5618,7 @@
 //     solve(inputStack ,count , N );
 // }
 
-// CHECKING VALID PARENTHESIS
+// --------------------------CHECKING VALID PARENTHESIS---------------------------------
 
 // bool isValidParenthesis(string expression)
 // {
@@ -5698,7 +5697,7 @@
 //     solve(stack);
 // }
 
-// SORT A STACK USING RECURSION
+// -------------------------------SORT A STACK USING RECURSION------------------------------
 
 // #include <bits/stdc++.h>
 
@@ -5987,77 +5986,87 @@
 
 // -----------------N STACKS IN AN ARRAY-------------------(TOUGH QUESTION)------
 
-// #include <bits/stdc++.h>
-// class NStack
+// #include <iostream>
+// using namespace std;
+
+// class NStacks
 // {
+// public:
+//     int n;
+//     int s;
 //     int *arr;
 //     int *top;
 //     int *next;
-//     int n, s, freespot;
-// public:
-//     // Initialize your data structure.
-//     NStack(int N, int S)
-//     {   // Write your code here.
-//         n=N;
-//         s=S;
-//         arr= new int[s];
-//         top= new int[n];
-//         next= new int[s];
-
-//         // top initialise
-//         for(int i=0; i<n; i++){
-//             top[i]= -1;
+//     int freespot;
+//     NStacks(int n, int s)
+//     {
+//         this->n = n;
+//         this->s = s;
+//         arr = new int[n];
+//         top = new int[s];
+//         next = new int[s];
+//         freespot = 0;
+//         for (int i = 0; i < n; i++)
+//         {
+//             next[i] = i + 1;
 //         }
-
-//         // next initialise
-//         for(int i=0; i<s; i++){
-//             next[i]= i+1;
+//         next[n - 1] = -1;
+//         for (int i = 0; i < s; i++)
+//         {
+//             top[i] = -1;
 //         }
-
-//         // update last index value to -1
-//         next[s-1] = -1;
-//         // initialise freespot
-//         freespot= 0;
 //     }
-
-//     // Pushes 'X' into the Mth stack. Returns true if it gets pushed into the stack, and false otherwise.
 //     bool push(int x, int m)
 //     {
-//         // Write your code here.
-//         if(freespot==-1){
+//         if (freespot == -1)
+//         {
+//             cout << x<<" nai ho skta" << endl;
 //             return false;
 //         }
-//         // find index
-//         int index= freespot;
-//         // update freespot
-//         freespot= next[index];
-//         // insert element in the array
-//         arr[index]= x;
-//         // update next;
-//         next[index]= top[m-1];
-//         // update top
-//         top[m-1]= index;
-
+//         int index = freespot;
+//         freespot = next[index];
+//         arr[index] = x;
+//         next[index] = top[m - 1];
+//         top[m - 1] = index;
+//         cout << x<<" aa gya" << endl;
 //         return true;
 //     }
 
-//     // Pops top element from Mth Stack. Returns -1 if the stack is empty, otherwise returns the popped element.
 //     int pop(int m)
 //     {
-//         // check underflow
-//         if(top[m-1]==-1){
+//         if (top[m - 1] == -1)
+//         {
 //             return -1;
 //         }
-//         int index=top[m-1];
-//         top[m-1]= next[index];
-//         next[index]= freespot;
-//         freespot= index;
+//         int index = top[m - 1];
+//         top[m - 1] = next[index];
+//         next[index] = freespot;
+//         freespot = index;
 //         return arr[index];
-
 //     }
 // };
 
-//
+// int main()
+// {
+//     NStacks ns(6, 3);
+//     ns.push(10, 1);
+//     ns.push(20, 2);
+//     ns.push(30, 3);
+//     ns.push(101, 1);
+//     ns.push(201, 2);
+//     ns.push(301, 3);
+//     ns.push(102, 1);
+//     ns.push(202, 2);
+//     ns.push(302, 3);
+//     cout<< endl;
+//     cout << ns.pop(1) << " 1 ka hai jo nikal gaya" << endl;
+//     cout << ns.pop(2) << " 2 ka hai jo nikal gaya" << endl;
+//     cout << ns.pop(3) << " 3 ka hai jo nikal gaya" << endl;
+//     cout << ns.pop(1) << " 1 ka hai jo nikal gaya" << endl;
+//     cout << ns.pop(2) << " 2 ka hai jo nikal gaya" << endl;
+//     cout << ns.pop(3) << " 3 ka hai jo nikal gaya" << endl;
+//     return 0;
+// }
 //
 //
 //
@@ -6183,7 +6192,7 @@
 //     return 0;
 // }
 
-// -------------DE- QUEUE----------------
+// -------------D-E- QUEUE----------------(STL IMPLEMENTATION)------------
 // #include <iostream>
 // #include<queue>
 // using namespace std;
@@ -6206,7 +6215,234 @@
 //     cout<< "FJKJFM"<< endl;
 //     cout<< d.front()<< endl;
 //     cout<< d.back()<< endl;
+//     return 0;
+// }
 
+// CIRCULAR QUEUE IMPLEMENTATION----------(full concept implementation)
+
+// #include <iostream>
+// using namespace std;
+
+// class Cqueue
+// {
+// public:
+//     int size;
+//     int *arr;
+//     int front;
+//     int rear;
+//     Cqueue(int n)
+//     {
+//         this->size = n;
+//         this->front = -1;
+//         this->rear = -1;
+//         this->arr = new int[size];
+//     }
+
+//     bool push(int x)
+//     {
+//         if ((front == 0 && rear == size - 1) || (front != 0 && rear == (front - 1) % (size - 1)))
+//         {
+//             cout << " Nai hoga" << endl;
+//             return false;
+//         }
+//         else if (front == -1)
+//         {
+//             front = rear = 0;
+//             arr[rear] = x;
+//         }
+//         else if (rear == size - 1)
+//         {
+//             rear = 0;
+//             arr[rear] = x;
+//         }
+//         else
+//         {
+//             arr[++rear] = x;
+//         }
+//         return true;
+//     }
+
+//     int pop()
+//     {
+//         if (front == -1)
+//         {
+//             cout << " aur kuch nai hai" << endl;
+//             return -1;
+//         }
+//         int ret = arr[front];
+//         arr[front] = -1;
+//         if (front == rear)
+//         {
+//             front = rear = -1;
+//         }
+//         else if (front == size - 1)
+//         {
+//             front = 0;
+//         }
+//         else
+//         {
+//             front++;
+//         }
+//         return ret;
+//     }
+// };
+
+// int main()
+// {
+//     Cqueue cq(6);
+//     cq.push(10);
+//     cq.push(20);
+//     cq.push(30);
+//     cq.push(40);
+//     cq.push(50);
+//     cq.push(60);
+//     // cq.push(70); // isme 'nai hoga' print ho jayega---------
+//     cq.pop();
+//     cq.pop();
+//     cq.pop();
+//     cq.pop();
+//     cq.pop();
+//     cq.pop();
+//     // cq.pop();  // isme 'aur kuch nai hai' print ho jayega--------
+//     return 0;
+// }
+
+// -----------D-E-QUEUE IMPLEMENTATION--------------
+// #include <iostream>
+// using namespace std;
+
+// class Dequeue
+// {
+// public:
+//     int *arr;
+//     int front;
+//     int rear;
+//     int size;
+//     Dequeue(int n)
+//     {
+//         this->size = n;
+//         this->arr = new int[n];
+//         this->front = -1;
+//         this->rear = -1;
+//     }
+//     bool push_front(int x)
+//     {
+//         if ((front == 0 && rear == size - 1) || (front != 0 && rear == (front - 1) % (size - 1)))
+//         {
+//             cout << " Bhara hua hai. nai jayga aur" << endl;
+//             return false;
+//         }
+//         else if (front == -1)
+//         {
+//             rear = front = 0;
+//             arr[front] = x;
+//         }
+//         else if (front == 0)
+//         {
+//             front = size - 1;
+//             arr[front] = x;
+//         }
+//         else
+//         {
+//             front--;
+//             arr[front] = x;
+//         }
+//         return true;
+//     }
+//     bool push_back(int x)
+//     {
+//         if ((front == 0 && rear == size - 1) || (front != 0 && rear == (front - 1) % (size - 1)))
+//         {
+//             cout << " nai ja payga aur" << endl;
+//             return false;
+//         }
+//         else if (front == -1)
+//         {
+//             front = rear = 0;
+//             arr[rear] = x;
+//         }
+//         else if (front != 0 && rear == size - 1)
+//         {
+//             rear = 0;
+//             arr[rear] = x;
+//         }
+//         else
+//         {
+//             arr[++rear] = x;
+//         }
+//         return true;
+//     }
+
+//     int front_delete()
+//     {
+//         if (front == -1)
+//         {
+//             cout << "aur nai hai, kya delete krega?" << endl;
+//             return -1;
+//         }
+
+//         int ret = arr[front];
+//         arr[front] = -1;
+
+//         if (front == rear)
+//         {
+//             front = rear = -1;
+//         }
+//         else if (front == size - 1)
+//         {
+//             front = 0;
+//         }
+//         else
+//         {
+//             front++;
+//         }
+//         return ret;
+//     }
+
+//     int back_delete()
+//     {
+//         if (front == -1)
+//         {
+//             cout << "Kuch nai hai delete kya hoga " << endl;
+//             return -1;
+//         }
+//         int ret = arr[rear];
+//         arr[rear] = -1;
+//         if (front == rear)
+//         {
+//             front = rear = -1;
+//         }
+//         else if (rear == 0)
+//         {
+//             rear = size - 1;
+//         }
+//         else
+//         {
+//             rear--;
+//         }
+//         return ret;
+//     }
+// };
+
+// int main()
+// {
+//     Dequeue deq(6);
+//     deq.push_front(10);
+//     deq.push_back(20);
+//     deq.push_front(30);
+//     deq.push_back(40);
+//     deq.push_front(50);
+//     deq.push_back(60);
+//     // deq.push_back(70);  // push nai ho payega-----
+
+//     deq.front_delete();
+//     deq.back_delete();
+//     deq.front_delete();
+//     deq.back_delete();
+//     deq.front_delete();
+//     deq.back_delete();
+//     // deq.front_delete(); // aur delete nai ho paygea
+//     // deq.back_delete();  // aur delete nai ho paygea
 //     return 0;
 // }
 
@@ -6253,7 +6489,7 @@
 //     return q;
 // }
 
-// IMPLEMENTING N QUEUES IN AN ARRAY-----------
+// IMPLEMENTING N QUEUES IN AN ARRAY-----------(ek aur baar niche likha hua hai jisko ki refer krna hai)
 
 // #include <iostream>
 // using namespace std;
@@ -6364,6 +6600,104 @@
 //     cout << q.dequeue(1) << endl;
 //     return 0;
 // }
+// -------------
+// -----(ek aur baar likhe hai yaha pe)-----------
+// #include <iostream>
+// using namespace std;
+
+// class Queue
+// {
+// public:
+//     int n;
+//     int s;
+//     int *front;
+//     int *rear;
+//     int *arr;
+//     int *next;
+//     int freespot;
+//     Queue(int n, int s)
+//     {
+//         this->n = n;
+//         this->s = s;
+//         front = new int[s];
+//         rear = new int[s];
+//         for (int i = 0; i < s; i++)
+//         {
+//             front[i] = -1;
+//             rear[i] = -1;
+//         }
+
+//         arr = new int[n];
+//         next = new int[n];
+//         for (int i = 0; i < n; i++)
+//         {
+//             next[i] = i + 1;
+//         }
+//         next[n - 1] = -1;
+//         freespot = 0;
+//     }
+
+//     bool enqueue(int data, int m)
+//     {
+//         if (freespot < 0)
+//         {
+//             cout << " cant insert";
+//             return false;
+//         }
+//         int index = freespot;
+//         freespot = next[index];
+//         next[index] = -1;
+//         if (front[m - 1] == -1)
+//         {
+//             front[m - 1] = index;
+//         }
+//         else
+//         {
+//             next[rear[m - 1]] = index;
+//         }
+//         rear[m - 1] = index;
+//         arr[index] = data;
+//         return true;
+//     }
+
+//     int dequeue(int m)
+//     {
+//         if (front[m - 1] == -1)
+//         {
+//             cout << " kch nai nikal payega " << endl;
+//             return -1;
+//         }
+//         int index = front[m - 1];
+//         front[m - 1] = next[index];
+//         next[index] = freespot;
+//         freespot = index;
+//         return arr[index];
+//     }
+// };
+
+// int main(int argc, char const *argv[])
+// {
+//     Queue qu(6, 3);
+//     qu.enqueue(100, 1);
+//     cout << " Ho gya daalna " << endl;
+//     qu.enqueue(200, 2);
+//     cout << " Ho gya daalna " << endl;
+//     qu.enqueue(300, 3);
+//     cout << " ho gya daalna " << endl;
+//     qu.enqueue(101, 1);
+//     cout << " Ho gya daalna " << endl;
+//     qu.enqueue(201, 2);
+//     cout << " Ho gya daalna " << endl;
+//     qu.enqueue(301, 3);
+//     cout << " ho gya daalna " << endl;
+//     cout << endl;
+//     cout << qu.dequeue(1) << " nikalna ho gya " << endl;
+//     cout << qu.dequeue(2) << " nikalna ho gya " << endl;
+//     cout << qu.dequeue(3) << " nikalna ho gya " << endl;
+//     return 0;
+// }
+
+// --------------------------------------------------
 
 // --------SUM OF ALL THE MINIMUM AND THE MAXIMUM ELEMENTS IN A SUBARRAY OF SIZE 'K' IN AN ARRAY OF SIZE 'N'-------
 
@@ -6435,5 +6769,857 @@
 
 //     return 0;
 // }
+
+// SLIDING WINDOW PROBLEM--------
+// (finding the maximum sum from the subarray in the given array)
+// #include <iostream>
+// using namespace std;
+
+// void go(int *arr, int sz, int k)
+// {
+//     int i = 0, j = 0, sum = 0;
+//     int maxx = INT_MIN;
+//     while (j < sz)
+//     {
+//         if (j - i + 1 <= k)
+//         {
+//             sum += arr[j++];
+//         }
+//         else
+//         {
+//             maxx = max(maxx, sum);
+//             sum -= arr[i++];
+//             sum += arr[++j];
+//         }
+//     }
+//     cout << endl
+//          << maxx;
+// }
+
+// int main()
+// {
+//     int arr[7] = {2, 5, -1, 7, -3, -1, 2};
+//     int size = 7;
+//     go(arr, size, 4);
+//     return 0;
+// }
+
+// -----------------SUM OF MINIMUM AND MAXIMUM ELEMENT OF SUBARRAYS OF SIZE K-----------------------(USING NORMAL METHOD(NOT USING DEQUE))
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// void go(int *arr, int sz, int k, vector<int> &vctr)
+// {
+//     int i = 0;
+//     int j = 0;
+//     int maxx = INT_MIN;
+//     int minn = INT_MAX;
+//     while (j <= sz)
+//     {
+//         if (j - i + 1 <= k)
+//         {
+//             maxx = max(maxx, arr[j]);
+//             minn = min(minn, arr[j]);
+//             j++;
+//         }
+//         else
+//         {
+//             vctr.push_back(maxx + minn);
+//             i++;
+//             for (int p = i; p <= j; p++)
+//             {
+//                 maxx = max(maxx, arr[j]);
+//                 minn = min(minn, arr[j]);
+//             }
+//             j++;
+//         }
+//     }
+// }
+
+// int prit(vector<int> vcr, int count)
+// {
+//     for (auto i : vcr)
+//     {
+//         count += i;
+//     }
+//     return count;
+// }
+
+// int main()
+// {
+//     int arr[7] = {2, 5, -1, 7, -3, -1, -2};
+//     int size = 7;
+//     int k = 4;
+//     vector<int> vctr;
+//     go(arr, size, k, vctr);
+//     int count = 0;
+//     cout << prit(vctr, count);
+//     return 0;
+// }
+
+//-----------------------BINARY TREES CREATION---------------------
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// class node
+// {
+// public:
+//     int data;
+//     node *left;
+//     node *right;
+
+//     node(int d)
+//     {
+//         this->data = d;
+//         this->left = NULL;
+//         this->right = NULL;
+//     }
+// };
+
+// node *buildtree()
+// {
+//     cout << " ENTER THE DATA" << endl;
+//     int data;
+//     cin >> data;
+//     node *root = new node(data);
+
+//     if (data == -1)
+//     {
+//         return NULL;
+//     }
+
+//     cout << " enter the data for inserting in left of " << data << endl;
+//     root->left = buildtree();
+//     cout << " enter the data for inserting in right of " << data << endl;
+//     root->right = buildtree();
+//     return root;
+// }
+
+// void levelordertraversal(node *root)
+// {
+//     queue<node *> q;
+//     q.push(root);
+//     q.push(NULL);
+
+//     while (!q.empty())
+//     {
+//         node *temp = q.front();
+//         q.pop();
+
+//         if (temp == NULL)
+//         {
+//             // purana level traverse compute ho chuka hai----
+//             cout << endl;
+//             if (!q.empty())
+//             {
+//                 // queue still has some child nodes
+//                 q.push(NULL);
+//             }
+//         }
+//         else
+//         {
+//             cout << temp->data << " ";
+//             if (temp->left)
+//             {
+//                 q.push(temp->left);
+//             }
+//             if (temp->right)
+//             {
+//                 q.push(temp->right);
+//             }
+//         }
+//     }
+// }
+
+// void inorder(node *root)
+// {
+//     if (root == NULL)
+//     {
+//         return;
+//     }
+//     inorder(root->left);
+//     cout << root->data << " ";
+//     inorder(root->right);
+// }
+
+// void preorder(node *root)
+// {
+//     if (root == NULL)
+//     {
+//         return;
+//     }
+//     cout << root->data << " ";
+//     inorder(root->left);
+//     inorder(root->right);
+// }
+
+// void postorder(node *root)
+// {
+//     if (root == NULL)
+//     {
+//         return;
+//     }
+//     inorder(root->left);
+//     inorder(root->right);
+//     cout << root->data << " ";
+// }
+
+// // level order matlb hi queue lena hoga
+// void buildfromlevelorder(node *&root)
+// {
+//     queue<node *> q;
+//     cout << " Enter the data for root" << endl;
+//     int data;
+//     cin >> data;
+//     root = new node(data);
+//     q.push(root);
+
+//     while (!q.empty())
+//     {
+//         node *temp = q.front();
+//         q.pop();
+
+//         cout << " enter the left node for " << temp->data << endl;
+//         int leftdata;
+//         cin >> leftdata;
+//         if (leftdata != -1)
+//         {
+//             temp->left = new node(leftdata);
+//             q.push(temp->left);
+//         }
+
+//         cout << " enter the right node for " << temp->data << endl;
+//         int rightdata;
+//         cin >> rightdata;
+//         if (rightdata != -1)
+//         {
+//             temp->right = new node(rightdata);
+//             q.push(temp->right);
+//         }
+//     }
+// }
+
+// int main()
+// {
+//     node *root = NULL;
+
+// buildfromlevelorder(root);
+// levelordertraversal(root);
+
+//     /*  // creating a tree
+//   root = buildtree();
+
+//       // level order
+//       // cout << " printing the level order traversal output" << endl;
+
+//       // inorder traversal
+//       inorder(root);
+//       cout << endl;
+
+//       // inorder traversal
+//       preorder(root);
+//       cout << endl;
+
+//       // inorder traversal
+//       postorder(root);
+//       cout << endl;  */
+//     return 0;
+// }
+
+// ------------------------------------ALL THE BINARY QUESTIONS IN ONE -------------------------------
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// class node
+// {
+// public:
+//     int data;
+//     node *left;
+//     node *right;
+//     node(int data)
+//     {
+//         this->data = data;
+//         this->left = NULL;
+//         this->right = NULL;
+//     }
+// };
+
+// node *createnode()
+// {
+//     cout << " enter the data for node" << endl;
+//     int da;
+//     cin >> da;
+//     if (da == -1)
+//     {
+//         return NULL;
+//     }
+//     node *newnode = new node(da);
+//     cout << "now for the left side of " << da;
+//     newnode->left = createnode();
+//     cout << " now for the right side of " << da;
+//     newnode->right = createnode();
+//     return newnode;
+// }
+
+// void dispalytree(node *root)
+// {
+//     queue<node *> q;
+//     q.push(root);
+//     q.push(NULL);
+//     while (!q.empty())
+//     {
+//         node *temp = q.front();
+//         q.pop();
+//         if (temp != NULL)
+//         {
+//             cout << temp->data << " ";
+//             if (temp->left)
+//                 q.push(temp->left);
+//             if (temp->right)
+//                 q.push(temp->right);
+//         }
+//         else if (temp == NULL)
+//         {
+//             cout << endl;
+//             if (!q.empty())
+//                 q.push(NULL);
+//         }
+//     }
+// }
+
+// void inorder(node *root)
+// {
+//     if (root == NULL)
+//     {
+//         return;
+//     }
+//     inorder(root->left);
+//     cout << root->data << " ";
+//     inorder(root->right);
+// }
+
+// int height(node *root)
+// {
+//     if (root == NULL)
+//     {
+//         return 0;
+//     }
+//     int left = height(root->left);
+//     int right = height(root->right);
+//     return max(left, right) + 1;
+// }
+
+// int brutediameter(node *root)
+// {
+//     if (root == NULL)
+//         return 0;
+//     int left = brutediameter(root->left);
+//     int right = brutediameter(root->right);
+//     int hght = height(root->left) + height(root->right) + 1;
+//     return max(left, max(right, hght));
+// }
+
+// pair<int, int> efficientdiameterapproach(node *root)
+// { // first is the diameter and the second is the height--------
+//     if (root == NULL)
+//         return make_pair(0, 0);
+//     pair<int, int> left = efficientdiameterapproach(root->left);
+//     pair<int, int> right = efficientdiameterapproach(root->right);
+//     int leftdia = left.first;
+//     int rightdia = right.first;
+//     int heightt = left.second + right.second + 1;
+//     pair<int, int> ans;
+//     ans.first = max(leftdia, max(rightdia, heightt));
+//     ans.second = max(left.second, right.second) + 1;
+//     return ans;
+// }
+
+// pair<bool, int> checkbalanced(node *root)
+// {
+//     if (root == NULL)
+//         return make_pair(true, 0);
+//     pair<bool, int> left = checkbalanced(root->left);
+//     pair<bool, int> right = checkbalanced(root->right);
+//     bool fir = left.first;
+//     bool sec = right.first;
+//     bool diff = abs(left.second - right.second) <= 1;
+//     pair<bool, int> ans;
+//     if (fir && sec && diff)
+//         ans.first = true;
+//     else
+//         ans.first = false;
+//     ans.second = max(left.second, right.second) + 1;
+//     return ans;
+// }
+
+// pair<bool, int> checksumoftree(node *root)
+// {
+//     if (root == NULL)
+//         return make_pair(true, 0);
+//     if (root->left == NULL && root->right == NULL)
+//         return make_pair(true, root->data);
+//     pair<bool, int> left = checksumoftree(root->left);
+//     pair<bool, int> right = checksumoftree(root->right);
+//     bool fir = left.first;
+//     bool sec = right.first;
+//     bool condn = left.second + right.second == root->data;
+//     pair<bool, int> ans;
+//     if (fir && sec && condn)
+//         ans.first = true;
+//     else
+//         ans.first = false;
+//     ans.second = root->data + left.second + right.second;
+//     return ans;
+// }
+
+// bool findidentical(node *root1, node *root2)
+// {
+//     if (root1 == NULL && root2 == NULL)
+//         return true;
+//     if (root1 == NULL && root2 != NULL)
+//         return false;
+//     if (root1 != NULL && root2 == NULL)
+//         return false;
+
+//     bool fir = findidentical(root1->left, root2->left);
+//     bool sec = findidentical(root1->right, root2->right);
+//     bool val = root1->data == root2->data;
+//     if (fir && sec && val)
+//         return true;
+//     return false;
+// }
+
+// vector<int> zigzagprint(node *root, vector<int> vctr)
+// {
+//     queue<node *> q;
+//     q.push(root);
+//     bool find = true;
+//     while (!q.empty())
+//     {
+//         int size = q.size();
+//         vector<int> asn(size);
+//         for (int i = 0; i < size; i++)
+//         {
+//             node *tem = q.front();
+//             q.pop();
+//             asn[find ? i : (size - 1) - i] = tem->data;
+//             if (tem->left)
+//                 q.push(tem->left);
+//             if (tem->right)
+//                 q.push(tem->right);
+//         }
+//         find = !find;
+//         for (auto j : asn)
+//             vctr.push_back(j);
+//     }
+//     return vctr;
+// }
+
+// int main()
+// {
+//     node *nd;
+//     nd = createnode();
+// dispalytree(nd);
+// inorder(nd);
+// cout << height(nd);
+// cout << brutediameter(nd); // using bruteforce approach
+// cout << efficientdiameterapproach(nd).first;
+//
+//
+//
+// if (checkbalanced(nd).first)
+//     cout << " balanced ";
+// else
+//     cout << " not balanced";
+//
+//
+//
+//
+// if (checksumoftree(nd).first)
+// {
+//     cout << " yes sum of tree is same ";
+// }
+// else
+// {
+//     cout << " no sum of the tree is not the same";
+// }
+//
+//
+//
+// node *rg;
+// rg = createnode();
+// if (findidentical(nd, rg))
+//     cout << "yes identical trees";
+// else
+//     cout << " no not identical";
+//
+//
+//
+//
+// vector<int> vctr;
+// vector<int> p = zigzagprint(nd, vctr);
+// for (auto h : p)
+//     cout << h << " ";
+//
+//
+//
+//
+//
+//
+//     return 0;
+// }
+
+// -------------------VERTICAL TRAVERSAL------------------
+// class Solution {
+
+// private:
+//     void travleft(Node *root, vector<int>&ans){
+//         if((root==NULL) || (root->left==NULL && root->right==NULL))   return;
+//         ans.push_back(root->data);
+//         if(root->left)  travleft(root->left, ans);
+//         else    travleft(root->right, ans);
+//     }
+
+//     void travleaf(Node *root, vector<int> & ans){
+//         if(root==NULL)  return;
+//         if(root->left==NULL && root->right==NULL) {ans.push_back(root->data); return ;}
+//         travleaf(root->left, ans);
+//         travleaf(root->right, ans);
+//     }
+
+//     void travright(Node *root, vector<int> &ans){
+//        if(root==NULL || (root->right==NULL && root->left==NULL))    return;
+//
+//         if(root->right)
+//             travright(root->right, ans);
+//         else
+//             travright(root->left, ans);
+//         ans.push_back(root->data);
+//     }
+// public:
+//     vector <int> boundary(Node *root)
+//     {
+//         vector<int> ans;
+//         if(root==NULL)  return ans;
+
+//         ans.push_back(root->data);
+
+//         travleft(root->left,ans);
+
+//         travleaf(root->left, ans);
+//         travleaf(root->right, ans);
+
+//         travright(root->right, ans);
+//         return ans;
+//     }
+// };
+
+// ----------------TOP VIEW OF A BINARY TREE-----------
+// class Solution
+// {
+//     public:
+//     //Function to return a list of nodes visible from the top view
+//     //from left to right in Binary Tree.
+//     vector<int> topView(Node *root)
+//     {
+//         vector<int> ans;
+//         if(root==NULL) return ans;
+//         map<int, int> nodetop;
+//         queue<pair<Node* , int>>q;
+//         q.push(make_pair(root, 0));
+//         while(!q.empty()){
+//            pair<Node*, int>temp= q.front(); q.pop();
+//            Node *frontnode= temp.first;
+//            int hd=temp.second;
+//            if(nodetop.find(hd)== nodetop.end())
+//                 nodetop[hd]=frontnode->data;
+//             if(frontnode->left)
+//                 q.push(make_pair(frontnode->left, hd-1));
+//             if(frontnode->right)
+//                 q.push(make_pair(frontnode->right, hd+1));
+//         }
+//         for(auto i: nodetop)
+//             ans.push_back(i.second);
+
+//     return ans; }
+
+// };
+
+// ---------------------BOTTOM VIEW OF BINARY TREE------------
+// class Solution {
+//   public:
+//     vector <int> bottomView(Node *root)
+//     {
+//          vector<int> ans;
+//          if(root==NULL) return ans;
+
+//          map<int, int> topnode;
+//          queue<pair<Node *,int>> q;  // yaha int mane horizontal distance---
+
+//          q.push(make_pair(root, 0));
+
+//          while(!q.empty()){
+//              pair<Node* , int> temp= q.front();
+//              q.pop();
+//              Node *frontnode= temp.first;
+//              int hd= temp.second;
+
+//              // if one value is present for a Horz. distan. then do nothing--
+//                  topnode[hd]= frontnode->data;
+
+//              if(frontnode->left)    q.push(make_pair(frontnode->left, hd-1));
+//              if(frontnode->right)    q.push(make_pair(frontnode->right, hd+1));
+//          }
+
+//          for(auto i: topnode)   ans.push_back(i.second);
+//          return ans;
+
+//     }
+// };
+
+//------------------RIGHT VIEW OF A BINARY TREE----------------
+// class Solution
+// {
+//     private:
+//         void solve(Node *root, vector<int>&vctr, int level){
+//             if(root==NULL)  return;
+//             if(vctr.size()== level){
+//                 vctr.push_back(root->data) ;
+//             }
+//             solve(root->right, vctr, level+1);
+//             solve(root->left, vctr, level+1);
+//
+//         }
+//     public:
+//     //Function to return list containing elements of right view of binary tree.
+//     vector<int> rightView(Node *root)
+//     {
+//         vector<int>vctr;
+//         if(root==NULL) return vctr;
+//         solve(root, vctr, 0);
+//         return vctr;
+//     }
+// };
+
+//------------LEFT VIEW OF A BINARY TREE------------
+// class Solution
+// {
+//     private:
+//         void solve(Node *root, vector<int>&vctr, int level){
+//             if(root==NULL)  return;
+//             if(vctr.size()== level){
+//                 vctr.push_back(root->data) ;
+//             }
+//             solve(root->left, vctr, level+1);
+//             solve(root->right, vctr, level+1);
+
+//         }
+//     public:
+//     //Function to return list containing elements of right view of binary tree.
+//     vector<int> rightView(Node *root)
+//     {
+//         vector<int>vctr;
+//         if(root==NULL) return vctr;
+//         solve(root, vctr, 0);
+//         return vctr;
+//     }
+// };
+
+// ---------------------BINARY SEARCH TREE IMPLEMENTATION-------------------
+
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// class Node
+// {
+// public:
+//     int data;
+//     Node *left;
+//     Node *right;
+//     Node(int d)
+//     {
+//         this->data = d;
+//         this->left = NULL;
+//         this->right = NULL;
+//     }
+// };
+
+// Node *insertinbst(Node *&root, int d)
+// {
+//     if (root == NULL)
+//     {
+//         root = new Node(d);
+//         return root;
+//     }
+//     if (d > root->data)
+//     {
+//         root->right = insertinbst(root->right, d);
+//     }
+//     else
+//     {
+//         root->left = insertinbst(root->left, d);
+//     }
+//     return root;
+// }
+
+// void takeinput(Node *&root)
+// {
+//     int data;
+//     cin >> data;
+//     while (data != -1)
+//     {
+//         insertinbst(root, data);
+//         cin >> data;
+//     }
+// }
+
+// void levelordertraversal(Node *root)
+// {
+//     queue<Node *> q;
+//     q.push(root);
+//     q.push(NULL);
+
+//     while (!q.empty())
+//     {
+//         Node *temp = q.front();
+//         q.pop();
+
+//         if (temp == NULL)
+//         {
+//             // purana level traverse compute ho chuka hai----
+//             cout << endl;
+//             if (!q.empty())
+//             {
+//                 // queue still has some child nodes
+//                 q.push(NULL);
+//             }
+//         }
+//         else
+//         {
+//             cout << temp->data << " ";
+//             if (temp->left)
+//             {
+//                 q.push(temp->left);
+//             }
+//             if (temp->right)
+//             {
+//                 q.push(temp->right);
+//             }
+//         }
+//     }
+// }
+
+// // --------------SEARCHING IN A BST----------------
+// bool searchInBST(Node *root, int x)
+// {
+//     if (root == NULL)
+//         return false;
+//     if (root->data == x)
+//         return true;
+//     if (root->data < x)
+//     {
+//         return searchInBST(root->right, x);
+//     }
+//     if (root->data > x)
+//     {
+//         return searchInBST(root->left, x);
+//     }
+// }
+
+// Node *minval(Node *root)
+// {
+//     Node *temp = root;
+//     while (temp->left != NULL)
+//     {
+//         temp = temp->left;
+//     }
+//     return temp;
+// }
+
+// Node *maxval(Node *root)
+// {
+//     Node *temp = root;
+//     while (temp->right != NULL)
+//     {
+//         temp = temp->right;
+//     }
+//     return temp;
+// }
+
+// Node *deletefrombst(Node *root, int val)
+// {
+//     if (root == NULL)
+//         return root;
+//     if (root->data == val)
+//     {
+//         // 0 child
+//         if (root->left == NULL && root->right == NULL)
+//         {
+//             delete root;
+//             return NULL;
+//         }
+//         // 1 child
+//         // left child
+//         if (root->left != NULL && root->right == NULL)
+//         {
+//             Node *temp = root->left;
+//             delete root;
+//             return temp;
+//         }
+//         // right child
+//         if (root->right != NULL && root->left == NULL)
+//         {
+//             Node *temp = root->right;
+//             delete root;
+//             return temp;
+//         }
+//         // 2 children
+//         if (root->left != NULL && root->right != NULL)
+//         {
+//             int mini = minval(root->right)->data;
+//             root->data = mini;
+//             root->right = deletefrombst(root->right, mini);
+//             return root;
+//         }
+//     }
+//     else if (root->data > val)
+//     {
+//         // left part
+//         root->left = deletefrombst(root->left, val);
+//         return root;
+//     }
+//     else
+//     {
+//         // right part
+//         root->right = deletefrombst(root->right, val);
+//         return root;
+//     }
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     Node *root = NULL;
+//     cout << " enter the data to create BST" << endl;
+//     // inserting ------
+//     takeinput(root);
+//     cout << "printing the bst " << endl;
+//     levelordertraversal(root);
+//     // MINIMUM VALUE OF BST
+//     cout << "MINIMUM VALUE OF BST IS" << minval(root) << endl;
+//     // MAXIMUM VALUE OF BST
+//     cout << "MAXIMUM VALUE OF BST IS" << maxval(root) << endl;
+//     // similarly inorder , preorder and and postorder can be found out ---------
+//     // --------------NOTE:: INORDER TRAVERSAL IS SORTED -------
+//     // searching ----------
+//     cout << searchInBST(root, 7);
+//     // deleting-----------
+//     deletefrombst(root, 21);
+//     return 0;
+// }
+
 
 
