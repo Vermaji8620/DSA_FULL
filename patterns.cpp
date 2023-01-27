@@ -7448,178 +7448,600 @@
 //     }
 // };
 
-// Node *insertinbst(Node *&root, int d)
+// Node *maketree(Node *&root, int da)
 // {
 //     if (root == NULL)
-//     {
-//         root = new Node(d);
-//         return root;
-//     }
-//     if (d > root->data)
-//     {
-//         root->right = insertinbst(root->right, d);
-//     }
-//     else
-//     {
-//         root->left = insertinbst(root->left, d);
-//     }
+//         return new Node(da);
+//     else if (da > root->data)
+//         root->right = maketree(root->right, da);
+//     else if (da < root->data)
+//         root->left = maketree(root->left, da);
 //     return root;
 // }
 
-// void takeinput(Node *&root)
-// {
-//     int data;
-//     cin >> data;
-//     while (data != -1)
-//     {
-//         insertinbst(root, data);
-//         cin >> data;
-//     }
-// }
-
-// void levelordertraversal(Node *root)
+// void lvl(Node *&root)
 // {
 //     queue<Node *> q;
 //     q.push(root);
 //     q.push(NULL);
-
 //     while (!q.empty())
 //     {
-//         Node *temp = q.front();
+//         Node *front = q.front();
 //         q.pop();
-
-//         if (temp == NULL)
+//         if (front != NULL)
 //         {
-//             // purana level traverse compute ho chuka hai----
-//             cout << endl;
-//             if (!q.empty())
-//             {
-//                 // queue still has some child nodes
-//                 q.push(NULL);
-//             }
+//             cout << front->data << " ";
+//             if (front->left)
+//                 q.push(front->left);
+//             if (front->right)
+//                 q.push(front->right);
 //         }
 //         else
 //         {
-//             cout << temp->data << " ";
-//             if (temp->left)
-//             {
-//                 q.push(temp->left);
-//             }
-//             if (temp->right)
-//             {
-//                 q.push(temp->right);
-//             }
+//             cout << endl;
+//             if (!q.empty())
+//                 q.push(NULL);
 //         }
 //     }
 // }
 
-// // --------------SEARCHING IN A BST----------------
-// bool searchInBST(Node *root, int x)
+// bool srching(Node *root, int x)
 // {
 //     if (root == NULL)
 //         return false;
 //     if (root->data == x)
 //         return true;
-//     if (root->data < x)
-//     {
-//         return searchInBST(root->right, x);
-//     }
 //     if (root->data > x)
-//     {
-//         return searchInBST(root->left, x);
-//     }
+//         return srching(root->left, x);
+//     if (root->data < x)
+//         return srching(root->right, x);
 // }
 
-// Node *minval(Node *root)
+// int minval(Node *root)
 // {
-//     Node *temp = root;
-//     while (temp->left != NULL)
-//     {
-//         temp = temp->left;
-//     }
-//     return temp;
+//     if (root->left == NULL)
+//         return root->data;
+//     return minval(root->left);
 // }
 
-// Node *maxval(Node *root)
+// int maxval(Node *root)
 // {
-//     Node *temp = root;
-//     while (temp->right != NULL)
-//     {
-//         temp = temp->right;
-//     }
-//     return temp;
+//     if (root->right == NULL)
+//         return root->data;
+//     return maxval(root->right);
 // }
 
-// Node *deletefrombst(Node *root, int val)
+// Node *deletenode(Node *&root, int num)
 // {
 //     if (root == NULL)
-//         return root;
-//     if (root->data == val)
 //     {
-//         // 0 child
+//         return NULL;
+//     }
+//     if (num == root->data)
+//     {
 //         if (root->left == NULL && root->right == NULL)
 //         {
 //             delete root;
-//             return NULL;
 //         }
-//         // 1 child
-//         // left child
 //         if (root->left != NULL && root->right == NULL)
 //         {
 //             Node *temp = root->left;
 //             delete root;
 //             return temp;
 //         }
-//         // right child
 //         if (root->right != NULL && root->left == NULL)
 //         {
-//             Node *temp = root->right;
+//             Node *tm = root->right;
 //             delete root;
-//             return temp;
+//             return tm;
 //         }
-//         // 2 children
 //         if (root->left != NULL && root->right != NULL)
 //         {
-//             int mini = minval(root->right)->data;
-//             root->data = mini;
-//             root->right = deletefrombst(root->right, mini);
+//             int minn = minval(root->right);
+//             root->data = minn;
+//             root->right = deletenode(root->right, minn);
 //             return root;
 //         }
 //     }
-//     else if (root->data > val)
+//     else if (num > root->data)
 //     {
-//         // left part
-//         root->left = deletefrombst(root->left, val);
+//         root->right = deletenode(root->right, num);
 //         return root;
 //     }
 //     else
 //     {
-//         // right part
-//         root->right = deletefrombst(root->right, val);
+//         root->left = deletenode(root->left, num);
 //         return root;
 //     }
 // }
 
-// int main(int argc, char const *argv[])
+// bool chckvalidbst(Node *root, int min, int max)
+// {
+//     if (root == NULL)
+//         return true;
+//     if (root->data >= min && root->data <= max)
+//     {
+//         bool left = chckvalidbst(root->left, min, root->data);
+//         bool right = chckvalidbst(root->right, root->data, max);
+//         return left && right;
+//     }
+//     else
+//         return false;
+// }
+
+// int kthsmallest(Node *root, int i, int k)
+// {
+//     if (root == NULL)
+//         return -1;
+//     int left = kthsmallest(root->left, i, k);
+//     if (left != -1)
+//     {
+//         return left;
+//     }
+//     i++;
+//     if (i == k)
+//         return root->data;
+//     return kthsmallest(root->right, i, k);
+// }
+
+// int main()
 // {
 //     Node *root = NULL;
-//     cout << " enter the data to create BST" << endl;
-//     // inserting ------
-//     takeinput(root);
-//     cout << "printing the bst " << endl;
-//     levelordertraversal(root);
-//     // MINIMUM VALUE OF BST
-//     cout << "MINIMUM VALUE OF BST IS" << minval(root) << endl;
-//     // MAXIMUM VALUE OF BST
-//     cout << "MAXIMUM VALUE OF BST IS" << maxval(root) << endl;
-//     // similarly inorder , preorder and and postorder can be found out ---------
-//     // --------------NOTE:: INORDER TRAVERSAL IS SORTED -------
-//     // searching ----------
-//     cout << searchInBST(root, 7);
-//     // deleting-----------
-//     deletefrombst(root, 21);
+//     while (true)
+// {
+//     cout << " enter the data " << endl;
+//     int data;
+//     cin >> data;
+//     if (data == -1)
+//     {
+//         break;
+//     }
+//     root = maketree(root, data);
+// }
+// lvl(root);
+// cout << endl;
+// -------searching in a bst--------
+//     // if (srching(root, 30))
+//     //     cout << " yes present ";
+//     // else
+//     //     cout << " not present ";
+
+//-------finding min and max--------
+//     // cout << minval(root) << endl;
+//     // cout << maxval(root) << endl;
+
+// --------deleting node----------
+//     root=deletenode(root, 20);
+//     lvl(root);
+
+// ------checking valididity of BST
+// if (chckvalidbst(root, INT_MIN, INT_MAX))
+//     cout << " yes valid ";
+// else
+//     cout << " no not valid ";
+
+// kth smallest element in an array-------
+// int count = 0;
+// cout << " the kth smallest element is " << kthsmallest(root, 3, count);
+
+// ----------code for inorder predecessor and inorder successor of a BST---------
+
+// pair<int, int> predecessorSuccessor(BinaryTreeNode<int> * root, int key)
+// {
+//     BinaryTreeNode<int> *temp = root;
+//     int pre = -1;
+//     int suc = -1;
+//     while (temp->data != key)
+//     {
+//         if (temp->data > key)
+//         {
+//             suc = temp->data;
+//             temp = temp->left;
+//         }
+//         else
+//         {
+//             pre = temp->data;
+//             temp = temp->right;
+//         }
+//     }
+//     // pre and suc
+
+//     // pre
+//     BinaryTreeNode<int> *lefttree = temp->left;
+//     while (lefttree != NULL)
+//     {
+//         pre = lefttree->data;
+//         lefttree = lefttree->right;
+//     }
+
+//     // suc
+//     BinaryTreeNode<int> *righttree = temp->right;
+//     while (righttree != NULL)
+//     {
+//         suc = righttree->data;
+//         righttree = righttree->left;
+//     }
+//     pair<int, int> ans = make_pair(pre, suc);
+//     return ans;
+// }
+//
+// ---------lca of BST---------------
+//
+// TreeNode<int> *LCAinaBST(TreeNode<int> * root, TreeNode<int> * P, TreeNode<int> * Q)
+// {
+//     if (root == NULL)
+//         return NULL;
+//     if (root->data < P->data && root->data < Q->data)
+//         return LCAinaBST(root->right, P, Q);
+//     if (root->data > P->data && root->data > Q->data)
+//         return LCAinaBST(root->left, P, Q);
+//     return root;
+// }
+
+//     return 0;
+// }
+//
+//
+
+// ------------------HEAPS-------------------------
+
+// #include <iostream>
+// using namespace std;
+
+// class heap
+// {
+// public:
+//     int arr[100];
+//     int size;
+
+//     heap()
+//     {
+//         arr[0] = -1;
+//         size = 0;
+//     }
+
+//     void insert(int val)
+//     {
+//         size = size + 1;
+//         int index = size;
+//         arr[index] = val;
+
+//         while (index > 1)
+//         {
+//             int parent = index / 2;
+//             if (arr[parent] < arr[index])
+//             {
+//                 swap(arr[parent], arr[index]);
+//                 index = parent;
+//             }
+//             else
+//             {
+//                 return;
+//             }
+//         }
+//     }
+
+//     void print()
+//     {
+//         for (int i = 1; i <= size; i++)
+//         {
+//             cout << arr[i] << " ";
+//         }
+//         cout << endl;
+//     }
+
+//     void deletefromheap()
+//     {
+//         if (size == 0)
+//         {
+//             cout << " nothing to delete";
+//             return;
+//         }
+
+//         // put last element to first index
+//         arr[1] = arr[size];
+//         // remove the last element
+//         size--;
+
+//         // take root node to its correct position
+//         int i = 1;
+//         while (i < size)
+//         {
+//             int leftindex = 2 * i;
+//             int rightindex = 2 * i + 1;
+//             if (leftindex < size && arr[i] < arr[leftindex])
+//             {
+//                 swap(arr[i], arr[leftindex]);
+//                 i = leftindex;
+//             }
+//             else if (rightindex < size && arr[rightindex])
+//             {
+//                 swap(arr[i], arr[rightindex]);
+//                 i = rightindex;
+//             }
+//             else
+//             {
+//                 return;
+//             }
+//         }
+//     }
+// };
+
+// // heapify algo------(ek node ko apne jagah se uthake sahi jagah pe leke jane wala code ko heapify algo bolte hai)
+
+// void max_heapify(int *arr, int n, int i)
+// {
+//     int largest = i;
+//     int left = 2 * i;
+//     int right = 2 * i + 1;
+
+//     if (left <= n && arr[largest] < arr[left])
+//     {
+//         largest = left;
+//     }
+//     if (right <= n && arr[largest] < arr[right])
+//     {
+//         largest = right;
+//     }
+//     if (largest != i)
+//     {
+//         swap(arr[largest], arr[i]);
+//         max_heapify(arr, n, largest);
+//     }
+// }
+
+// // ***********  heap sort**************
+
+// void heapsort(int *arr, int n)
+// {
+//     int size = n;
+//     while (size > 1)
+//     {
+//         // step1: swap
+//         swap(arr[size], arr[1]);
+//         size--;
+//         // step2
+//         max_heapify(arr, size, 1);
+//     }
+// }
+
+// int main()
+// {
+//     heap h;
+//     h.insert(50);
+//     h.insert(55);
+//     h.insert(53);
+//     h.insert(52);
+//     h.insert(54);
+//     h.print();
+//     h.deletefromheap();
+//     h.print();
+//     int arr[6] = {-1, 54, 53, 55, 52, 50};
+//     int n = 5;
+
+//     // heap creation
+//     for (int i = n / 2; i > 0; i--)
+//     {
+//         max_heapify(arr, n, i);
+//     }
+//     cout << " printing the array is " << endl;
+//     for (int i = 1; i <= n; i++)
+//     {
+//         cout << arr[i] << " ";
+//     }
+//     cout << endl;
+
+//     // heapsort
+//     heapsort(arr, n);
+//     cout << " printing the array now " << endl;
+//     for (int i = 1; i <= n; i++)
+//     {
+//         cout << arr[i] << " ";
+//     }
+//     cout << endl;
 //     return 0;
 // }
 
+//  -----------HEAP IMPLEMENTATION USING (PRIORITY QUEUE) STL------------------
+// #include <iostream>
+// #include <queue>
+// using namespace std;
 
+// int main(int argc, char const *argv[])
+// {
+//     // for max heap------------
+//     priority_queue<int> pq;
+//     pq.push(4);
+//     pq.push(2);
+//     pq.push(5);
+//     pq.push(3);
 
+//     cout << " the element at the top is" << pq.top() << endl;
+//     pq.pop();
+//     cout << " element at the top " << pq.top() << endl;
+//     cout << "size is " << pq.size() << endl;
+//     if (pq.empty())
+//         cout << " pq is empty" << endl;
+//     else
+//         cout << "pq is not empty" << endl;
+
+//     cout << "///////////////////////////////"<< endl;
+//     // for min heap------------
+//     priority_queue<int, vector<int>, greater<int>> minheap;
+//     minheap.push(4);
+//     minheap.push(2);
+//     minheap.push(5);
+//     minheap.push(3);
+
+//     cout << " the element at the top is" << pq.top() << endl;
+//     pq.pop();
+//     cout << " element at the top " << pq.top() << endl;
+//     cout << "size is " << pq.size() << endl;
+//     if (pq.empty())
+//         cout << " pq is empty" << endl;
+//     else
+//         cout << "pq is not empty" << endl;
+//     return 0;
+// }
+//
+//
+//
+//
+//  ----------------kth smallest element in array-----------------
+// int kthSmallest(int arr[], int l, int r, int k) {
+//         priority_queue<int> pq;
+
+//         //  step1
+//         for(int i=0; i<k; i++){
+//             pq.push(arr[i]);
+//         }
+
+//         for(int i=k; i<=r; i++){
+//             if(arr[i]< pq.top())
+//             {
+//             pq.pop();
+//             pq.push(arr[i]); }
+//         }
+
+//         return pq.top();
+
+//     }
+//
+//
+//
+// ------------------finding out the kth smallest element----------
+// int kthSmallest(int arr[], int l, int r, int k) {
+//         priority_queue<int> pq;
+//         for(int i=0; i<k; i++){
+//             pq.push(arr[i]);
+//         }
+//         for(int i=k; i<=r; i++){
+//             if(arr[i]<pq.top()) {
+//                 pq.pop();
+//                 pq.push(arr[i]);
+//             }
+//         }
+//         return pq.top();
+//}
+//
+//
+//
+//
+// //   -------------------CHECKING IF A BINARY TREE IS A HEAP OR NOT-----------------------
+// class Solution {
+//   public:
+// //   counting the total number of nodes
+//     int countnode(struct Node* root){
+//         if(root==NULL)  return 0;
+//         int ans=1+countnode(root->left)+countnode(root->right);
+//         return ans;
+//     }
+
+// //   code for the checking of a complete binary tree
+//     bool isCBT(struct Node* root, int index, int cnt){
+//         if(root==NULL)  return true;
+//         if(index >= cnt) return false;
+//         else{
+//             bool left= isCBT(root->left, 2*index+1, cnt);
+//             bool right= isCBT(root->right, 2*index+2 ,cnt);
+//             return (left && right);
+//         }
+//     }
+
+// //   code for the checking if root ka data uska left aur right ka data se bada hai ya nahi
+//     bool ismax(struct Node* root){
+//         if(root->left==NULL && root->right==NULL){
+//             return true;
+//         }
+//         if(root->right==NULL){
+//             return (root->data > root->left->data);
+//         }
+//         else{
+//             bool left= ismax(root->left);
+//             bool right= ismax(root->right);
+//             if(left && right && (root->data > root->right->data && root->data > root->left->data)){
+//                 return true;
+//             }
+//             else{return false;}
+//         }
+//     }
+
+//     bool isHeap(struct Node* tree) {
+//         int index=0; int totalcount= countnode(tree);
+//         if(isCBT(tree, index, totalcount) && ismax(tree)){
+//             return true;
+//         }
+//         return false;
+//     }
+// };
+//
+//
+//
+//
+//
+// //   ------------------minimum cost of the ropes ---------------
+// class Solution
+// {
+// public:
+//     // Function to return the minimum cost of connecting the ropes.
+//     long long minCost(long long arr[], long long n)
+//     {
+//         priority_queue<long long, vector<long long>, greater<long long>> pq;
+//         for (int i = 0; i < n; i++)
+//             pq.push(arr[i]);
+//         long long cost = 0;
+
+//         while (pq.size() > 1)
+//         {
+//             long long a = pq.top();
+//             pq.pop();
+//             long long b = pq.top();
+//             pq.pop();
+//             long long sum = a + b;
+//             cost += sum;
+//             pq.push(sum);
+//         }
+//         return cost;
+//     }
+// };
+
+// //   ----------------merge two max heaps------------------
+// class Solution
+// {
+// public:
+//     void heapify(vector<int> &v, int n, int i)
+//     {
+//         int largest = i;
+//         int left = 2 * i + 1;
+//         int right = 2 * i + 2;
+//         if (left < n && v[left] > v[largest])
+//             largest = left;
+//         if (right < n && v[right] > v[largest])
+//             largest = right;
+//         if (i != largest)
+//         {
+//             swap(v[largest], v[i]);
+//             i = largest;
+//             heapify(v, n, i);
+//         }
+//     }
+
+//     vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m)
+//     {
+//         vector<int> vctr;
+//         for (int i = 0; i < n; i++)
+//         {
+//             vctr.push_back(a[i]);
+//         }
+//         for (int i = 0; i < m; i++)
+//         {
+//             vctr.push_back(b[i]);
+//         }
+//         int nn = vctr.size();
+//         for (int i = (nn / 2) - 1; i >= 0; i--)
+//         {
+//             heapify(vctr, nn, i);
+//         }
+//         return vctr;
+//     }
+// };
