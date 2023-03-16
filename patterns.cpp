@@ -8045,3 +8045,676 @@
 //         return vctr;
 //     }
 // };
+
+//***************HASHMAPS IMPLEMENTATION*****************
+
+// #include <iostream>
+// #include <map>
+// #include <unordered_map>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+//     // creation
+//     unordered_map<string, int> m;
+
+//     // insertion(1)
+//     pair<string, int> p = make_pair("babbar", 3);
+//     m.insert(p);
+//     //(2)
+//     pair<string, int> pair2("love", 2);
+//     m.insert(pair2);
+//     //(3)
+//     m["mera"] = 1;
+//     m["mera"] = 2; // rewrite ho jayega
+
+//     // searching
+//     cout << m["mera"] << endl;
+//     cout << m.at("babbar") << endl;
+
+//     // cout<< m["unknown"];
+//     // cout<< m.at("unknown");
+
+//     cout << "GHH";
+//     cout << m.size() << endl;
+
+//     cout << m.count("bro") << endl;
+
+//     m.erase("mera");
+//     cout << m.size();
+
+//     for (auto i : m)
+//     {
+//         cout << i.first << " ";
+//     }
+
+//     // iterator
+//     unordered_map<string, int>::iterator iter = m.begin();
+//     while (iter != m.end())
+//     {
+//         cout << iter->first << " " << iter->second;
+//         iter++;
+//     }
+
+//     return 0;
+// }
+
+// *******  TRIE   ************
+
+// #include <iostream>
+// using namespace std;
+
+// class TrieNode
+// {
+// public:
+//     char data;
+//     TrieNode *children[26];
+//     bool isterminal;
+
+//     TrieNode(char ch)
+//     {
+//         data = ch;
+//         for (int i = 0; i < 26; i++)
+//         {
+//             children[i] = NULL;
+//         }
+//         isterminal = false;
+//     }
+// };
+
+// class Trie
+// {
+// public:
+//     TrieNode *root;
+
+//     Trie()
+//     {
+//         root = new TrieNode('\0');
+//     }
+
+//     void insertUtil(TrieNode *root, string word)
+//     {
+//         // base case
+//         if (word.length() == 0)
+//         {
+//             root->isterminal = true;
+//             return;
+//         }
+
+//         // assumption: word will be in CAPS
+//         int index = word[0] - 'A';
+//         TrieNode *child;
+
+//         // present
+//         if (root->children[index] != NULL)
+//         {
+//             child = root->children[index];
+//         }
+//         else
+//         {
+//             // absent
+//             child = new TrieNode(word[0]);
+//             root->children[index] = child;
+//         }
+//         // recursion
+//         insertUtil(child, word.substr(1));
+//     }
+
+//     void insert(string word)
+//     {
+//         insertUtil(root, word);
+//     }
+
+//     bool searchUtil(TrieNode *root, string word)
+//     {
+//         // base case
+//         if (word.length() == 0)
+//         {
+//             return root->isterminal;
+//         }
+
+//         int index = word[0] - 'A';
+//         TrieNode *child;
+
+//         // present
+//         if (root->children[index] != NULL)
+//         {
+//             child = root->children[index];
+//         }
+//         else
+//         {
+//             // absent
+//             return false;
+//         }
+
+//         // recursion
+//         return searchUtil(child, word.substr(1));
+//     }
+
+//     bool search(string word)
+//     {
+//         return searchUtil(root, word);
+//     }
+
+//     ~Trie()
+//     {
+//         delete root;
+//     }
+// };
+
+// int main()
+// {
+//     Trie *t = new Trie();
+//     t->insert("ABCD");
+//     t->insert("DO");
+
+//     cout << "Is 'ABCD' present? " << t->search("ABCD") << endl;
+//     cout << "Is 'DO' present? " << t->search("DO") << endl;
+
+//     delete t;
+//     return 0;
+// }
+
+//**************  TRIE (FROM CODING NINJAS)*****************
+/*
+    Your Trie object will be instantiated and called as such:
+    Trie* obj = new Trie();
+    obj->insert(word);
+    bool check2 = obj->search(word);
+    bool check3 = obj->startsWith(prefix);
+ */
+// class TrieNode
+// {
+// public:
+//     char data;
+//     TrieNode *children[26];
+//     bool isterminal;
+//     TrieNode(char ch)
+//     {
+//         data = ch;
+//         for (int i = 0; i < 26; i++)
+//         {
+//             children[i] = NULL;
+//         }
+//         isterminal = false;
+//     }
+// };
+
+// class Trie
+// {
+//     TrieNode *root;
+
+// public:
+//     /** Initialize your data structure here. */
+//     Trie()
+//     {
+//         root = new TrieNode('\0');
+//     }
+
+//     void insertutil(TrieNode *root, string word)
+//     {
+//         // base case
+//         if (word.length() == 0)
+//         {
+//             root->isterminal = true;
+//             return;
+//         }
+
+//         // assumption, word will be in CAPS
+//         int index = word[0] - 'a';
+//         TrieNode *child;
+
+//         // present
+//         if (root->children[index] != NULL)
+//         {
+//             child = root->children[index];
+//         }
+//         else
+//         {
+//             // absent
+//             child = new TrieNode(word[0]);
+//             root->children[index] = child;
+//         }
+//         // recursion
+//         insertutil(child, word.substr(1));
+//     }
+
+//     /** Inserts a word into the trie. */
+//     void insert(string word)
+//     {
+//         insertutil(root, word);
+//     }
+
+//     bool searchutil(TrieNode *root, string word)
+//     {
+//         // base case
+//         if (word.length() == 0)
+//         {
+//             return root->isterminal;
+//         }
+//         int index = word[0] - 'a';
+//         TrieNode *child;
+
+//         // present
+//         if (root->children[index] != NULL)
+//         {
+//             child = root->children[index];
+//         }
+//         else
+//         {
+//             // absent
+//             return false;
+//         }
+//         // recursion
+//         return searchutil(child, word.substr(1));
+//     }
+
+//     /** Returns if the word is in the trie. */
+//     bool search(string word)
+//     {
+//         return searchutil(root, word);
+//     }
+
+//     bool prefixutil(TrieNode *root, string word)
+//     {
+//         // base case
+//         if (word.length() == 0)
+//         {
+//             return true;
+//         }
+//         int index = word[0] - 'a';
+//         TrieNode *child;
+
+//         // present
+//         if (root->children[index] != NULL)
+//         {
+//             child = root->children[index];
+//         }
+//         else
+//         {
+//             // absent
+//             return false;
+//         }
+//         // recursion
+//         return prefixutil(child, word.substr(1));
+//     }
+
+//     /** Returns if there is any word in the trie that starts with the given prefix. */
+//     bool startsWith(string prefix)
+//     {
+
+//         return prefixutil(root, prefix);
+//     }
+// };
+
+//**************LONGEST COMMON PREFIX PROBLEM******************
+
+// class trienode
+// {
+// public:
+//     int data;
+//     trienode *children[26];
+//     int childcount;
+//     bool isterminal;
+//     trienode(char ch)
+//     {
+//         data = ch;
+//         for (int i = 0; i < 26; i++)
+//         {
+//             children[i] = NULL;
+//         }
+//         isterminal = false;
+//         childcount = 0;
+//     }
+// };
+
+// class trie
+// {
+// public:
+//     trienode *root;
+//     trie(char ch) { root = new trienode(ch); }
+
+//     void insertutil(trienode *root, string word)
+//     {
+//         // base case
+//         if (word.length() == 0)
+//         {
+//             root->isterminal = true;
+//             return;
+//         }
+
+//         // assumption, word will be in CAPS
+//         int index = word[0] - 'a';
+//         trienode *child;
+
+//         // present
+//         if (root->children[index] != NULL)
+//         {
+//             child = root->children[index];
+//         }
+//         else
+//         {
+//             // absent
+//             child = new trienode(word[0]);
+//             root->childcount++;
+//             root->children[index] = child;
+//         }
+//         // recursion
+//         insertutil(child, word.substr(1));
+//     }
+
+//     /** Inserts a word into the trie. */
+//     void insert(string word) { insertutil(root, word); }
+
+//     void lcp(string str, string &ans)
+//     {
+//         for (int i = 0; i < str.length(); i++)
+//         {
+//             char ch = str[i];
+//             if (root->childcount == 1)
+//             {
+//                 ans.push_back(ch);
+//                 int index = ch - 'a';
+//                 root = root->children[index];
+//             }
+//             else
+//             {
+//                 break;
+//             }
+//             if (root->isterminal)
+//                 break;
+//         }
+//     }
+// };
+
+// string longestCommonPrefix(vector<string> &arr, int n)
+// {
+
+//     trie *t = new trie('\0');
+//     // insert kardo all strings into trie
+//     for (int i = 0; i < n; i++)
+//     {
+//         t->insert(arr[i]);
+//     }
+
+//     string first = arr[0];
+//     string ans = "";
+
+//     t->lcp(first, ans);
+//     return ans;
+// }
+
+//****************PHONE DIRECTORY IMPLEMENTATION USING TRIE**************
+// class TrieNode
+// {
+// public:
+//     char data;
+//     TrieNode *children[26];
+//     bool isterminal;
+//     TrieNode(char ch)
+//     {
+//         data = ch;
+//         for (int i = 0; i < 26; i++)
+//         {
+//             children[i] = NULL;
+//         }
+//         isterminal = false;
+//     }
+// };
+
+// class Trie
+// {
+//     TrieNode *root;
+
+// public:
+//     /** Initialize your data structure here. */
+//     Trie() { root = new TrieNode('\0'); }
+
+//     void insertutil(TrieNode *root, string word)
+//     {
+//         // base case
+//         if (word.length() == 0)
+//         {
+//             root->isterminal = true;
+//             return;
+//         }
+
+//         // assumption, word will be in CAPS
+//         int index = word[0] - 'a';
+//         TrieNode *child;
+
+//         // present
+//         if (root->children[index] != NULL)
+//         {
+//             child = root->children[index];
+//         }
+//         else
+//         {
+//             // absent
+//             child = new TrieNode(word[0]);
+//             root->children[index] = child;
+//         }
+//         // recursion
+//         insertutil(child, word.substr(1));
+//     }
+
+//     /** Inserts a word into the trie. */
+//     void insert(string word) { insertutil(root, word); }
+
+//     void printsuggestions(TrieNode *curr, vector<string> &temp, string prefix)
+//     {
+//         if (curr->isterminal)
+//         {
+//             temp.push_back(prefix);
+//         }
+//         for (char ch = 'a'; ch <= 'z'; ch++)
+//         {
+//             TrieNode *next = curr->children[ch - 'a'];
+
+//             if (next != NULL)
+//             {
+//                 prefix.push_back(ch);
+//                 printsuggestions(next, temp, prefix);
+//                 prefix.pop_back();
+//             }
+//         }
+//     }
+
+//     vector<vector<string>> getsuggestions(string str)
+//     {
+//         TrieNode *prev = root;
+//         vector<vector<string>> output;
+//         string prefix = "";
+//         for (int i = 0; i < str.length(); i++)
+//         {
+//             char lastch = str[i];
+
+//             prefix.push_back(lastch);
+
+//             // check for lastch
+//             TrieNode *curr = prev->children[lastch - 'a'];
+
+//             // if not fount
+//             if (curr == NULL)
+//             {
+//                 break;
+//             }
+
+//             // if found
+//             vector<string> temp;
+//             printsuggestions(curr, temp, prefix);
+//             output.push_back(temp);
+//             prev = curr;
+//         }
+//         return output;
+//     }
+// };
+
+// vector<vector<string>> phoneDirectory(vector<string> &contactList,
+//                                       string &queryStr)
+// {
+
+//     // trie creation
+//     Trie *t = new Trie();
+
+//     // insert all contact in trie
+//     for (int i = 0; i < contactList.size(); i++)
+//     {
+//         string str = contactList[i];
+//         t->insert(str);
+//     }
+
+//     return t->getsuggestions(queryStr);
+// }
+
+//*****************  RAT IN A MAZE *********************
+// #include <bits/stdc++.h>
+
+// bool isSafe(int newx, int newy, vector<vector<bool>> &vis, vector<vector<int>> &arr, int n){
+//     if((newx>=0 && newx<n )&&( newy>=0 && newy<n ) && vis[newx][newy]!=1 && arr[newx][newy]==1){
+//         return true;
+//     }return false;
+// }
+
+// void solve(int x, int y, vector<vector<int>> &arr, int n, vector<string> &ans, vector<vector<bool>> &vis, string path){
+//     // base case
+//     if(x==n-1 && y==n-1){
+//         ans.push_back(path);
+//         return;
+//     }
+
+//     // 4 movement
+//     // D L R U
+
+//     //down
+//     if(isSafe(x+1, y, vis, arr, n)){
+//         vis[x][y]=1;
+//         solve(x+1, y, arr, n, ans, vis, path+'D');
+//         vis[x][y]=0;
+//     }
+//     //left
+//     if(isSafe(x, y-1, vis, arr, n)){
+//         vis[x][y]=1;
+//         solve(x, y-1, arr, n, ans, vis, path+'L');
+//         vis[x][y]=0;
+//     }
+//     //right
+//     if(isSafe(x, y+1, vis, arr, n)){
+//         vis[x][y]=1;
+//         solve(x, y+1, arr, n, ans, vis, path+'R');
+//         vis[x][y]=0;
+//     }
+//     // up
+//     if(isSafe(x-1, y, vis, arr, n)){
+//         vis[x][y]=1;
+//         solve(x-1, y, arr, n, ans, vis, path+'U');
+//         vis[x][y]=0;
+//     }
+// }
+// vector < string > searchMaze(vector < vector < int >> & arr, int n) {
+//     vector<string> ans;
+//     vector<vector<bool>> visited(n, vector<bool>(n,0));
+//     string path= "";
+//     if(arr[0][0]==0)return ans;
+//     solve(0, 0, arr, n, ans, visited, path);
+//     return ans;
+// }
+
+// ************* N QUEENS PUZZLE***************
+// #include <bits/stdc++.h>
+
+// void addsolution(vector<vector<int>> &ans, vector<vector<int>> &board, int n)
+// {
+//     vector<int> temp;
+//     for (int i = 0; i < n; i++)
+//     {
+//         for (int j = 0; j < n; j++)
+//         {
+//             temp.push_back(board[i][j]);
+//         }
+//     }
+//     ans.push_back(temp);
+// }
+
+// bool isSafe(int row, int col, vector<vector<int>> &board, int n)
+// {
+//     int x = row;
+//     int y = col;
+
+//     // check for the same row
+//     while (y >= 0)
+//     {
+//         if (board[x][y] == 1)
+//         {
+//             return false;
+//         }
+//         y--;
+//     }
+
+//     x = row;
+//     y = col;
+//     // check for diagonal
+//     while (x >= 0 && y >= 0)
+//     {
+//         if (board[x][y] == 1)
+//         {
+//             return false;
+//         }
+//         y--;
+//         x--;
+//     }
+
+//     x = row;
+//     y = col;
+//     // check for diagonal
+//     while (x < n && y >= 0)
+//     {
+//         if (board[x][y] == 1)
+//         {
+//             return false;
+//         }
+//         y--;
+//         x++;
+//     }
+//     return true;
+// }
+
+// void solve(int col, vector<vector<int>> &ans, vector<vector<int>> &board,
+//            int n)
+// {
+//     // base case
+//     if (col == n)
+//     {
+//         addsolution(ans, board, n);
+//         return;
+//     }
+
+//     // solve 1 case and the rest recursion will take care
+
+//     for (int row = 0; row < n; row++)
+//     {
+//         if (isSafe(row, col, board, n))
+//         {
+//             // if placing queen is safe or not
+//             board[row][col] = 1;
+//             solve(col + 1, ans, board, n);
+//             board[row][col] = 0;
+//         }
+//     }
+// }
+
+// vector<vector<int>> nQueens(int n)
+// {
+//     vector<vector<int>> board(n, vector<int>(n, 0));
+//     vector<vector<int>> ans;
+//     solve(0, ans, board, n);
+//     return ans;
+// }
+
+
+
+
+
+
+
+
