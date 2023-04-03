@@ -8711,10 +8711,1102 @@
 //     return ans;
 // }
 
+// ************** GRAPHS (using unordered map)******************
+
+// #include <iostream>
+// #include <unordered_map>
+// #include <list>
+// using namespace std;
+
+// class graph
+// {
+// public:
+//     unordered_map<int, list<int>> adj;
+
+//     void addedge(int u, int v, bool direction)
+//     {
+//         // create an edge from u to v
+//         adj[u].push_back(v);
+//         if (direction == 0)
+//         {
+//             adj[v].push_back(u);
+//         }
+//     }
+
+//     void printadjlist()
+//     {
+//         for (auto i : adj)
+//         {
+//             cout << i.first << "->";
+//             for (auto j : i.second)
+//             {
+//                 cout << j << ",  ";
+//             }
+//             cout << endl;
+//         }
+//     }
+// };
+
+// int main()
+// {
+//     int n;
+//     cout << " enter the number of nodes" << endl;
+//     cin >> n;
+
+//     int m;
+//     cout << " enter the number of edges" << endl;
+//     cin >> m;
+
+//     graph g;
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int u, v;
+//         cin >> u >> v;
+//         g.addedge(u, v, 0);
+//     }
+
+//     // printing  graph
+//     g.printadjlist();
+
+//     return 0;
+// }
+
+// // ********* graphs(using vector<vector<int>>)***********
+// #include <bits/stdc++.h>
+// #include<vector>
+// vector < vector < int >> printAdjacency(int n, int m, vector < vector < int >> & edges) {
+//     vector<int>ans[n];
+//     for(int i=0; i<m; i++){
+//         int u= edges[i][0];
+//         int v= edges[i][1];
+
+//         ans[u].push_back(v);
+//         ans[v].push_back(u);
+
+//     }
+
+//     vector<vector<int>> adj(n);
+//     for(int i=0; i<n; i++){
+//         adj[i].push_back(i);
+//         for(int j=0; j<ans[i].size(); j++)
+//         {
+//             adj[i].push_back(ans[i][j]);
+//         }
+//     }
+//     return adj;
+// }
+
+// ***************** BFS ***************
+
+// #include <bits/stdc++.h>
+
+// void prepareadj(unordered_map<int, set<int>> &adjlist, vector<pair<int, int>> &edges){
+//     for(int i= 0; i<edges.size(); i++){
+//         int u= edges[i].first;
+//         int v= edges[i].second;
+
+//         adjlist[u].insert(v);
+//         adjlist[v].insert(u);
+//     }
+// }
+
+// void bfs(unordered_map<int, set<int>> &adjlist, unordered_map<int, bool> &visited, vector<int> &ans, int node){
+//     queue<int> q;
+//     q.push(node);
+//     visited[node]=1;
+
+//     while(!q.empty()){
+//         int frontnode= q.front();
+//         q.pop();
+
+//         // store front node into ans
+//         ans.push_back(frontnode);
+
+//         // traverse all the neighbours of frontnode
+//         for(auto i: adjlist[frontnode]){
+//             if(!visited[i]){
+//                 q.push(i);
+//                 visited[i]=1;
+//             }
+//         }
+//     }
+// }
+
+// vector<int> BFS(int vertex, vector<pair<int, int>> edges)
+// {
+//     unordered_map<int, set<int>> adjlist;
+//     vector<int> ans;
+//     unordered_map<int, bool> visited;
+
+//     prepareadj(adjlist, edges);
+
+//     //traverse all components of a graph
+//     for(int i=0; i<vertex; i++){
+//         if(!visited[i]){
+//             bfs(adjlist, visited, ans, i);
+//         }
+//     }
+//     return ans;
+// }
+
+// **************** DFS ALGO *****************
+
+// #include<unordered_map>
+
+// void dfs(int node, unordered_map<int, bool>&vis, unordered_map<int, list<int>> &adj, vector<int> &component){
+//     component.push_back(node);
+//     vis[node]=true;
+
+//     for(auto i:adj[node]){
+//         if(!vis[i]){
+//             dfs(i, vis, adj, component);
+//         }
+//     }
+
+// }
+
+// vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+// {
+//     unordered_map<int, list<int>> adj;
+//     for(int i=0; i<edges.size(); i++){
+//         int u= edges[i][0];
+//         int v= edges[i][1];
+
+//         adj[u].push_back(v);
+//         adj[v].push_back(u);
+//     }
+
+//     vector<vector<int>> ans;
+//     unordered_map<int, bool> vis;
+//     for(int i=0; i<V ; i++){
+//         if(!vis[i]){
+//             vector<int> component;
+//             dfs(i, vis, adj, component);
+//             ans.push_back(component);
+//         }
+//     }return ans;
+// }
+
+//  *********  DETECTION IN UNDIRECTED GRAPH (USING BFS)  ************
+
+// #include <vector>
+// #include <queue>
+// #include <list>
+// #include <unordered_map>
+
+// using namespace std;
+
+// bool isCyclicBFS(int src, unordered_map<int, bool>& visited, unordered_map<int, list<int>>& adj) {
+//     unordered_map<int, int> parent;
+//     parent[src] = -1;
+
+//     queue<int> q;
+//     q.push(src);
+
+//     while (!q.empty()) {
+//         int front = q.front();
+//         q.pop();
+
+//         for (auto neighbour : adj[front]) {
+//             if (!visited[neighbour]) {
+//                 visited[neighbour] = true;
+//                 q.push(neighbour);
+//                 parent[neighbour] = front;
+//             }
+//             else if (neighbour != parent[front]) {
+//                 return true;
+//             }
+//         }
+//     }
+
+//     return false;
+// }
+
+// string cycleDetection(vector<vector<int>>& edges, int n, int m) {
+//     unordered_map<int, list<int>> adj;
+
+//     for (int i = 0; i < m; i++) {
+//         int u = edges[i][0];
+//         int v = edges[i][1];
+//         adj[u].push_back(v);
+//         adj[v].push_back(u);
+//     }
+
+//     unordered_map<int, bool> visited;
+//     for (int i = 0; i < n; i++) {
+//         if (!visited[i]) {
+//             visited[i] = true;
+//             if (isCyclicBFS(i, visited, adj)) {
+//                 return "Yes";
+//             }
+//         }
+//     }
+
+//     return "No";
+// }
+
+//  ***********  DETECTION IN UNDIRECTED GRAPH (USING DFS  )****************
+// #include <vector>
+// #include <queue>
+// #include <list>
+// #include <unordered_map>
+
+// using namespace std;
+
+// bool isCyclicDFS(int node, int parent, unordered_map<int, bool> &visited, unordered_map<int, list<int>> &adj)
+// {
+//     visited[node] = true;
+//     for (auto nghbr : adj[node])
+//     {
+//         if (!visited[nghbr])
+//         {
+//             bool cycledetect = isCyclicDFS(nghbr, node, visited, adj);
+//             if (cycledetect)
+//                 return true;
+//         }
+//         else if (nghbr != parent)
+//         {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
+// string cycleDetection(vector<vector<int>> &edges, int n, int m)
+// {
+//     unordered_map<int, list<int>> adj;
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int u = edges[i][0];
+//         int v = edges[i][1];
+//         adj[u].push_back(v);
+//         adj[v].push_back(u);
+//     }
+
+//     unordered_map<int, bool> visited;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (!visited[i])
+//         {
+//             visited[i] = true;
+//             if (isCyclicDFS(i, -1, visited, adj))
+//             {
+//                 return "Yes";
+//             }
+//         }
+//     }
+
+//     return "No";
+// }
+
+//  ************* Detect Cycle In A Directed Graph(DFS ALGO)  **************
+
+// #include "list"
+
+// bool chckcycl(int node, unordered_map<int, bool> &visited,
+//               unordered_map<int, bool> &dfsvisited,
+//               unordered_map<int, list<int>> &adj)
+// {
+//     visited[node] = true;
+//     dfsvisited[node] = true;
+
+//     for (auto neighbour : adj[node])
+//     {
+//         if (!visited[neighbour])
+//         {
+//             bool cyclede = chckcycl(neighbour, visited, dfsvisited, adj);
+//             if (cyclede)
+//                 return true;
+//         }
+//         else if (dfsvisited[neighbour])
+//         {
+//             return true;
+//         }
+//     }
+//     dfsvisited[node] = false;
+//     return false;
+// }
+
+// int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
+// {
+//     unordered_map<int, list<int>> adj;
+//     for (int i = 0; i < edges.size(); i++)
+//     {
+//         int u = edges[i].first;
+//         int v = edges[i].second;
+//         adj[u].push_back(v);
+//     }
+
+//     unordered_map<int, bool> visited;
+//     unordered_map<int, bool> dfsvisited;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (!visited[i])
+//         {
+//             bool cyclefound = chckcycl(i, visited, dfsvisited, adj);
+//             if (cyclefound)
+//                 return true;
+//         }
+//     }
+//     return false;
+// }
+
+//  *******  Topological Sort(using dfs) *****
+
+// #include "list"
+// #include "stack"
+// #include "unordered_map"
+// #include "vector"
+// #include "iostream"
+
+// void toposort(int node, unordered_map<int, list<int>>& adj,
+//               vector<bool>& visited, stack<int>& stack) {
+//   visited[node] = true;
+//   for (auto it : adj[node]) {
+//     if (!visited[it]) {
+//       toposort(it, adj, visited, stack);
+//     }
+//   }
+//   stack.push(node);
+// }
+
+// vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e) {
+//   unordered_map<int, list<int>> adj;
+//   for (int i = 0; i < edges.size(); i++) {
+//     int u = edges[i][0];
+//     int v = edges[i][1];
+
+//     adj[u].push_back(v);
+//   }
+//   vector<bool> visited(v);
+//   stack<int> st;
+//   for (int i = 0; i < v; i++) {
+//     if (!visited[i]) {
+//       toposort(i, adj, visited, st);
+//     }
+//   }
+//   vector<int> ansfinal;
+//   while (!st.empty()) {
+//     ansfinal.push_back(st.top());
+//     st.pop();
+//   }
+//   return ansfinal;
+// }
+
+// ******   TOPOGRAPHICAL SORT(bfs) KAHN'S ALGORITHM  **********
+
+// #include <bits/stdc++.h>
+// vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e) {
+//   // Write your code here
+//   unordered_map<int, list<int>> adj;
+//   for (int i = 0; i < e; i++) {
+//     int u = edges[i][0];
+//     int v = edges[i][1];
+//     adj[u].push_back(v);
+//   }
+
+//   vector<int> indegree(v);
+//   for (auto i : adj) {
+//     for (auto j : i.second) {
+//       indegree[j]++;
+//     }
+//   }
+
+//   queue<int> q;
+//   for (int i = 0; i < v; i++) {
+//     if (indegree[i] == 0) {
+//       q.push(i);
+//     }
+//   }
+
+//   vector<int> ans;
+//   while (!q.empty()) {
+//     int front = q.front();
+//     q.pop();
+
+//     ans.push_back(front);
+
+//     for (auto nghbr : adj[front]) {
+//       indegree[nghbr]--;
+//       if (indegree[nghbr] == 0) {
+//         q.push(nghbr);
+//       }
+//     }
+//   }
+
+//   return ans;
+// }
+
+//  *********   CYCLE DETECTION USING BFS  *****************
+// #include <bits/stdc++.h>
+// int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges) {
+
+//   unordered_map<int, list<int>> adj;
+//   for (int i = 0; i < edges.size(); i++) {
+//     int u = edges[i].first - 1;
+//     int v = edges[i].second - 1;
+//     adj[u].push_back(v);
+//   }
+
+//   vector<int> indegree(n);
+//   for (auto i : adj) {
+//     for (auto j : i.second) {
+//       indegree[j]++;
+//     }
+//   }
+
+//   queue<int> q;
+//   for (int i = 0; i < n; i++) {
+//     if (indegree[i] == 0) {
+//       q.push(i);
+//     }
+//   }
+//   int count = 0;
+//   while (!q.empty()) {
+//     int front = q.front();
+//     q.pop();
+
+//     count++;
+
+//     for (auto nghbr : adj[front]) {
+//       indegree[nghbr]--;
+//       if (indegree[nghbr] == 0) {
+//         q.push(nghbr);
+//       }
+//     }
+//   }
+//   if (count == n) {
+//     return false;
+//   }
+//   return true;
+// }
+
+//  ********    SHORTEST PATH IN AN UNDIRECTED GRAPH    *******
+
+// #include "unordered_map"
+// #include "list"
+
+// vector<int> shortestPath(vector<pair<int, int>> edges, int n, int m, int s,
+//                          int t) {
+
+//   unordered_map<int, list<int>> adj;
+//   for (int i = 0; i < edges.size(); i++) {
+//     int u = edges[i].first;
+//     int v = edges[i].second;
+
+//     adj[u].push_back(v);
+//     adj[v].push_back(u);
+//   }
+
+//   unordered_map<int, bool> visited;
+//   unordered_map<int, int> parent;
+//   queue<int> q;
+//   q.push(s);
+//   visited[s] = true;
+//   parent[s] = -1;
+//   while (!q.empty()) {
+//     int front = q.front();
+//     q.pop();
+//     for (auto it : adj[front]) {
+//       if (!visited[it]) {
+//         q.push(it);
+//         visited[it] = true;
+//         parent[it] = front;
+//       }
+//     }
+//   }
+
+//   // prepare the shortest path
+//   vector<int> ans;
+//   int currentnode = t;
+//   while (currentnode != s) {
+//     ans.push_back(currentnode);
+//     currentnode = parent[currentnode];
+//   }
+//   ans.push_back(currentnode);
+//   reverse(ans.begin(), ans.end());
+
+//   return ans;
+// }
+
+//  ******* SHORTEST PATH IN A DIRECTED GRAPH   ********
+
+// #include <iostream>
+// #include <stack>
+// #include <vector>
+// #include <unordered_map>
+// #include <list>
+// using namespace std;
+
+// class graph
+// {
+// public:
+//     unordered_map<int, list<pair<int, int>>> adj;
+
+//     void addedge(int u, int v, int weight)
+//     {
+//         pair<int, int> p = make_pair(v, weight);
+//         adj[u].push_back(p);
+//     }
+//     void printadj()
+//     {
+//         for (auto i : adj)
+//         {
+//             cout << i.first << " ->";
+//             for (auto j : i.second)
+//             {
+//                 cout << "(" << j.first << ", " << j.second << "), ";
+//             }
+//             cout << endl;
+//         }
+//     }
+
+//     void dfs(int node, unordered_map<int, bool> &visited, stack<int> &topo)
+//     {
+//         visited[node] = true;
+//         for (auto nghbr : adj[node])
+//         {
+//             if (!visited[nghbr.first])
+//             {
+//                 dfs(nghbr.first, visited, topo);
+//             }
+//         }
+//         topo.push(node);
+//     }
+
+//     void getshorttestpath(int src, vector<int> &dist, stack<int> &topo)
+//     {
+//         dist[src] = 0;
+//         while (!topo.empty())
+//         {
+//             int top = topo.top();
+//             topo.pop();
+//             if (dist[top] != INT_MAX)
+//             {
+//                 for (auto i : adj[top])
+//                 {
+//                     if (dist[top] + i.second < dist[i.first])
+//                     {
+//                         dist[i.first] = dist[top] + i.second;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// };
+
+// int main()
+// {
+//     graph g;
+//     g.addedge(0, 1, 5);
+//     g.addedge(0, 2, 3);
+//     g.addedge(1, 2, 2);
+//     g.addedge(1, 3, 6);
+//     g.addedge(2, 3, 7);
+//     g.addedge(2, 4, 4);
+//     g.addedge(2, 5, 2);
+//     g.addedge(3, 4, -1);
+//     g.addedge(4, 5, -2);
+//     g.printadj();
+
+//     // topological sorting
+//     int n = 6;
+//     unordered_map<int, bool> visited;
+//     stack<int> s;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (!visited[i])
+//         {
+//             g.dfs(i, visited, s);
+//         }
+//     }
+
+//     int src = 1;
+//     vector<int> dist(n);
+//     for (int i = 0; i < n; i++)
+//     {
+//         dist[i] = INT_MAX;
+//     }
+//     g.getshorttestpath(src, dist, s);
+//     cout << "answer is: " << endl;
+//     for (int i = 0; i < dist.size(); i++)
+//     {
+//         cout << dist[i] << " ";
+//     }
+//     cout << endl;
+
+//     return 0;
+// }
+
+//  **********  DIJKSTRA'S ALGORITHM    ************
+
+// #include <bits/stdc++.h>
+
+// vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges,
+//                      int source) {
+//   // CREATE adjency list
+//   unordered_map<int, list<pair<int, int>>> adj;
+//   for (int i = 0; i < edges; i++) {
+//     int u = vec[i][0];
+//     int v = vec[i][1];
+//     int w = vec[i][2];
+
+//     adj[u].push_back(make_pair(v, w));
+//     adj[v].push_back(make_pair(u, w));
+//   }
+
+//   // creation of distance array with infinite value initially
+//   vector<int> dist(vertices);
+//   for (int i = 0; i < vertices; i++)
+//     dist[i] = INT_MAX;
+
+//   // creation of set on the basis (distance, node)
+//   set<pair<int, int>> st;
+
+//   // initialise distance and set with source node
+//   dist[source] = 0;
+//   st.insert(make_pair(0, source));
+
+//   while (!st.empty()) {
+//       // fetch top record
+//     auto top= *(st.begin());
+
+//     int nodedistance= top.first;
+//     int topnode= top.second;
+//     st.erase(st.begin());
+
+//     // traverse on neighbours
+//     for(auto nghbr: adj[topnode])
+//     {
+//         if(nodedistance+nghbr.second < dist[nghbr.first])
+//         {
+//             auto record= st.find(make_pair(dist[nghbr.first], nghbr.first));
+
+//             // if record is found then erase it
+//             if(record!=st.end()){
+//                 st.erase(record);
+//             }
+
+//             // dsitance update
+//             dist[nghbr.first]= nodedistance+nghbr.second;
+//             // record
+//             st.insert(make_pair(dist[nghbr.first], nghbr.first));
+//         }
+//     }
+//   }
+//   return dist;
+// }
+
+//  **********  PRIMS ALGORITHM     ************
+
+// #include <bits/stdc++.h>
+
+// vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
+// {
+//     unordered_map<int, list<pair<int, int>>> adj;
+//     for (int i = 0; i < g.size(); i++)
+//     {
+//         int u = g[i].first.first;
+//         int v = g[i].first.second;
+//         int w = g[i].second;
+//         adj[u].push_back(make_pair(v, w));
+//         adj[v].push_back(make_pair(u, w));
+//     }
+
+//     vector<int> key(n + 1);
+//     vector<int> parent(n + 1);
+//     vector<bool> mst(n + 1);
+
+//     for (int i = 0; i <= n; i++)
+//     {
+//         key[i] = INT_MAX;
+//         mst[i] = false;
+//         parent[i] = -1;
+//     }
+
+//     key[1] = 0;
+//     parent[1] = -1;
+
+//     for (int i = 1; i < n; i++)
+//     {
+//         int mini = INT_MAX;
+//         int u;
+//         // find the min wali node
+//         for (int v = 1; v <= n; v++)
+//         {
+//             if (mst[v] == false && key[v] < mini)
+//             {
+//                 u = v;
+//                 mini = key[v];
+//             }
+//         }
+
+//         // mark min node as true
+//         mst[u] = true;
+
+//         // check its adjacent nodes
+//         for (auto it : adj[u])
+//         {
+//             int v = it.first;
+//             int w = it.second;
+//             if (mst[v] == false && w < key[v])
+//             {
+//                 parent[v] = u;
+//                 key[v] = w;
+//             }
+//         }
+//     }
+
+//     vector<pair<pair<int, int>, int>> result;
+//     for (int i = 2; i <= n; i++)
+//     {
+//         result.push_back({{parent[i], i}, key[i]});
+//     }
+
+//     return result;
+// }
+
+//  ********* DISJOINT SETS AND KRUSKAL'S ALGORTHM  *************
+
+// #include "algorithm"
+
+// bool cmp(vector<int> &a, vector<int> &b) { return a[2] < b[2]; }
+
+// void makeset(vector<int> &parent, vector<int> &rank, int n) {
+//   for (int i = 0; i <= n; i++) {
+//     parent[i] = i;
+//     rank[i] = 0;
+//   }
+// }
+
+// int findparent(vector<int> &parent, int node) {
+//   if (parent[node] == node) {
+//     return node;
+//   }
+
+//   return parent[node] = findparent(parent, parent[node]);
+// }
+
+// void unionset(int u, int v, vector<int> &parent, vector<int>&rank) {
+//     u = findparent(parent, u);
+//     v=findparent(parent, v);
+
+//     if(rank[u] < rank[v]){
+//     parent[u] = v;
+//     }
+//     else if (rank[v]< rank[u])
+//     {
+//     parent[v] = u;
+//     }
+//     else {
+//     parent[v] = u;
+//     rank[u]++;
+//     }
+// }
+
+// int minimumSpanningTree(vector<vector<int>> &edges, int n) {
+//   sort(edges.begin(), edges.end(), cmp);
+//   vector<int> parent(n);
+//   vector<int> rank(n);
+//   makeset(parent, rank, n);
+
+//   int minweight = 0;
+
+//   for (int i = 0; i < edges.size(); i++) {
+//     int u = findparent(parent, edges[i][0]);
+//     int v = findparent(parent, edges[i][1]);
+//     int wt = edges[i][2];
+
+//     if (u != v) {
+//       minweight += wt;
+//       unionset(u, v, parent, rank);
+//     }
+//   }
+//   return minweight;
+// }
+
+//  *********** BRIDGES IN A GRAPH(TARJANS ALGORITHM)***********
+
+// #include "bits/stdc++.h"
+
+// void dfs(int node, int parent, int &timer, vector<int> &disc, vector<int> &low,
+//          vector<vector<int>> &result, unordered_map<int, list<int>> &adj,
+//          unordered_map<int, bool> &visited) {
+
+//   visited[node] = true;
+//   disc[node] = low[node] = timer++;
+
+//   for (auto nghbr : adj[node]) {
+//     if (nghbr == parent)
+//       continue;
+//     if (!visited[nghbr]) {
+//       dfs(nghbr, node, timer, disc, low, result, adj, visited);
+//       low[node] = min(low[node], low[nghbr]);
+//     }
+//     if (low[nghbr] > disc[node]) {
+//       vector<int> ans;
+//       ans.push_back(node);
+//       ans.push_back(nghbr);
+//       result.push_back(ans);
+//     } else {
+//       low[node] = min(low[node], disc[nghbr]);
+//     }
+//   }
+// }
+
+// vector<vector<int>> findBridges(vector<vector<int>> &edges, int v, int e) {
+//   // adj list
+//   unordered_map<int, list<int>> adj;
+
+//   for (int i = 0; i < edges.size(); i++) {
+//     int u = edges[i][0];
+//     int v = edges[i][1];
+
+//     adj[u].push_back(v);
+//     adj[v].push_back(u);
+//   }
+
+//   int timer = 0;
+//   vector<int> disc(v);
+//   vector<int> low(v);
+//   int parent = -1;
+//   unordered_map<int, bool> visited;
+
+//   for (int i = 0; i < v; i++) {
+//     disc[i] = -1;
+//     low[i] = -1;
+//   }
+
+//   vector<vector<int>> result;
+//   // dfs
+//   for (int i = 0; i < v; i++) {
+//     if (!visited[i]) {
+//       dfs(i, parent, timer, disc, low, result, adj, visited);
+//     }
+//   }
+//   return result;
+// }
+
+//  **********  ARTICULATION POINT  **************
+
+// #include <iostream>
+// #include <unordered_map>
+// #include <list>
+// #include <vector>
+// using namespace std;
+
+// void dfs(int node, int parent, vector<int> &disc, vector<int> &low, unordered_map<int, bool> &vis, unordered_map<int, list<int>> &adj, vector<int> &ap, int &timer)
+// {
+//     vis[node] = true;
+//     disc[node] = low[node] = timer++;
+//     int child = 0;
+
+//     for (auto nghbr : adj[node])
+//     {
+//         if (nghbr == parent)
+//             continue;
+//         if (!vis[nghbr])
+//         {
+//             dfs(nghbr, node, disc, low, vis, adj, ap, timer);
+//             low[node] = min(low[node], low[nghbr]);
+
+//             // checking for an articulation point
+//             if (low[nghbr] >= disc[node] && parent != -1)
+//             {
+//                 ap[node] = true;
+//             }
+//             child++;
+//         }
+//         else
+//         {
+//             low[node] = min(low[node], disc[nghbr]);
+//         }
+//     }
+//     if (parent == -1 && child > 1)
+//     {
+//         ap[node] = 1;
+//     }
+// }
+
+// int main()
+// {
+
+//     int n = 5;
+//     int e = 5;
+
+//     vector<pair<int, int>> edges;
+//     edges.push_back({0, 3});
+//     edges.push_back({3, 4});
+//     edges.push_back({0, 4});
+//     edges.push_back({0, 1});
+//     edges.push_back({1, 2});
+
+//     // adj list
+//     unordered_map<int, list<int>> adj;
+//     for (int i = 0; i < edges.size(); i++)
+//     {
+//         int u = edges[i].first;
+//         int v = edges[i].second;
+//         adj[u].push_back(v);
+//         adj[v].push_back(u);
+//     }
+
+//     int timer = 0;
+//     vector<int> disc(n);
+//     vector<int> low(n);
+//     unordered_map<int, bool> vis;
+//     vector<int> ap(n, 0);
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         disc[i] = -1;
+//         low[i] = -1;
+//     }
+
+//     // dfs
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (!vis[i])
+//         {
+//             dfs(i, -1, disc, low, vis, adj, ap, timer);
+//         }
+//     }
+
+//     // print ap
+//     cout << " articulation points are as follows" << endl;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (ap[i] != 0)
+//         {
+//             cout << i << " ";
+//         }
+//     }
+//     cout << endl;
+
+//     return 0;
+// }
+
+//  ***********     KOSARAJU'S ALGORITHM    ***************
+// #include "algorithm"
+// #include "bits/stdc++.h"
+
+// void dfs(unordered_map<int, list<int>> adj, unordered_map<int, bool> &visited,
+//          int node, stack<int> &stackk)
+// {
+//     visited[node] = true;
+//     for (auto nghbr : adj[node])
+//     {
+//         if (!visited[nghbr])
+//         {
+//             dfs(adj, visited, nghbr, stackk);
+//         }
+//     }
+//     stackk.push(node);
+// }
+
+// void revdfs(int node, unordered_map<int, bool> &vis,
+//             unordered_map<int, list<int>> &adj)
+// {
+//     vis[node] = true;
+//     for (auto nghbr : adj[node])
+//     {
+//         if (!vis[nghbr])
+//         {
+//             revdfs(nghbr, vis, adj);
+//         }
+//     }
+// }
+
+// int stronglyConnectedComponents(int v, vector<vector<int>> &edges)
+// {
+
+//     unordered_map<int, list<int>> adj;
+//     for (int i = 0; i < edges.size(); i++)
+//     {
+//         int u = edges[i][0];
+//         int v = edges[i][1];
+
+//         adj[u].push_back(v);
+//     }
+
+//     // topo sort
+//     unordered_map<int, bool> visited;
+//     stack<int> stackk;
+//     for (int i = 0; i < v; i++)
+//     {
+//         if (!visited[i])
+//         {
+//             dfs(adj, visited, i, stackk);
+//         }
+//     }
+
+//     // create a transpose graph
+//     unordered_map<int, list<int>> transpose;
+//     for (int i = 0; i < v; i++)
+//     {
+//         visited[i] = false;
+//         for (auto nghbr : adj[i])
+//         {
+//             transpose[nghbr].push_back(i);
+//         }
+//     }
+
+//     // dfs using above ordering
+//     int count = 0;
+//     while (!stackk.empty())
+//     {
+//         int top = stackk.top();
+//         stackk.pop();
+//         if (!visited[top])
+//         {
+//             count++;
+//             revdfs(top, visited, transpose);
+//         }
+//     }
+//     return count;
+// }
 
 
 
+//  *********** BELMANN FORD ALGORITHM  ************
+// #include <bits/stdc++.h>
+// int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges) {
 
+//   vector<int> dist(n + 1, 1e9);
+//   dist[src] = 0;
 
+//   for (int i = 1; i <= n; i++) {
+//     // traverse on edge list
+//     for (int j = 0; j < m; j++) {
+//       int u = edges[j][0];
+//       int v = edges[j][1];
+//       int wt = edges[j][2];
 
+//       if (dist[u] != 1e9 && ((dist[u] + wt) < dist[v])) {
+//         dist[v] = dist[u] + wt;
+//       }
+//     }
+//   }
+//   return dist[dest];
 
+//   // check for negative cycle
+//   // bool flag= 0;
+//   // for (int j = 0; j < m; j++) {
+//   //     int u = edges[j][0];
+//   //     int v = edges[j][1];
+//   //     int wt = edges[j][2];
+
+//   //     if (dist[u] != INT_MAX && ((dist[u] + wt) < dist[v])) {
+//   //         flag= 1;
+//   //     }
+//   //   }
+
+//   //   if(flag==0)
+//   //   {
+//   //       return dist[dest];
+//   //   }
+//   //   return -1;
+// }
