@@ -9769,8 +9769,6 @@
 //     return count;
 // }
 
-
-
 //  *********** BELMANN FORD ALGORITHM  ************
 // #include <bits/stdc++.h>
 // int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges) {
@@ -9809,4 +9807,1906 @@
 //   //       return dist[dest];
 //   //   }
 //   //   return -1;
+// }
+
+//  *********** DYNAMIC PROGRAMMING *************
+//  USING TOP-DOWN APPROACH
+// #include "vector"
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int fib(int n, vector<int> &dp)
+// {
+//     if (n <= 1)
+//         return n;
+//     if (dp[n] != -1)
+//         return dp[n];
+//     dp[n] = fib((n - 1), dp) + fib((n - 2), dp);
+//     return dp[n];
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> dp(n + 1);
+//     for (int i = 0; i < n + 1; i++)
+//     {
+//         dp[i] = -1;
+//     }
+
+//     cout << fib(n, dp) << endl;
+
+//     return 0;
+// }
+
+// ********Min Cost Climbing Stairs******
+// class Solution {
+// public:
+// int solve(vector<int> &cost, int n, vector<int> &dp){
+//     //base case
+//     if(n==0)    return cost[0];
+//     if(n==1)    return cost[1];
+
+//     int ans= cost[n]+min(solve(cost, n-1,dp), solve(cost, n-2,dp));
+//     return  ans;
+// }
+
+// int solve2(vector<int> &cost, int n, vector<int> &dp){
+//     //base case
+//     if(n==0)    return cost[0];
+//     if(n==1)    return cost[1];
+
+//     if(dp[n]!=-1){
+//         return dp[n];
+//     }
+
+//     dp[n]= cost[n]+min(solve2(cost, n-1,dp), solve2(cost, n-2,dp));
+//     return  dp[n];
+// }
+
+// int solve3(vector<int>&cost, int n){
+//     vector<int> dp(n+1);
+//     dp[0]=cost[0];
+//     dp[1]=cost[1];
+
+//     for(int i=2; i<n; i++)
+//     {
+//         dp[i]=cost[i]+min(dp[i-1],dp[i-2]);
+//     }
+//     return min(dp[n-1], dp[n-2]);
+
+// }
+
+// int solve4(vector<int>&cost, int n){
+//     int prev2= cost[0];
+//     int prev1= cost[1];
+//     for(int i=2; i<n; i++)
+//     {
+//        int curr= cost[i]+min(prev1, prev2);
+//        prev2= prev1; prev1= curr;
+
+//     }
+//     return min(prev1, prev2);
+
+// }
+
+//     int minCostClimbingStairs(vector<int>& cost) {
+//         // int  n=cost.size();
+//         // vector<int>dp(n+1, -1);
+//         // int ans= min(solve2(cost, n-1, dp), solve2(cost, n-2, dp));
+//         // return ans;
+
+//         // int  n=cost.size();
+//         // return solve3(cost, n);
+
+//          int  n=cost.size();
+//         return solve4(cost, n);
+//     }
+// };
+
+//  ************    MINIUM ELEMENTS (COUNTING COINS)    ************
+
+// #include <bits/stdc++.h>
+
+// int solve(vector<int> &num, int x) {
+//   if (x == 0)
+//     return 0;
+//   if (x < 0)
+//     return INT_MAX;
+
+//   int mini = INT_MAX;
+//   for (int i = 0; i < num.size(); i++) {
+//     int ans = solve(num, x - num[i]);
+//     if (ans != INT_MAX)
+//       mini = min(mini, 1 + ans);
+//   }
+//   return mini;
+// }
+
+// int solvemem(vector<int> &num, int x, vector<int> &dp) {
+//   if (x == 0)
+//     return 0;
+//   if (x < 0)
+//     return INT_MAX;
+
+//   if (dp[x] != -1)
+//     return dp[x];
+
+//   int mini = INT_MAX;
+//   for (int i = 0; i < num.size(); i++) {
+//     int ans = solve(num, x - num[i]);
+//     if (ans != INT_MAX)
+//       mini = min(mini, 1 + ans);
+//   }
+//   dp[x] = mini;
+//   return mini;
+// }
+
+// int solvetabulation(vector<int> &num, int x) {
+//   vector<int> dp(x + 1, INT_MAX);
+//   dp[0] = 0;
+//   for (int i = 1; i <= x; i++) {
+//     for (int j = 0; j < num.size(); j++) {
+//       if (i - num[j] >= 0 && dp[i - num[j]] != INT_MAX) {
+//         dp[i] = min(dp[i], 1 + dp[i - num[j]]);
+//       }
+//     }
+//   }
+
+//   if (dp[x] == INT_MAX)
+//     return -1;
+//   return dp[x];
+// }
+
+// int minimumElements(vector<int> &num, int x) {
+//   // int ans = solve(num, x);
+//   // if (ans == INT_MAX)
+//   //   return -1;
+//   // return ans;
+
+//   // vector<int> dp(x + 1, -1);
+//   // int ans = solvemem(num, x, dp);
+//   // if (ans == INT_MAX) {
+//   //   return -1;
+//   // } else {
+//   //   return ans;
+//   // }
+
+//   return solvetabulation(num, x);
+// }
+
+//  ************    MAXIMUM SUM OF NON-ADJACENT ELEMENTS    ****************
+// #include <bits/stdc++.h>
+
+// int solve(vector<int> &nums, int n)
+// {
+//     if (n < 0)
+//         return 0;
+//     if (n == 0)
+//         return nums[0];
+
+//     int incl = solve(nums, n - 2) + nums[n];
+//     int excl = solve(nums, n - 1) + 0;
+
+//     return max(incl, excl);
+// }
+
+// int solvemem(vector<int> &nums, int n, vector<int> &dp)
+// {
+//     if (n == 0)
+//         return nums[0];
+//     if (n < 0)
+//         return 0;
+
+//     if (dp[n] != -1)
+//         return dp[n];
+//     int incl = solve(nums, n - 2) + nums[n];
+//     int excl = solve(nums, n - 1) + 0;
+//     dp[n] = max(incl, excl);
+//     return dp[n];
+// }
+
+// int solvetab(vector<int> &nums)
+// {
+//     int n = nums.size();
+//     vector<int> dp(n, 0);
+
+//     dp[0] = nums[0];
+
+//     for (int i = 1; i < n; i++)
+//     {
+//         int incl = dp[i - 2] + nums[i];
+//         int excl = dp[i - 1] + 0;
+//         dp[i] = max(incl, excl);
+//     }
+//     return dp[n - 1];
+// }
+
+// int solvewithSpaceOptimisation(vector<int> &nums)
+// {
+//     int n = nums.size();
+
+//     int prev2 = 0;
+//     int prev1 = nums[0];
+
+//     for (int i = 1; i < n; i++)
+//     {
+//         int incl = prev2 + nums[i];
+//         int excl = prev1 + 0;
+//         int ans = max(incl, excl);
+//         prev2 = prev1;
+//         prev1 = ans;
+//     }
+//     return prev1;
+// }
+
+// int maximumNonAdjacentSum(vector<int> &nums)
+// {
+//     //   int n = nums.size();
+//     //   return solve(nums, n - 1);
+
+//     //   int n = nums.size();
+//     //   vector<int> dp(n, -1);
+//     //   return solvemem(nums, n - 1, dp);
+
+//     //   return solvetab(nums);
+
+//     return solvewithSpaceOptimisation(nums);
+// }
+
+//  **************HOUSE ROBBERY PROBLEM ****************
+// #include <bits/stdc++.h>
+
+// long long int solve(vector<int> &nums)
+// {
+//     int n = nums.size();
+
+//     long long int prev2 = 0;
+//     long long int prev1 = nums[0];
+
+//     for (int i = 1; i < n; i++)
+//     {
+//         long long int incl = prev2 + nums[i];
+//         long long int excl = prev1 + 0;
+//         long long int ans = max(incl, excl);
+//         prev2 = prev1;
+//         prev1 = ans;
+//     }
+//     return prev1;
+// }
+
+// long long int houseRobber(vector<int> &valueInHouse)
+// {
+//     // Write your code here.
+//     int n = valueInHouse.size();
+//     if (n == 1)
+//         return valueInHouse[0];
+
+//     vector<int> first, second;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (i != n - 1)
+//             first.push_back(valueInHouse[i]);
+//         if (i != 0)
+//             second.push_back(valueInHouse[i]);
+//     }
+
+//     return max(solve(first), solve(second));
+// }
+
+// ********** CUTTING ROD INTO SEGMENTS***********
+// #include <bits/stdc++.h>
+// int solve(int n, int x, int y, int z) {
+//   if (n == 0)
+//     return 0;
+//   if (n < 0)
+//     return INT_MIN;
+//   int a = solve(n - x, x, y, z) + 1;
+//   int b = solve(n - y, x, y, z) + 1;
+//   int c = solve(n - z, x, y, z) + 1;
+
+//   return max(a, max(b, c));
+// }
+
+// int solvemem(int n, int x, int y, int z, vector<int> &dp) {
+//   if (n == 0)
+//     return 0;
+//   if (n < 0)
+//     return INT_MIN;
+
+//   if (dp[n] != -1)
+//     return dp[n];
+//   int a = solvemem(n - x, x, y, z, dp) + 1;
+//   int b = solvemem(n - y, x, y, z, dp) + 1;
+//   int c = solvemem(n - z, x, y, z, dp) + 1;
+
+//   dp[n] = max(a, max(b, c));
+//   return dp[n];
+// }
+
+// int solvetab(int n, int x, int y, int z) {
+//   vector<int> vctr(n + 1, INT_MIN);
+//   vctr[0] = 0;
+//   for (int i = 1; i <= n; i++) {
+//     if (i - x >= 0)
+//       vctr[i] = max(vctr[i], vctr[i - x] + 1);
+
+//     if (i - y >= 0)
+//       vctr[i] = max(vctr[i], vctr[i - y] + 1);
+
+//     if (i - z >= 0)
+//       vctr[i] = max(vctr[i], vctr[i - z] + 1);
+//   }
+//   if (vctr[n] < 0)
+//     return 0;
+//   else
+//     return vctr[n];
+// }
+
+// int cutSegments(int n, int x, int y, int z) {
+//   // recursion
+//   //   int ans = solve(n, x, y, z);
+//   //   if (ans < 0)
+//   //     return 0;
+//   //   else
+//   //     return ans;
+
+//   // recursion + memoisation
+//   // vector<int> dp(n + 1, -1);
+//   // int ans = solvemem(n, x, y, z, dp);
+//   // return (ans < 0) ? 0 : ans;
+
+//   // tabulation method
+//   return solvetab(n, x, y, z);
+
+//   // space optimisation
+
+// }
+
+// ***************COUNTING DERANGEMENTS***********
+// #define MOD 1000000007
+// #include "bits/stdc++.h"
+
+// long long solvemem(int n, vector<long long int> &dp) {
+//   if (n == 1)
+//     return 0;
+//   if (n == 2)
+//     return 1;
+
+//   if (dp[n] != -1)
+//     return dp[n];
+
+//   dp[n] = (((n - 1) % MOD) *
+//            ((solvemem(n - 1, dp) % MOD) + (solvemem(n - 2, dp) % MOD)) % MOD) %
+//           MOD;
+
+//   return dp[n];
+// }
+
+// long long int solvebytab(int n) {
+//   vector<long long int> dp(n + 1, -1);
+
+//   dp[1] = 0;
+//   dp[2] = 1;
+//   for (int i = 3; i <= n; i++) {
+//     long long int first = dp[i - 1] % MOD;
+//     long long int second = dp[i - 2] % MOD;
+//     long long int sum = (first + second) % MOD;
+//     long long int ans = ((i - 1) * sum) % MOD;
+//     dp[i] = ans;
+//   }
+//   return dp[n];
+// }
+
+// long long int spaceoptimisation(int n) {
+//   long long int prev2 = 0;
+//   long long int prev1 = 1;
+//   for (int i = 3; i <= n; i++) {
+//     long long int first = prev1 % MOD;
+//     long long int second = prev2 % MOD;
+//     long long int sum = (first + second) % MOD;
+//     long long int ans = ((i - 1) * sum) % MOD;
+//     prev2 = prev1;
+//     prev1 = ans;
+//   }
+//   return prev1;
+// }
+
+// long long int countDerangements(int n) {
+//   // recursion + memoisation
+//   // vector<long long int> dp(n + 1, -1);
+//   // return solvemem(n, dp);
+
+//   // tabulation
+//   // return solvebytab(n);
+
+//   // space optimisation
+//   return spaceoptimisation(n);
+// }
+
+//  PAINTING FENCE ALGORITHM
+// #include <bits/stdc++.h>
+// #define MOD 1000000007
+
+// int add(int a, int b) { return (a % MOD + b % MOD) % MOD; }
+
+// int mul(int a, int b) { return ((a % MOD) * 1LL * b % MOD) % MOD; }
+
+// int solverec(int n, int k) {
+//   if (n == 1)
+//     return k;
+//   if (n == 2)
+//     return add(k, mul(k, k - 1));
+
+//   int ans = add(mul(solverec(n - 2, k), k - 1), mul(solverec(n - 1, k), k - 1));
+//   return ans;
+// }
+
+// int solvemem(int n, int k, vector<int> &dp) {
+//   if (n == 1)
+//     return k;
+//   if (n == 2)
+//     return add(k, mul(k, k - 1));
+
+//   if (dp[n] != -1)
+//     return dp[n];
+//   dp[n] = add(mul(solvemem(n - 2, k, dp), k - 1),
+//               mul(solvemem(n - 1, k, dp), k - 1));
+//   return dp[n];
+// }
+
+// int solvetab(int n, int k) {
+//   vector<int> dp(n + 1, -1);
+//   dp[1] = k;
+//   dp[2] = add(k, mul(k, k - 1));
+//   for (int i = 3; i <= n; i++) {
+//     dp[i] = add(mul(dp[i - 2], k - 1), mul(dp[i - 1], k - 1));
+//   }
+//   return dp[n];
+// }
+
+// int solvespaceoptimise(int n, int k) {
+//   int prev2 = k;
+//   int prev1 = add(k, mul(k, k - 1));
+//   for (int i = 3; i <= n; i++) {
+//     int ans = add(mul(prev2, k - 1), mul(prev1, k - 1));
+//     prev2 = prev1;
+//     prev1 = ans;
+//   }
+//   return prev1;
+// }
+
+// int numberOfWays(int n, int k) {
+//   // using recursion that gives TLE
+//   // return solverec(n, k);
+
+//   // using recursion+ memoisation
+//   // vector<int> dp(n + 1, -1);
+//   // return solvemem(n, k, dp);
+
+//   // using tabulation method
+//   return solvetab(n, k);
+
+//   // using space optimisation
+//   return solvespaceoptimise(n, k);
+// }
+
+//  **********  2-D DP (KNAPSACK PROBLEM)   **************
+// #include <bits/stdc++.h>
+
+// int solve(vector<int> &weight, vector<int> &value, int index, int capacity)
+// {
+//     //	base case
+//     // if there is only 1 item to steal, then just compare its weight with the
+//     // knapsack capacity
+//     if (index == 0)
+//     {
+//         if (weight[index] <= capacity)
+//             return value[0];
+//         else
+//             return 0;
+//     }
+
+//     int include = 0;
+//     if (weight[index] <= capacity)
+//     {
+//         include = value[index] +
+//                   solve(weight, value, index - 1, capacity - weight[index]);
+//     }
+//     int exclude = 0 + solve(weight, value, index - 1, capacity);
+//     int ans = max(include, exclude);
+//     return ans;
+// }
+
+// int solvemem(vector<int> &weight, vector<int> &value, int index, int capacity,
+//              vector<vector<int>> &dp)
+// {
+//     //	base case
+//     // if there is only 1 item to steal, then just compare its weight with the
+//     // knapsack capacity
+//     if (index == 0)
+//     {
+//         if (weight[index] <= capacity)
+//             return value[0];
+//         else
+//             return 0;
+//     }
+
+//     if (dp[index][capacity] != -1)
+//         return dp[index][capacity];
+
+//     int include = 0;
+//     if (weight[index] <= capacity)
+//     {
+//         include = value[index] +
+//                   solvemem(weight, value, index - 1, capacity - weight[index], dp);
+//     }
+//     int exclude = 0 + solvemem(weight, value, index - 1, capacity, dp);
+//     dp[index][capacity] = max(include, exclude);
+//     return dp[index][capacity];
+// }
+
+// int solvetab(vector<int> &weight, vector<int> &value, int n, int capacity)
+// {
+//     vector<vector<int>> dp(n, vector<int>(capacity + 1, 0));
+
+//     for (int w = weight[0]; w <= capacity; w++)
+//     {
+//         if (weight[0] <= capacity)
+//         {
+//             dp[0][w] = value[0];
+//         }
+//         else
+//         {
+//             dp[0][w] = 0;
+//         }
+//     }
+
+//     for (int index = 1; index < n; index++)
+//     {
+//         for (int w = 0; w <= capacity; w++)
+//         {
+//             int include = 0;
+//             if (weight[index] <= w)
+//             {
+//                 include = value[index] + dp[index - 1][w - weight[index]];
+//             }
+//             int exclude = 0 + dp[index - 1][w];
+//             dp[index][w] = max(include, exclude);
+//         }
+//     }
+//     return dp[n - 1][capacity];
+// }
+
+// int solvebyoptimisation(vector<int> &weight, vector<int> &value, int n,
+//                         int capacity)
+// {
+//     vector<int> prev(capacity + 1, 0);
+//     vector<int> curr(capacity + 1, 0);
+
+//     for (int w = weight[0]; w <= capacity; w++)
+//     {
+//         if (weight[0] <= capacity)
+//         {
+//             prev[w] = value[0];
+//         }
+//         else
+//         {
+//             prev[w] = 0;
+//         }
+//     }
+
+//     for (int index = 1; index < n; index++)
+//     {
+//         for (int w = 0; w <= capacity; w++)
+//         {
+//             int include = 0;
+//             if (weight[index] <= w)
+//             {
+//                 include = value[index] + prev[w - weight[index]];
+//             }
+//             int exclude = 0 + prev[w];
+//             curr[w] = max(include, exclude);
+//         }
+//         prev = curr;
+//     }
+//     return prev[capacity];
+// }
+
+// int solvebyevenmoreoptimisation(vector<int> &weight, vector<int> &value, int n,
+//                                 int capacity)
+// {
+//     vector<int> prev(capacity + 1, 0);
+//     vector<int> curr(capacity + 1, 0);
+
+//     for (int w = weight[0]; w <= capacity; w++)
+//     {
+//         if (weight[0] <= capacity)
+//         {
+//             curr[w] = value[0];
+//         }
+//         else
+//         {
+//             curr[w] = 0;
+//         }
+//     }
+
+//     for (int index = 1; index < n; index++)
+//     {
+//         for (int w = capacity; w >= 0; w--)
+//         {
+//             int include = 0;
+//             if (weight[index] <= w)
+//             {
+//                 include = value[index] + curr[w - weight[index]];
+//             }
+//             int exclude = 0 + curr[w];
+//             curr[w] = max(include, exclude);
+//         }
+//         prev = curr;
+//     }
+//     return curr[capacity];
+// }
+
+// int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight)
+// {
+
+//     // using recursion
+//     // return solve(weight, value, n - 1, maxWeight);
+
+//     //  using recursion+memoisation
+//     // vector<vector<int>> dp(n, vector<int>(maxWeight + 1, -1));
+//     // return solvemem(weight, value, n - 1, maxWeight, dp);
+
+//     // tabulation method
+//     // return solvetab(weight, value, n, maxWeight);
+
+//     // space optimisation
+//     // return solvebyoptimisation(weight, value, n, maxWeight);
+
+//     // even more space-optimised
+//     return solvebyevenmoreoptimisation(weight, value, n, maxWeight);
+// }
+
+// ***************GET MINIMUM SQUARES   *************************
+//{ Driver Code Starts
+// Initial Template for C++
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// // } Driver Code Ends
+// // User function Template for C++
+
+// class Solution
+// {
+// public:
+//     int solverec(int n)
+//     {
+//         if (n == 0)
+//             return 0;
+
+//         int ans = n;
+//         for (int i = 1; i * i <= n; i++)
+//         {
+//             ans = min(ans, 1 + solverec(n - i * i));
+//         }
+//         return ans;
+//     }
+
+//     int solvemem(int n, vector<int> &dp)
+//     {
+//         if (n == 0)
+//             return 0;
+//         if (dp[n] != -1)
+//             return dp[n];
+
+//         int ans = n;
+//         for (int i = 1; i * i <= n; i++)
+//         {
+//             ans = min(ans, 1 + solvemem(n - i * i, dp));
+//         }
+//         dp[n] = ans;
+//         return dp[n];
+//     }
+
+//     int solvetab(int n)
+//     {
+//         vector<int> dp(n + 1, INT_MAX);
+//         dp[0] = 0;
+//         for (int i = 1; i <= n; i++)
+//         {
+//             for (int j = 1; j * j <= n; j++)
+//             {
+//                 if (i - j * j >= 0)
+//                     dp[i] = min(dp[i], 1 + dp[i - j * j]);
+//             }
+//         }
+//         return dp[n];
+//     }
+
+//     int MinSquares(int n)
+//     {
+//         // return solverec(n);
+
+//         // vector<int> dp(n+1, -1);
+//         // return solvemem(n, dp);
+
+//         return solvetab(n);
+//     }
+// };
+
+// //{ Driver Code Starts.
+// int main()
+// {
+//     int tc;
+//     cin >> tc;
+//     while (tc--)
+//     {
+//         int n;
+//         cin >> n;
+//         Solution ob;
+//         int ans = ob.MinSquares(n);
+//         cout << ans << "\n";
+//     }
+//     return 0;
+// }
+
+//  ******************  COMBINATION SUM *******************
+// #include <bits/stdc++.h>
+
+// int rec(vector<int> &num, int target)
+// {
+//     if (target == 0)
+//         return 1;
+//     if (target < 0)
+//         return 0;
+
+//     int sum = 0;
+//     for (int i = 0; i < num.size(); i++)
+//     {
+//         sum += rec(num, target - num[i]);
+//     }
+//     return sum;
+// }
+
+// int rec_mem(vector<int> &num, int target, vector<int> &dp)
+// {
+//     if (target == 0)
+//         return 1;
+//     if (target < 0)
+//         return 0;
+//     if (dp[target] != -1)
+//         return dp[target];
+
+//     int sum = 0;
+//     for (int i = 0; i < num.size(); i++)
+//     {
+//         sum += rec_mem(num, target - num[i], dp);
+//     }
+//     dp[target] = sum;
+//     return dp[target];
+// }
+
+// int tab(vector<int> &num, int target)
+// {
+
+//     vector<int> dp(target + 1, 0);
+//     dp[0] = 1;
+
+//     // traversing from target to tar 1
+//     for (int i = 1; i < target + 1; i++)
+//     {
+
+//         // traverse on th enum vector
+//         for (int j = 0; j < num.size(); j++)
+//         {
+//             if (i - num[j] >= 0)
+//             {
+//                 dp[i] += dp[i - num[j]];
+//             }
+//         }
+//     }
+//     return dp[target];
+// }
+
+// int findWays(vector<int> &num, int tar)
+// {
+//     // recursion
+//     //   return rec(num, tar);
+
+//     // recursion+memoisation
+//     // vector<int> dp(tar + 1, -1);
+//     // return rec_mem(num, tar, dp);
+
+//     // tabulation
+//     return tab(num, tar);
+// }
+
+// **************** NINJAS TRIP OF DAYS AND PASSES  ***************
+// int rec_mem(vector<int> days, vector<int> &cost, int i, vector<int> &dp, int n)
+// {
+//     if (i >= n)
+//         return 0;
+//     if (dp[i] > 0)
+//         return dp[i];
+
+//     int op1 = cost[0] + rec_mem(days, cost, i + 1, dp, n);
+
+//     int k = i;
+//     for (; k < n; k++)
+//     {
+//         if (days[k] >= days[i] + 7)
+//             break;
+//     }
+//     int op2 = cost[1] + rec_mem(days, cost, k, dp, n);
+
+//     for (; k < n; k++)
+//     {
+//         if (days[k] >= days[i] + 30)
+//             break;
+//     }
+
+//     int op3 = cost[2] + rec_mem(days, cost, k, dp, n);
+
+//     dp[i] = min(op1, min(op2, op3));
+//     return dp[i];
+// }
+
+// int solvebyspaceopti(int n, vector<int> &days, vector<int> &cost)
+// {
+//     int ans = 0;
+
+//     queue<pair<int, int>> month;
+//     queue<pair<int, int>> week;
+
+//     for (int day : days)
+//     {
+
+//         // step1 : remove expired days
+//         while (!month.empty() && month.front().first + 30 <= day)
+//             month.pop();
+
+//         while (!week.empty() && week.front().first + 7 <= day)
+//             week.pop();
+
+//         // step2: add cost for the currnet day
+//         week.push(make_pair(day, ans + cost[1]));
+//         month.push(make_pair(day, ans + cost[2]));
+
+//         // step3: answer update
+//         ans = min(ans + cost[0], min(week.front().second, month.front().second));
+//     }
+//     return ans;
+// }
+
+// int minimumCoins(int n, vector<int> days, vector<int> cost)
+// {
+
+//     //  recursion+memoisation
+//     // vector<int> dp(n + 1);
+//     // return rec_mem(days, cost, 0, dp, n);
+
+//     // space optimisation
+//     return solvebyspaceopti(n, days, cost);
+// }
+
+//    ***********  LARGEST SQUARE THAT CAN BE FORMED IN A MATRIX*******
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Solution
+// {
+// private:
+//     int solve(vector<vector<int>> mat, int i, int j, int &maxi)
+//     {
+//         if (i >= mat.size() || j >= mat[0].size())
+//         {
+//             return 0;
+//         }
+//         int right = solve(mat, i, j + 1, maxi);
+//         int diagonal = solve(mat, i + 1, j + 1, maxi);
+//         int down = solve(mat, i + 1, j, maxi);
+
+//         int ans;
+//         if (mat[i][j] == 1)
+//         {
+//             ans = 1 + min(diagonal, min(right, down));
+//             maxi = max(maxi, ans);
+//             return ans;
+//         }
+//          else{
+//               return 0;
+//          }
+//     }
+
+//     int solvemem(vector<vector<int>> &mat, int i, int j, int &maxi, vector<vector<int>> &dp)
+//     {
+//         if (i >= mat.size() || j >= mat[0].size())
+//         {
+//             return 0;
+//         }
+
+//         if (dp[i][j] != -1)
+//             return dp[i][j];
+
+//         int right = solvemem(mat, i, j + 1, maxi, dp);
+//         int diagonal = solvemem(mat, i + 1, j + 1, maxi, dp);
+//         int down = solvemem(mat, i + 1, j, maxi, dp);
+
+//         if (mat[i][j] == 1)
+//         {
+//             dp[i][j] = 1 + min(diagonal, min(right, down));
+//             maxi = max(maxi, dp[i][j]);
+//             return dp[i][j];
+//         }
+//         else
+//             return dp[i][j] = 0;
+//     }
+
+//     int solvetab(vector<vector<int>> &mat, int &maxi)
+//     {
+//         int row = mat.size();
+//         int col = mat[0].size();
+//         vector<vector<int>> dp(row + 1, vector<int>(col + 1, 0));
+//         for (int i = row - 1; i >= 0; i--)
+//         {
+//             for (int j = col - 1; j >= 0; j--)
+//             {
+
+//                 int right = dp[i][j + 1];
+//                 int diagonal = dp[i + 1][j + 1];
+//                 int down = dp[i + 1][j];
+
+//                 if (mat[i][j] == 1)
+//                 {
+//                     dp[i][j] = 1 + min(diagonal, min(right, down));
+//                     maxi = max(maxi, dp[i][j]);
+//                 }
+//                 else
+//                     dp[i][j] = 0;
+//             }
+//         }
+//         return dp[0][0];
+//     }
+
+//     int spaceopti(vector<vector<int>> &mat, int &maxi)
+//     {
+//         int row = mat.size();
+//         int col = mat[0].size();
+
+//         vector<int> curr(col + 1, 0);
+//         vector<int> next(col + 1, 0);
+//         for (int i = row - 1; i >= 0; i--)
+//         {
+//             for (int j = col - 1; j >= 0; j--)
+//             {
+//                 int right = curr[j + 1];
+//                 int diagonal = next[j + 1];
+//                 int down = next[j];
+
+//                 if (mat[i][j] == 1)
+//                 {
+//                     curr[j] = 1 + min(diagonal, min(right, down));
+//                     maxi = max(maxi, curr[j]);
+//                 }
+//                 else
+//                     curr[j] = 0;
+//             }
+//             next = curr;
+//         }
+//         return next[0];
+//     }
+
+// public:
+//     int maxSquare(int n, int m, vector<vector<int>> mat)
+//     {
+//         int maxi = 0;
+
+//         // recursion
+//         // solve(mat, 0, 0, maxi);
+
+//         // recu+memo
+//         // vector<vector<int>>dp(n, vector<int> (m, -1));
+//         // solvemem(mat, 0, 0, maxi, dp);
+
+//         // tabulation
+//         // solvetab(mat, maxi);
+//         // return maxi;
+
+//         // space optimisation
+//         spaceopti(mat, maxi);
+//         return maxi;
+//     }
+// };
+
+// *************Minimum Score Triangulation of Polygon***************
+
+// class Solution {
+// public:
+
+//     // int solve(vector<int> &values, int start, int end){
+//     //     if(start+1==end)  return 0;
+//     //     int minn= INT_MAX;
+//     //     for(int i= start+1; i<=end-1; i++)
+//     //     {
+//     //         int ans= values[start]*values[i]*values[end]+ solve(values, start, i)+ solve(values, i, end);
+//     //         minn=min(minn, ans);
+//     //     }
+//     //     return minn;
+//     // }
+
+//     // int solvemem(vector<int> &values, int start, int end, vector<vector<int>>& dp){
+//     //     if(start+1==end)  return 0;
+//     //     int minn= INT_MAX;
+//     //     if(dp[start][end]!=-1)  return dp[start][end];
+//     //     for(int i= start+1; i<=end-1; i++)
+//     //     {
+//     //         int ans= values[start] * values[i] * values[end] + solvemem(values, start, i, dp)+ solvemem(values, i, end, dp);
+//     //         minn=min(minn, ans);
+//     //     }
+//     //     dp[start][end]=minn;
+//     //     return dp[start][end];
+//     // }
+
+//     int solvetab(vector<int>&values){
+//         int n= values.size();
+//         vector<vector<int>> dp(n, vector<int>(n, 0));
+//         for(int i= n-1; i>=0; i--){
+//             for(int j=i+2; j<n; j++){
+//                 int minn= INT_MAX;
+//                 for(int k=i+1; k<=j-1; k++)
+//                 {
+//                     int ans= values[i]*values[j]*values[k]+dp[i][k]+dp[k][j];
+//                     minn= min(minn, ans);
+//                 }
+//                 dp[i][j]= minn;
+//             }
+//         }
+//         return dp[0][n-1];
+//     }
+
+//     int minScoreTriangulation(vector<int>& values) {
+//         int i=0; int j=values.size()-1;
+
+//         // recursion
+//         // return solve(values, i, j);
+
+//         // recursion + memoisation
+//         // vector<vector<int>> dp(values.size(), vector<int>(values.size(), -1));
+//         // return solvemem(values, i, j, dp);
+
+//         // tabulation
+//         // return solvetab(values);
+
+//     }
+
+// };
+
+//  ********* Minimum Sideway Jumps ************
+
+// class Solution {
+// public:
+
+//     int solve(vector<int> &obs, int currlane, int currpos){
+//         int n= obs.size()-1;
+//         if(currpos>=n) return 0;
+
+//         if(obs[currpos+1]!=currlane){
+//             return solve(obs, currlane, currpos+1);
+//         }
+//         else{
+//             int minn=INT_MAX;
+//             for(int i=1; i<=3; i++)
+//             if(obs[currpos]!=i && i!=currlane){
+//                 int one= 1+solve(obs, i, currpos);
+//                 minn=min(minn, one);
+//             }return minn;
+//         }
+//     }
+
+//     int solvemem(vector<int> &obs, int currlane, int currpos, vector<vector<int>>&dp){
+//         int n= obs.size()-1;
+//         if(currpos>=n) return 0;
+//         if(dp[currlane][currpos]>0)   return dp[currlane][currpos];
+
+//         if(obs[currpos+1] != currlane){
+//             return solvemem(obs, currlane, currpos+1, dp);
+//         }
+//         else{
+//             int minn=INT_MAX;
+//             for(int i=1; i<=3; i++)
+//             if(obs[currpos]!=i && i!=currlane){
+//                 int one= 1+solvemem(obs, i, currpos, dp);
+//                 minn=min(minn, one);
+//             }
+//             dp[currlane][currpos]= minn;
+//             return dp[currlane][currpos];
+//         }
+//     }
+
+//     int solvetab(vector<int> &obs){
+//         int n= obs.size()-1;
+//         vector<vector<int>> dp(4, vector<int>(n+1, 1e9));
+//         dp[0][n]=0; dp[1][n]=0; dp[2][n]=0; dp[3][n]= 0;
+
+//         for(int currpos=n-1; currpos>=0; currpos--){
+//             for(int currlane=1; currlane<=3; currlane++){
+//                 if(obs[currpos+1]!=currlane){
+//                     dp[currlane][currpos]=dp[currlane][currpos+1];
+//                 }
+//                 else{
+//                     int minn=1e9;
+//                     for(int i=1; i<=3; i++)
+//                     if(obs[currpos]!=i && i!=currlane){
+//                         int one= 1+dp[i][currpos+1];
+//                         minn=min(minn, one);
+//                     }
+//                     dp[currlane][currpos]= minn;
+//                 }
+//             }
+//         }
+//         return min(dp[2][0], min(1+dp[1][0], 1+dp[3][0]));
+//     }
+
+//     int spaceopti(vector<int> &obs){
+//         int n= obs.size()-1;
+//         vector<int> curr(4, INT_MAX);
+//         vector<int> next(4, INT_MAX);
+
+//         next[0]=0; next[1]=0; next[2]=0; next[3]= 0;
+
+//         for(int currpos=n-1; currpos>=0; currpos--){
+//             for(int currlane=1; currlane<=3; currlane++){
+//                 if(obs[currpos+1]!=currlane){
+//                     curr[currlane]=next[currlane];
+//                 }
+//                 else{
+//                     int minn=1e9;
+//                     for(int i=1; i<=3; i++)
+//                     if(obs[currpos]!=i && i!=currlane){
+//                         int one= 1+next[i];
+//                         minn=min(minn, one);
+//                     }
+//                     curr[currlane]= minn;
+//                 }
+//             }
+//             next= curr;
+//         }
+//         return min(next[2], min(1+next[1], 1+next[3]));
+//     }
+
+//     int minSideJumps(vector<int>& obstacles) {
+//         // recursion
+//         // return solve(obstacles, 2, 0);
+
+//         // recursion+memoisation
+//         // int n= obstacles.size();
+//         // vector<vector<int>> dp(4, vector<int>(n, 0));
+//         // return solvemem(obstacles, 2, 0, dp);
+
+//         // tabulation
+//         // return solvetab(obstacles);
+
+//         // spaceoptim
+//         return spaceopti(obstacles);
+//     }
+// };
+
+//     *************. Reducing Dishes****************
+
+// class Solution {
+// private:
+//     int solve(vector<int> &satis, int index, int time ){
+//         // base case
+//         if(index==satis.size()) return 0;
+
+//         //  include
+//         int include= satis[index]* (time+1) +solve(satis, index+1, time +1);
+//         // exclude
+//         int exclude= 0+ solve(satis, index+1, time);
+//         return max(include, exclude);
+//     }
+
+//     int solvemem(vector<int>&satis, int index, int time, vector<vector<int>>&dp){
+
+//         // base case
+//         if(index==satis.size()) return 0;
+//         if(dp[index][time]>0)   return dp[index][time];
+
+//         //include
+//         int include= satis[index]* (time+1) +solvemem(satis,index+1, time+1, dp);
+//         // exclude
+//         int exclude= 0+solvemem(satis, index+1, time, dp);
+//         dp[index][time]= max(include, exclude);
+//         return dp[index][time];
+//     }
+
+//     int solvetab(vector<int>& satis){
+//         int n=satis.size();
+//         vector<vector<int>>dp(satis.size()+1, vector<int>(satis.size()+1, 0));
+
+//         for(int in=n-1; in>=0; in--){
+//             for(int ti=in; ti>=0; ti--){
+//                 //include
+//                 int include= satis[in]* (ti+1) +dp[in+1][ti+1];
+//                 // exclude
+//                 int exclude= 0+dp[in+1][ti];
+//                 dp[in][ti]=max(include, exclude);
+//             }
+//         }
+//         return dp[0][0];
+//     }
+
+//     int spaceopti(vector<int>& satis){
+//         int n= satis.size();
+//         vector<int> curr(n+1 , 0);
+//         vector<int> next(n+1, 0);
+//         for(int in=n-1; in>=0; in--){
+//             for(int ti=in; ti>=0; ti--)
+//             {
+//                 //  include
+//                 int include= satis[in]* (ti+1) + next[ti+1];
+//                 // exclude
+//                 int exclude= 0+next[ti];
+//                 curr[ti]= max(include, exclude);
+//             }
+//             next=curr;
+//         }
+//         return next[0];
+//     }
+
+// public:
+//     int maxSatisfaction(vector<int>& satisfaction) {
+//         int index=0; int time =0;
+//         sort(satisfaction.begin(), satisfaction.end());
+
+//         //recursion
+//         // return solve(satisfaction, index, time );
+
+//         // recursion + memoisation
+//         // vector<vector<int>>dp(satisfaction.size()+1, vector<int>(satisfaction.size()+1, 0));
+//         // return solvemem(satisfaction, index, time, dp);
+
+//         //  tabulation
+//         // return solvetab(satisfaction);
+
+//         //  space optimisation
+//         return spaceopti(satisfaction);
+
+//     }
+// };
+
+// *********Longest Increasing Subsequence**********
+
+// class Solution
+// {
+// private:
+//     int solve(int n, int a[], int curr, int prev)
+//     {
+//         // base case
+//         if (curr == n)
+//             return 0;
+
+//         // include
+//         int take = 0;
+//         if (prev == -1 || a[curr] > a[prev])
+//         {
+//             take = 1 + solve(n, a, curr + 1, curr);
+//         }
+
+//         // exclude
+//         int notake = 0 + solve(n, a, curr + 1, prev);
+
+//         return max(take, notake);
+//     }
+
+//     int solvemem(int n, int a[], int curr, int prev, vector<vector<int>> &dp)
+//     {
+//         // base case
+//         if (curr == n)
+//             return 0;
+//         if (dp[curr][prev + 1] > 0)
+//             return dp[curr][prev + 1];
+
+//         // include
+//         int take = 0;
+//         if (prev == -1 || a[curr] > a[prev])
+//         {
+//             take = 1 + solvemem(n, a, curr + 1, curr, dp);
+//         }
+
+//         // exclude
+//         int notake = 0 + solvemem(n, a, curr + 1, prev, dp);
+//         return dp[curr][prev + 1] = max(take, notake);
+//     }
+
+//     int solvetab(int n, int a[])
+//     {
+//         vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+
+//         for (int i = n - 1; i >= 0; i--)
+//         {
+//             for (int j = i - 1; j >= -1; j--)
+//             {
+//                 // include
+//                 int take = 0;
+//                 if (j == -1 || a[i] > a[j])
+//                 {
+//                     take = 1 + dp[i + 1][i + 1];
+//                 }
+//                 // exclude
+//                 int notake = 0 + dp[i + 1][j + 1];
+//                 dp[i][j + 1] = max(take, notake);
+//             }
+//         }
+//         return dp[0][-1 + 1];
+//     }
+
+//     int spaceopti(int n, int a[])
+//     {
+//         vector<int> next(n + 1, 0);
+//         vector<int> curr(n + 1, 0);
+
+//         for (int i = n - 1; i >= 0; i--)
+//         {
+//             for (int j = i - 1; j >= -1; j--)
+//             {
+
+//                 // include
+//                 int take = 0;
+//                 if (j == -1 || a[i] > a[j])
+//                 {
+//                     take = 1 + next[i + 1];
+//                 }
+
+//                 // exclude
+//                 int notake = 0 + next[j + 1];
+//                 curr[j + 1] = max(take, notake);
+//             }
+//             next = curr;
+//         }
+//         return next[-1 + 1];
+//     }
+
+//      int solveoptimal(int n, int a[])
+//      {
+//          if (n == 0)
+//              return 0;
+//          vector<int> ans;
+//          ans.push_back(a[0]);
+
+//     for (int i = 1; i < n; i++)
+//     {
+//         if (a[i] > ans.back())
+//         {
+//             ans.push_back(a[i]);
+//         }
+//         else
+//         {
+//             // find the index of the jusstttt bada wala element
+//             int index = lower_bound(ans.begin(), ans.end(), a[i]) - ans.begin();
+//             ans[index] = a[i];
+//         }
+//     }
+//     return ans.size();
+// }
+
+// public:
+//     // Function to find length of longest increasing subsequence.
+//     int longestSubsequence(int n, int a[])
+//     {
+//         // recursion
+//         //   return solve(n, a, 0, -1);
+
+//         //  recursion+ memeoisation
+//         //   vector<vector<int>> dp(n+1, vector<int>(n+1,0));
+//         //     return solvemem(n, a, 0, -1, dp);
+
+//         // tabulation
+//         // return solvetab(n, a);
+
+//         // space optimisation
+//         return spaceopti(n, a);
+
+//        //  moreorganised time complexity
+//        return solveoptimal(n, a);
+//     }
+// };
+
+// APPLICATION OF LARGEST INCREASING SUBSEQUENCE ------(MAXIMUM HEIGHT OF STACKING CUBOIDS)
+// class Solution
+// {
+// public:
+//     bool check(vector<int> base, vector<int> newbox)
+//     {
+//         if (newbox[0] <= base[0] && newbox[1] <= base[1] && newbox[2] <= base[2])
+//             return true;
+//         return false;
+//     }
+
+//     int solve(int n, vector<vector<int>> &a)
+//     {
+//         vector<int> currow(n + 1, 0);
+//         vector<int> nextrow(n + 1, 0);
+//         for (int curr = n - 1; curr >= 0; curr--)
+//         {
+//             for (int prev = curr - 1; prev >= -1; prev--)
+//             {
+//                 // include
+//                 int take = 0;
+//                 if (prev == -1 || check(a[curr], a[prev]))
+//                     take = a[curr][2] + nextrow[curr + 1];
+
+//                 // exclude
+//                 int notake = 0 + nextrow[prev + 1];
+
+//                 currow[prev + 1] = max(take, notake);
+//             }
+//             nextrow = currow;
+//         }
+//         return nextrow[0];
+//     }
+
+//     int maxHeight(vector<vector<int>> &cuboids)
+//     {
+//         for (auto &a : cuboids)
+//         {
+//             sort(a.begin(), a.end());
+//         }
+
+//         // sort all the cuboids on the basis of width or length
+//         sort(cuboids.begin(), cuboids.end());
+
+//         // use LIS logic
+//         int n = cuboids.size();
+//         return solve(n, cuboids);
+//     }
+// };
+
+//   Pizza With 3n Slices
+// class Solution
+// {
+// public:
+//     int solve(int index, int end, vector<int> &slices, int n)
+//     {
+
+//         if ((n == 0) || (index > end))
+//             return 0;
+
+//         int take = slices[index] + solve(index + 2, end, slices, n - 1);
+//         int notake = 0 + solve(index + 1, end, slices, n);
+//         return max(take, notake);
+//     }
+
+//     int solvemem(int index, int end, vector<int> &slices, int n, vector<vector<int>> &dp)
+//     {
+
+//         if ((n == 0) || (index > end))
+//             return 0;
+//         if (dp[index][n] > 0)
+//             return dp[index][n];
+
+//         int take = slices[index] + solvemem(index + 2, end, slices, n - 1, dp);
+//         int notake = 0 + solvemem(index + 1, end, slices, n, dp);
+//         return dp[index][n] = max(take, notake);
+//     }
+
+//     int solvetab(vector<int> &slices)
+//     {
+//         int n = slices.size();
+//         vector<vector<int>> dp1(n + 2, vector<int>(n + 2, 0));
+//         for (int i = n - 2; i >= 0; i--)
+//         {
+//             for (int j = 1; j <= n / 3; j++)
+//             {
+//                 int take = slices[i] + dp1[i + 2][j - 1];
+//                 int notake = 0 + dp1[i + 1][j];
+//                 dp1[i][j] = max(take, notake);
+//             }
+//         }
+//         int case1 = dp1[0][n / 3];
+
+//         vector<vector<int>> dp2(n + 2, vector<int>(n + 2, 0));
+//         for (int i = n - 1; i >= 1; i--)
+//         {
+//             for (int j = 1; j <= n / 3; j++)
+//             {
+//                 int take = slices[i] + dp2[i + 2][j - 1];
+//                 int notake = 0 + dp2[i + 1][j];
+//                 dp2[i][j] = max(take, notake);
+//             }
+//         }
+//         int case2 = dp2[1][n / 3];
+
+//         return max(case1, case2);
+//     }
+
+//     int spaceopti(vector<int> &slices)
+//     {
+//         int n = slices.size();
+
+//         vector<int> next1(n + 2, 0);
+//         vector<int> curr1(n + 2, 0);
+//         vector<int> prev1(n + 2, 0);
+//         for (int i = n - 2; i >= 0; i--)
+//         {
+//             for (int j = 1; j <= n / 3; j++)
+//             {
+//                 int take = slices[i] + next1[j - 1];
+//                 int notake = 0 + curr1[j];
+//                 prev1[j] = max(take, notake);
+//             }
+//             next1 = curr1;
+//             curr1 = prev1;
+//         }
+//         int case1 = curr1[n / 3];
+
+//         vector<int> next2(n + 2, 0);
+//         vector<int> curr2(n + 2, 0);
+//         vector<int> prev2(n + 2, 0);
+//         for (int i = n - 1; i >= 1; i--)
+//         {
+//             for (int j = 1; j <= n / 3; j++)
+//             {
+//                 int take = slices[i] + next2[j - 1];
+//                 int notake = 0 + curr2[j];
+//                 prev2[j] = max(take, notake);
+//             }
+//             next2 = curr2;
+//             curr2 = prev2;
+//         }
+//         int case2 = curr2[n / 3];
+
+//         return max(case1, case2);
+//     }
+
+//     int maxSizeSlices(vector<int> &slices)
+//     {
+//         int k = slices.size();
+
+//         // recursion
+//         // int case1= solve(0, k-2, slices, k/3);
+//         // int case2= solve(1, k-1, slices, k/3);
+//         // return max(case1, case2);
+
+//         // recursion +memo
+//         // vector<vector<int>>dp1(k+1, vector<int>(k+1, 0));
+//         // int case1= solvemem(0, k-2, slices, k/3, dp1);
+//         // vector<vector<int>>dp2(k+1, vector<int>(k+1, 0));
+//         // int case2= solvemem(1, k-1, slices, k/3, dp2);
+//         // return max(case1, case2);
+
+//         //  tabulation
+//         // return  solvetab(slices);
+
+//         // space optimisation
+//         return spaceopti(slices);
+//     }
+// };
+
+// Minimum Swaps To Make Sequences Increasing
+// You are given two integer arrays of the same length nums1 and nums2. In one operation, you are allowed to swap nums1[i] with nums2[i].
+// For example, if nums1 = [1,2,3,8], and nums2 = [5,6,7,4], you can swap the element at i = 3 to obtain nums1 = [1,2,3,4] and nums2 = [5,6,7,8].
+// Return the minimum number of needed operations to make nums1 and nums2 strictly increasing. The test cases are generated so that the given input
+// always makes it possible.
+// An array arr is strictly increasing if and only if arr[0] < arr[1] < arr[2] < ... < arr[arr.length - 1].
+// int solve(vector<int> &nums1, vector<int> &nums2, int i, bool swapped)
+// {
+
+//     if (i >= nums1.size())
+//         return 0;
+//     int ans = INT_MAX;
+
+//     int prev1 = nums1[i - 1];
+//     int prev2 = nums2[i - 1];
+//     if (swapped)
+//         swap(prev1, prev2);
+
+//     // no swap
+//     if (nums1[i] > prev1 && nums2[i] > prev2)
+//         ans = solve(nums1, nums2, i + 1, 0);
+//     if (nums1[i] > prev2 || nums2[i] > prev1)
+//         ans = min(ans, 1 + solve(nums1, nums2, i + 1, 1));
+
+//     return ans;
+// }
+
+// int solvemem(vector<int> &nums1, vector<int> &nums2, int i, bool swapped, vector<vector<int>> &dp)
+// {
+//     if (i >= nums1.size())
+//         return 0;
+//     if (dp[i][swapped] != -1)
+//         return dp[i][swapped];
+//     int ans = INT_MAX;
+
+//     int prev1 = nums1[i - 1];
+//     int prev2 = nums2[i - 1];
+//     if (swapped)
+//         swap(prev1, prev2);
+
+//     // no swap
+//     if (nums1[i] > prev1 && nums2[i] > prev2)
+//         ans = solvemem(nums1, nums2, i + 1, 0, dp);
+//     if (nums1[i] > prev2 && nums2[i] > prev1)
+//         ans = min(ans, 1 + solvemem(nums1, nums2, i + 1, 1, dp));
+
+//     return dp[i][swapped] = ans;
+// }
+
+// int solvetab(vector<int> &nums1, vector<int> &nums2)
+// {
+//     int n = nums1.size();
+//     vector<vector<int>> dp(n + 1, vector<int>(2, 0));
+//     for (int i = n - 1; i >= 1; i--)
+//     {
+//         for (int j = 1; j >= 0; j--)
+//         {
+
+//             int ans = INT_MAX;
+//             int prev1 = nums1[i - 1];
+//             int prev2 = nums2[i - 1];
+//             if (j)
+//                 swap(prev1, prev2);
+
+//             // no swap
+//             if (nums1[i] > prev1 && nums2[i] > prev2)
+//                 ans = dp[i + 1][0];
+//             if (nums1[i] > prev2 && nums2[i] > prev1)
+//                 ans = min(ans, 1 + dp[i + 1][1]);
+
+//             dp[i][j] = ans;
+//         }
+//     }
+//     return dp[1][0];
+// }
+
+// int spaceopti(vector<int> &nums1, vector<int> &nums2)
+// {
+//     int n = nums1.size();
+
+//     vector<int> curr(2, 0);
+//     vector<int> next(2, 0);
+
+//     for (int i = n - 1; i >= 1; i--)
+//     {
+//         for (int j = 1; j >= 0; j--)
+//         {
+
+//             int ans = INT_MAX;
+//             int prev1 = nums1[i - 1];
+//             int prev2 = nums2[i - 1];
+//             if (j)
+//                 swap(prev1, prev2);
+
+//             // no swap
+//             if (nums1[i] > prev1 && nums2[i] > prev2)
+//                 ans = next[0];
+//             if (nums1[i] > prev2 && nums2[i] > prev1)
+//                 ans = min(ans, 1 + next[1]);
+
+//             curr[j] = ans;
+//         }
+//         next = curr;
+//     }
+//     return next[1];
+// }
+
+// int evenmorespaceopti(vector<int> &nums1, vector<int> &nums2)
+// {
+//     int n = nums1.size();
+
+//     int swap = 0;
+//     int noswap = 0;
+//     int currswap = 0;
+//     int currnoswap = 0;
+
+//     for (int i = n - 1; i >= 1; i--)
+//     {
+//         for (int j = 1; j >= 0; j--)
+//         {
+
+//             int ans = INT_MAX;
+//             int prev1 = nums1[i - 1];
+//             int prev2 = nums2[i - 1];
+//             if (j)
+//             {
+//                 int tem = prev2;
+//                 prev2 = prev1;
+//                 prev1 = tem;
+//             }
+
+//             // no swap
+//             if (nums1[i] > prev1 && nums2[i] > prev2)
+//                 ans = noswap;
+//             if (nums1[i] > prev2 && nums2[i] > prev1)
+//                 ans = min(ans, 1 + swap);
+
+//             if (j)
+//                 currswap = ans;
+//             else
+//                 currnoswap = ans;
+//         }
+//         swap = currswap;
+//         noswap = currnoswap;
+//     }
+//     return swap;
+// }
+
+// int minSwap(vector<int> &nums1, vector<int> &nums2)
+// {
+//     nums1.insert(nums1.begin(), -1);
+//     nums2.insert(nums2.begin(), -1);
+//     // rec
+//     // return solve(nums1 , nums2, 1, 0);
+
+//     // rec+mem
+//     //  int n= nums1.size();
+//     //  vector<vector<int>> dp(n+1, vector<int>(2, -1));
+//     //  return solvemem(nums1, nums2, 1, 0, dp);
+
+//     //  tabulation
+//     // return solvetab(nums1, nums2);
+
+//     // space opti
+//     // return spaceopti(nums1, nums2);
+
+//     // more spaceopti
+//     return evenmorespaceopti(nums1, nums2);
+// }
+
+// ************** Longest Arithmetic Subsequence of Given Difference****************
+// Given an integer array arr and an integer difference, return the length of the longest subsequence in arr which is an arithmetic sequence such that the difference between adjacent elements in the subsequence equals difference.
+// int longestSubsequence(vector<int> &arr, int difference)
+// {
+//     unordered_map<int, int> dp;
+//     int ans = 0;
+
+//     for (int i = 0; i < arr.size(); i++)
+//     {
+//         int temp = arr[i] - difference;
+//         int tempans = 0;
+//         // check if answer exist for temp or not
+//         if (dp.count(temp))
+//             tempans = dp[temp];
+
+//         // current answer update
+//         dp[arr[i]] = 1 + tempans;
+
+//         // ans update
+//         ans = max(ans, dp[arr[i]]);
+//     }
+//     return ans;
+// }
+
+// ************Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.************
+
+// int solve(int n)
+// {
+//     int ans = 0;
+//     if (n <= 1)
+//         return 1;
+//     for (int i = 1; i <= n; i++)
+//     {
+//         int left = numTrees(i - 1);
+//         int right = numTrees(n - i);
+//         int mul = left * right;
+//         ans += mul;
+//     }
+//     return ans;
+// }
+
+// int solvemem(vector<int> &dp, int n)
+// {
+//     int ans = 0;
+//     if (n <= 1)
+//         return 1;
+//     if (dp[n] != 1)
+//         return dp[n];
+//     for (int i = 1; i <= n; i++)
+//     {
+//         int left = solvemem(dp, i - 1);
+//         int right = solvemem(dp, n - i);
+//         int mul = left * right;
+//         ans += mul;
+//     }
+//     return dp[n] = ans;
+// }
+
+// int solvetab(int n)
+// {
+//     vector<int> dp(n + 1, 0);
+//     dp[0] = dp[1] = 1;
+//     for (int i = 2; i <= n; i++)
+//     {
+//         for (int j = 1; j <= i; j++)
+//         {
+//             int left = dp[j - 1];
+//             int right = dp[i - j];
+//             int mul = left * right;
+//             dp[i] += mul;
+//         }
+//     }
+//     return dp[n];
+// }
+
+// int numTrees(int n)
+// {
+//     // using rec
+//     // return solve(n);
+
+//     // using rec+mem
+//     // vector<int> dp(n+1, 1);
+//     // return solvemem(dp, n);
+
+//     //  using tabulation
+//     return solvetab(n);
+// }
+
+// **************Guess Number Higher or Lower ******************
+// int solve(int start, int end)
+// {
+//     if (start >= end)
+//         return 0;
+//     int ans = INT_MAX;
+//     for (int i = start; i <= end; i++)
+//     {
+//         ans = min(ans, i + max(solve(start, i - 1), solve(i + 1, end)));
+//     }
+//     return ans;
+// }
+
+// int solvemem(vector<vector<int>> &dp, int start, int end)
+// {
+//     if (start >= end)
+//         return 0;
+//     if (dp[start][end] > 0)
+//         return dp[start][end];
+//     int ans = INT_MAX;
+//     for (int i = start; i <= end; i++)
+//     {
+//         ans = min(ans, i + max(solvemem(dp, start, i - 1), solvemem(dp, i + 1, end)));
+//     }
+//     return dp[start][end] = ans;
+// }
+
+// int solvetab(int n)
+// {
+//     vector<vector<int>> dp(n + 2, vector<int>(n + 2, 0));
+
+//     for (int start = n; start >= 1; start--)
+//     {
+//         for (int end = start; end <= n; end++)
+//         {
+//             if (start == end)
+//                 continue;
+//             else
+//             {
+//                 int maxi = INT_MAX;
+//                 for (int i = start; i <= end; i++)
+//                 {
+//                     maxi = min(maxi, i + max(dp[start][i - 1], dp[i + 1][end]));
+//                 }
+//                 dp[start][end] = maxi;
+//             }
+//         }
+//     }
+//     return dp[1][n];
+// }
+
+// int getMoneyAmount(int n)
+// {
+//     // rec
+//     //  return solve(1, n);
+
+//     // rec+mem
+//     //  vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+//     //  return solvemem(dp, 1, n);
+
+//     // tabulation
+//     return solvetab(n);
+//
 // }

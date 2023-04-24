@@ -942,9 +942,9 @@
 // PREORDER/ POSTORDER/ INORDER TRAVERSAL OF AS BINARY TREE-- --
 //          4
 //       /    \
-        //      1       6
+//              1       6
 //    /   \
-        //  5       2
+//          5       2
 
 // #include <stdio.h>
 // #include <stdlib.h>
@@ -1016,3 +1016,5 @@
 //     inorder(p);
 //     return 0;
 // }
+
+
