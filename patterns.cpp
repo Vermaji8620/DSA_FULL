@@ -11171,7 +11171,7 @@
 //         }
 //         return next[-1 + 1];
 //     }
-
+//          *******using 0(N log N) T.C. and 0(N) S.C
 //      int solveoptimal(int n, int a[])
 //      {
 //          if (n == 0)
@@ -11216,6 +11216,35 @@
 //        return solveoptimal(n, a);
 //     }
 // };
+
+//      *********RUSSIAN DOLL PROBLEM (BASED ON LONGEST SUBSEQUENCE PROBLEM )*********
+
+// static bool cmp(vector<int> &a, vector<int> &b)
+// {
+//     if (a[0] == b[0])
+//         return a[1] > b[1];
+//     return a[0] < b[0];
+// }
+
+// int maxEnvelopes(vector<vector<int>> &envelopes)
+// {
+//     sort(envelopes.begin(), envelopes.end(), cmp);
+//     vector<int> ans;
+//     ans.push_back(envelopes[0][1]);
+//     for (int i = 1; i < envelopes.size(); i++)
+//     {
+//         if (envelopes[i][1] > ans.back())
+//         {
+//             ans.push_back(envelopes[i][1]);
+//         }
+//         else
+//         {
+//             int findindex = lower_bound(ans.begin(), ans.end(), envelopes[i][1]) - ans.begin();
+//             ans[findindex] = envelopes[i][1];
+//         }
+//     }
+//     return ans.size();
+// }
 
 // APPLICATION OF LARGEST INCREASING SUBSEQUENCE ------(MAXIMUM HEIGHT OF STACKING CUBOIDS)
 // class Solution
@@ -11710,3 +11739,1234 @@
 //     return solvetab(n);
 //
 // }
+
+//   *******MINIMUM COST TRESS FROM LEAF VALUES***************
+// The values of arr correspond to the values of each leaf in an in - order traversal of the tree.The value of each non - leaf node is equal to the product of the largest leaf value in its left and right subtree, respectively.
+
+// int findmaxi(int p, int q, vector<int> &arr)
+// {
+//     int z = INT_MIN;
+//     for (int i = p; i <= q; i++)
+//     {
+//         z = max(z, arr[i]);
+//     }
+//     return z;
+// }
+
+// int solvemem(vector<int> &arr, int i, int j, vector<vector<int>> &dp)
+// {
+//     int mini = 1e9;
+//     if (i >= j)
+//         return 0;
+//     if (dp[i][j] > 0)
+//         return dp[i][j];
+//     for (int k = i; k < j; k++)
+//     {
+//         int l = findmaxi(i, k, arr);
+//         int r = findmaxi(k + 1, j, arr);
+//         int small = l * r + solvemem(arr, i, k, dp) + solvemem(arr, k + 1, j, dp);
+//         mini = min(mini, small);
+//         dp[i][j] = mini;
+//     }
+//     return dp[i][j];
+// }
+
+// int mctFromLeafValues(vector<int> &arr)
+// {
+//     int n = arr.size();
+
+//     // rec
+//     //  return solve(arr, 0, n-1);
+
+//     // rec+mem
+//     // vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+//     // return solvemem(arr, 0, n-1, dp);
+
+//     // tabulation
+//     return solvetab(arr);
+// }
+
+//***********************************   BUY AND SELL STOCKS ***********************
+
+// You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+// You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+// Return the maximum profit you can achieve from this transaction.If you cannot achieve any profit, return 0
+
+// int maxProfit(vector4<int> &prices)
+// {
+//     int mini = prices[0];
+//     int profit = 0;
+//     for (int i = 1; i < prices.size(); i++)
+//     {
+//         int diff = prices[i] - mini;
+//         profit = max(profit, diff);
+//         mini = min(mini, prices[i]);
+//     }
+//     return profit;
+// }
+
+//  **********Best Time to Buy and Sell Stock II(BUYING AND SELLING INFINITE NUMBER OF TIMES)
+// You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
+
+// On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
+// Find and return the maximum profit you can achieve.
+
+// int solve(vector<int> &prices, int index, int n, int buyhoga){
+// if (index >= n)
+//     return 0;
+// int profit = 0;
+// if (buyhoga)
+// {
+//     int buy = -prices[index] + solve(prices, index + 1, n, 0);
+//     int ignoreb = 0 + solve(prices, index + 1, n, 1);
+//     profit = max(buy, ignoreb);
+// }
+// else
+// {
+//     int sell = prices[index] + solve(prices, index + 1, n, 1);
+//     int ignores = 0 + solve(prices, index + 1, n, 0);
+//     profit = max(sell, ignores);
+// }
+// return profit;
+// }
+
+// int solvemem(vector<int> &prices, int index, int n, int buyhoga, vector<vector<int>> &dp)
+// {
+//     if (index >= n)
+//         return 0;
+//     if (dp[index][buyhoga] != -1)
+//         return dp[index][buyhoga];
+//     int profit = 0;
+//     if (buyhoga)
+//     {
+//         int buy = -prices[index] + solvemem(prices, index + 1, n, 0, dp);
+//         int ignoreb = 0 + solvemem(prices, index + 1, n, 1, dp);
+//         profit = max(buy, ignoreb);
+//     }
+//     else
+//     {
+//         int sell = prices[index] + solvemem(prices, index + 1, n, 1, dp);
+//         int ignores = 0 + solvemem(prices, index + 1, n, 0, dp);
+//         profit = max(sell, ignores);
+//     }
+//     return dp[index][buyhoga] = profit;
+// }
+
+// int solvetab(vector<int> &prices)
+// {
+//     int n = prices.size();
+//     vector<vector<int>> dp(n + 1, vector<int>(2, 0));
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyornot = 0; buyornot <= 1; buyornot++)
+//         {
+//             int profit = 0;
+//             if (buyornot)
+//             {
+//                 int buy = -prices[index] + dp[index + 1][0];
+//                 int ignoreb = 0 + dp[index + 1][1];
+//                 profit = max(buy, ignoreb);
+//             }
+//             else
+//             {
+//                 int sell = prices[index] + dp[index + 1][1];
+//                 int ignores = 0 + dp[index + 1][0];
+//                 profit = max(sell, ignores);
+//             }
+//             dp[index][buyornot] = profit;
+//         }
+//     }
+//     return dp[0][1];
+// }
+
+// int solveopti(vector<int> &prices)
+// {
+//     int n = prices.size();
+//     vector<int> curr(2, 0), next(2, 0);
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyornot = 0; buyornot <= 1; buyornot++)
+//         {
+//             int profit = 0;
+//             if (buyornot)
+//             {
+//                 int buy = -prices[index] + next[0];
+//                 int ignoreb = 0 + next[1];
+//                 profit = max(buy, ignoreb);
+//             }
+//             else
+//             {
+//                 int sell = prices[index] + next[1];
+//                 int ignores = 0 + next[0];
+//                 profit = max(sell, ignores);
+//             }
+//             curr[buyornot] = profit;
+//         }
+//         next = curr;
+//     }
+//     return next[1];
+// }
+
+// int maxProfit(vector<int> &prices)
+// {
+//     int n = prices.size();
+//     int buyhoga = 1;
+//     int index = 0;
+//     // return solve(prices, index, n, buyhoga);
+
+//     // rec+mem
+//     // vector<vector<int>> dp(n+1, vector<int>(2, -1));
+//     // return solvemem(prices, index, n, buyhoga, dp);
+
+//     // tab
+//     // return solvetab(prices);
+
+//     // space opti
+//     return solveopti(prices);
+// }
+
+//  **************  (BUYING AND SELLING ATMOST A PARTICULAR NUMBER OF TIMES(2))***************
+
+// int solve(vector<int> &prices, int index, int n, int buyhoga, int count)
+// {
+//     if (index >= n)
+//         return 0;
+//     if (count == 0)
+//         return 0;
+//     int profit = 0;
+//     if (buyhoga)
+//     {
+//         int buy = -prices[index] + solve(prices, index + 1, n, 0, count);
+//         int ignoreb = 0 + solve(prices, index + 1, n, 1, count);
+//         profit = max(buy, ignoreb);
+//     }
+//     else
+//     {
+//         int sell = prices[index] + solve(prices, index + 1, n, 1, count - 1);
+//         int ignores = 0 + solve(prices, index + 1, n, 0, count);
+//         profit = max(sell, ignores);
+//     }
+//     return profit;
+// }
+
+// int solvemem(vector<int> &prices, int index, int n, int buyhoga, int count, vector<vector<vector<int>>> &dp)
+// {
+//     if (index >= n)
+//         return 0;
+//     if (count == 0)
+//         return 0;
+//     if (dp[index][buyhoga][count] != -1)
+//         return dp[index][buyhoga][count];
+//     int profit = 0;
+//     if (buyhoga)
+//     {
+//         int buy = -prices[index] + solvemem(prices, index + 1, n, 0, count, dp);
+//         int ignoreb = 0 + solvemem(prices, index + 1, n, 1, count, dp);
+//         profit = max(buy, ignoreb);
+//     }
+//     else
+//     {
+//         int sell = prices[index] + solvemem(prices, index + 1, n, 1, count - 1, dp);
+//         int ignores = 0 + solvemem(prices, index + 1, n, 0, count, dp);
+//         profit = max(sell, ignores);
+//     }
+//     return dp[index][buyhoga][count] = profit;
+// }
+
+// int solvetab(vector<int> &prices)
+// {
+//     int n = prices.size();
+//     vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(2, vector<int>(3, 0)));
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyhga = 0; buyhga <= 1; buyhga++)
+//         {
+//             for (int count = 1; count <= 2; count++)
+//             {
+//                 int profit = 0;
+//                 if (buyhga)
+//                 {
+//                     int buy = -prices[index] + dp[index + 1][0][count];
+//                     int ignoreb = 0 + dp[index + 1][1][count];
+//                     profit = max(buy, ignoreb);
+//                 }
+//                 else
+//                 {
+//                     int sell = prices[index] + dp[index + 1][1][count - 1];
+//                     int ignores = 0 + dp[index + 1][0][count];
+//                     profit = max(sell, ignores);
+//                 }
+//                 dp[index][buyhga][count] = profit;
+//             }
+//         }
+//     }
+//     return dp[0][1][2];
+// }
+
+// int spaceopti(vector<int> &prices)
+// {
+//     int n = prices.size();
+//     vector<vector<int>> curr(3, vector<int>(3, 0));
+//     vector<vector<int>> next(3, vector<int>(3, 0));
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyhga = 0; buyhga <= 1; buyhga++)
+//         {
+//             for (int count = 1; count <= 2; count++)
+//             {
+//                 int profit = 0;
+//                 if (buyhga)
+//                 {
+//                     int buy = -prices[index] + next[0][count];
+//                     int ignoreb = 0 + next[1][count];
+//                     profit = max(buy, ignoreb);
+//                 }
+//                 else
+//                 {
+//                     int sell = prices[index] + next[1][count - 1];
+//                     int ignores = 0 + next[0][count];
+//                     profit = max(sell, ignores);
+//                 }
+//                 curr[buyhga][count] = profit;
+//             }
+//         }
+//         next = curr;
+//     }
+//     return next[1][2];
+// }
+
+// int maxProfit(vector<int> &prices)
+// {
+
+//     // REC
+//     int n = prices.size();
+//     int buyhoga = 1;
+//     int index = 0;
+//     int count = 2;
+//     // return solve(prices, index, n, buyhoga, count);
+
+//     //  rec+mem(changing of three paramters, so 3d vector)
+//     // vector<vector<vector<int>>>dp(n+1, vector<vector<int>>(2, vector<int>(3, -1)));
+//     // return solvemem(prices, index, n, buyhoga, count, dp);
+
+//     // tab
+//     // return solvetab(prices);
+
+//     // space opti
+//     return spaceopti(prices);
+// }
+
+//  **************  (BUYING AND SELLING ATMOST A PARTICULAR NUMBER OF TIMES(k))***************(using some changes in the above approach)
+// int solve(vector<int> &prices, int index, int n, int buyhoga, int count)
+// {
+//     if (index >= n)
+//         return 0;
+//     if (count == 0)
+//         return 0;
+//     int profit = 0;
+//     if (buyhoga)
+//     {
+//         int buy = -prices[index] + solve(prices, index + 1, n, 0, count);
+//         int ignoreb = 0 + solve(prices, index + 1, n, 1, count);
+//         profit = max(buy, ignoreb);
+//     }
+//     else
+//     {
+//         int sell = prices[index] + solve(prices, index + 1, n, 1, count - 1);
+//         int ignores = 0 + solve(prices, index + 1, n, 0, count);
+//         profit = max(sell, ignores);
+//     }
+//     return profit;
+// }
+
+// int solvemem(vector<int> &prices, int index, int n, int buyhoga, int count, vector<vector<vector<int>>> &dp)
+// {
+//     if (index >= n)
+//         return 0;
+//     if (count == 0)
+//         return 0;
+//     if (dp[index][buyhoga][count] != -1)
+//         return dp[index][buyhoga][count];
+//     int profit = 0;
+//     if (buyhoga)
+//     {
+//         int buy = -prices[index] + solvemem(prices, index + 1, n, 0, count, dp);
+//         int ignoreb = 0 + solvemem(prices, index + 1, n, 1, count, dp);
+//         profit = max(buy, ignoreb);
+//     }
+//     else
+//     {
+//         int sell = prices[index] + solvemem(prices, index + 1, n, 1, count - 1, dp);
+//         int ignores = 0 + solvemem(prices, index + 1, n, 0, count, dp);
+//         profit = max(sell, ignores);
+//     }
+//     return dp[index][buyhoga][count] = profit;
+// }
+
+// int solvetab(vector<int> &prices)
+// {
+//     int n = prices.size();
+//     vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(2, vector<int>(3, 0)));
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyhga = 0; buyhga <= 1; buyhga++)
+//         {
+//             for (int count = 1; count <= 2; count++)
+//             {
+//                 int profit = 0;
+//                 if (buyhga)
+//                 {
+//                     int buy = -prices[index] + dp[index + 1][0][count];
+//                     int ignoreb = 0 + dp[index + 1][1][count];
+//                     profit = max(buy, ignoreb);
+//                 }
+//                 else
+//                 {
+//                     int sell = prices[index] + dp[index + 1][1][count - 1];
+//                     int ignores = 0 + dp[index + 1][0][count];
+//                     profit = max(sell, ignores);
+//                 }
+//                 dp[index][buyhga][count] = profit;
+//             }
+//         }
+//     }
+//     return dp[0][1][2];
+// }
+
+// int spaceopti(vector<int> &prices)
+// {
+//     int n = prices.size();
+//     vector<vector<int>> curr(3, vector<int>(3, 0));
+//     vector<vector<int>> next(3, vector<int>(3, 0));
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyhga = 0; buyhga <= 1; buyhga++)
+//         {
+//             for (int count = 1; count <= 2; count++)
+//             {
+//                 int profit = 0;
+//                 if (buyhga)
+//                 {
+//                     int buy = -prices[index] + next[0][count];
+//                     int ignoreb = 0 + next[1][count];
+//                     profit = max(buy, ignoreb);
+//                 }
+//                 else
+//                 {
+//                     int sell = prices[index] + next[1][count - 1];
+//                     int ignores = 0 + next[0][count];
+//                     profit = max(sell, ignores);
+//                 }
+//                 curr[buyhga][count] = profit;
+//             }
+//         }
+//         next = curr;
+//     }
+//     return next[1][2];
+// }
+
+// int maxProfit(int k, vector<int> &prices)
+// {
+//     // REC
+//     int n = prices.size();
+//     int buyhoga = 1;
+//     int index = 0;
+//     int count = k;
+//     // return solve(prices, index, n, buyhoga, count);
+
+//     //  rec+mem(changing of three paramters, so 3d vector)
+//     vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(2, vector<int>(k + 1, -1)));
+//     return solvemem(prices, index, n, buyhoga, count, dp);
+
+//     // tab
+//     // return solvetab(prices);
+
+//     // space opti
+//     // return spaceopti(prices);
+// }
+
+//  **************  (BUYING AND SELLING ATMOST A PARTICULAR NUMBER OF TIMES(k))***************(using operationnumber in the above approach)
+
+// int solve(int index, int operationno, int k, vector<int> &prices)
+// {
+//     if (index == prices.size())
+//         return 0;
+//     if (operationno == 2 * k)
+//         return 0;
+//     int profit;
+//     if (!(operationno & 1))
+//     {
+//         // buying allowed hai even operationno pe
+//         int buykaro = -prices[index] + solve(index + 1, operationno + 1, k, prices);
+//         int skipkaro = 0 + solve(index + 1, operationno, k, prices);
+//         profit = max(buykaro, skipkaro);
+//     }
+//     else
+//     {
+//         int sellkaro = prices[index] + solve(index + 1, operationno + 1, k, prices);
+//         int skipkaro = 0 + solve(index + 1, operationno, k, prices);
+//         profit = max(sellkaro, skipkaro);
+//     }
+//     return profit;
+// }
+
+// int solvemem(int index, int operationno, int k, vector<int> &prices, vector<vector<int>> &dp)
+// {
+//     if (index == prices.size())
+//         return 0;
+//     if (operationno == 2 * k)
+//         return 0;
+//     if (dp[index][operationno] > 0)
+//         return dp[index][operationno];
+//     int profit;
+//     if (!(operationno & 1))
+//     {
+//         // buying allowed hai even operationno pe
+//         int buykaro = -prices[index] + solvemem(index + 1, operationno + 1, k, prices, dp);
+//         int skipkaro = 0 + solvemem(index + 1, operationno, k, prices, dp);
+//         profit = max(buykaro, skipkaro);
+//     }
+//     else
+//     {
+//         int sellkaro = prices[index] + solvemem(index + 1, operationno + 1, k, prices, dp);
+//         int skipkaro = 0 + solvemem(index + 1, operationno, k, prices, dp);
+//         profit = max(sellkaro, skipkaro);
+//     }
+//     return dp[index][operationno] = profit;
+// }
+
+// int solvetab(int k, vector<int> &prices)
+// {
+//     int n = prices.size();
+//     vector<vector<int>> dp(n + 1, vector<int>(2 * k + 1, 0));
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int operationno = 0; operationno < 2 * k; operationno++)
+//         {
+//             int profit;
+//             if (!(operationno & 1))
+//             {
+//                 // buying allowed hai even operationno pe
+//                 int buykaro = -prices[index] + dp[index + 1][operationno + 1];
+//                 int skipkaro = 0 + dp[index + 1][operationno];
+//                 profit = max(buykaro, skipkaro);
+//             }
+//             else
+//             {
+//                 int sellkaro = prices[index] + dp[index + 1][operationno + 1];
+//                 int skipkaro = 0 + dp[index + 1][operationno];
+//                 profit = max(sellkaro, skipkaro);
+//             }
+//             dp[index][operationno] = profit;
+//         }
+//     }
+//     return dp[0][0];
+// }
+
+// int maxProfit(int k, vector<int> &prices)
+// {
+//     int n = prices.size();
+//     int index = 0, operationno = 0;
+//     // rec
+//     // return solve(index, operationno, k, prices);
+
+//     // rec+mem
+//     // vector<vector<int>> dp(n+1, vector<int>((2*k)+1, 0));
+//     // return solvemem(index, operationno, k, prices, dp);
+
+//     // tabulation
+//     return solvetab(k, prices);
+// }
+
+//  *************   BUYING AND SELLING GIVING  A TRANSACTION FEE    ***************
+// int solve(vector<int> &prices, int index, int n, int buyhoga, int fee)
+// {
+//     if (index >= n)
+//         return 0;
+//     int profit = 0;
+//     if (buyhoga)
+//     {
+//         int buy = -prices[index] + solve(prices, index + 1, n, 0, fee);
+//         int ignoreb = 0 + solve(prices, index + 1, n, 1, fee);
+//         profit = max(buy, ignoreb);
+//     }
+//     else
+//     {
+//         int sell = prices[index] + solve(prices, index + 1, n, 1, fee) - fee;
+//         int ignores = 0 + solve(prices, index + 1, n, 0, fee);
+//         profit = max(sell, ignores);
+//     }
+//     return profit;
+// }
+
+// int solvemem(vector<int> &prices, int index, int n, int buyhoga, vector<vector<int>> &dp, int fee)
+// {
+//     if (index >= n)
+//         return 0;
+//     if (dp[index][buyhoga] != -1)
+//         return dp[index][buyhoga];
+//     int profit = 0;
+//     if (buyhoga)
+//     {
+//         int buy = -prices[index] + solvemem(prices, index + 1, n, 0, dp, fee);
+//         int ignoreb = 0 + solvemem(prices, index + 1, n, 1, dp, fee);
+//         profit = max(buy, ignoreb);
+//     }
+//     else
+//     {
+//         int sell = prices[index] + solvemem(prices, index + 1, n, 1, dp, fee) - fee;
+//         int ignores = 0 + solvemem(prices, index + 1, n, 0, dp, fee);
+//         profit = max(sell, ignores);
+//     }
+//     return dp[index][buyhoga] = profit;
+// }
+
+// int solvetab(vector<int> &prices, int fee)
+// {
+//     int n = prices.size();
+//     vector<vector<int>> dp(n + 1, vector<int>(2, 0));
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyornot = 0; buyornot <= 1; buyornot++)
+//         {
+//             int profit = 0;
+//             if (buyornot)
+//             {
+//                 int buy = -prices[index] + dp[index + 1][0];
+//                 int ignoreb = 0 + dp[index + 1][1];
+//                 profit = max(buy, ignoreb);
+//             }
+//             else
+//             {
+//                 int sell = prices[index] + dp[index + 1][1] - fee;
+//                 int ignores = 0 + dp[index + 1][0];
+//                 profit = max(sell, ignores);
+//             }
+//             dp[index][buyornot] = profit;
+//         }
+//     }
+//     return dp[0][1];
+// }
+
+// int solveopti(vector<int> &prices, int fee)
+// {
+//     int n = prices.size();
+//     vector<int> curr(2, 0), next(2, 0);
+//     for (int index = n - 1; index >= 0; index--)
+//     {
+//         for (int buyornot = 0; buyornot <= 1; buyornot++)
+//         {
+//             int profit = 0;
+//             if (buyornot)
+//             {
+//                 int buy = -prices[index] + next[0];
+//                 int ignoreb = 0 + next[1];
+//                 profit = max(buy, ignoreb);
+//             }
+//             else
+//             {
+//                 int sell = prices[index] + next[1] - fee;
+//                 int ignores = 0 + next[0];
+//                 profit = max(sell, ignores);
+//             }
+//             curr[buyornot] = profit;
+//         }
+//         next = curr;
+//     }
+//     return next[1];
+// }
+
+// int maxProfit(vector<int> &prices, int fee)
+// {
+//     int n = prices.size();
+//     int buyhoga = 1;
+//     int index = 0;
+//     return solve(prices, index, n, buyhoga, fee);
+
+//     // rec+mem
+//     // vector<vector<int>> dp(n+1, vector<int>(2, -1));
+//     // return solvemem(prices, index, n, buyhoga, dp, fee);
+
+//     // tab
+//     // return solvetab(prices, fee);
+
+//     // space opti
+//     // return solveopti(prices, fee);
+// }
+
+//  ************    LONGEST COMMON SUBSEQUENCE  ****************
+// Given two strings text1 and text2, return the length of their longest common subsequence.If there is no common subsequence, return 0.
+// A subsequence of a string is a new string generated from the original string with some characters(can be none) deleted without changing the relative
+// order of the remaining characters.
+
+// int solve(string text1, int i, string text2, int j)
+// {
+//     if (i >= text1.size() || j >= text2.size())
+//         return 0;
+//     int ans = 0;
+//     if (text1[i] == text2[j])
+//         ans = 1 + solve(text1, i + 1, text2, j + 1);
+//     else
+//     {
+
+//         ans = max(solve(text1, i + 1, text2, j), solve(text1, i, text2, j + 1));
+//     }
+//     return ans;
+// }
+
+// int solvemem(string &text1, int i, string &text2, int j, vector<vector<int>> &dp)
+// {
+//     if (i >= text1.size() || j >= text2.size())
+//         return 0;
+//     if (dp[i][j] != -1)
+//         return dp[i][j];
+//     int ans = 0;
+//     if (text1[i] == text2[j])
+//         ans = 1 + solvemem(text1, i + 1, text2, j + 1, dp);
+//     else
+//     {
+
+//         ans = max(solvemem(text1, i + 1, text2, j, dp), solvemem(text1, i, text2, j + 1, dp));
+//     }
+//     return dp[i][j] = ans;
+// }
+
+// int solvetab(string &text1, string &text2)
+// {
+//     vector<vector<int>> dp(text1.size() + 1, vector<int>(text2.size() + 1, 0));
+//     for (int i = text1.size() - 1; i >= 0; i--)
+//     {
+//         for (int j = text2.size() - 1; j >= 0; j--)
+//         {
+//             int ans = 0;
+//             if (text1[i] == text2[j])
+//                 ans = 1 + dp[i + 1][j + 1];
+//             else
+//             {
+
+//                 ans = max(dp[i + 1][j], dp[i][j + 1]);
+//             }
+//             dp[i][j] = ans;
+//         }
+//     }
+//     return dp[0][0];
+// }
+
+// int spaceopti(string &text1, string &text2)
+// {
+//     vector<vector<int>> dp(text1.size() + 1, vector<int>(text2.size() + 1, 0));
+//     vector<int> curr(text2.size() + 1, 0), next(text2.size() + 1, 0);
+//     for (int i = text1.size() - 1; i >= 0; i--)
+//     {
+//         for (int j = text2.size() - 1; j >= 0; j--)
+//         {
+//             int ans = 0;
+//             if (text1[i] == text2[j])
+//                 ans = 1 + next[j + 1];
+//             else
+//             {
+
+//                 ans = max(next[j], curr[j + 1]);
+//             }
+//             curr[j] = ans;
+//         }
+//         next = curr;
+//     }
+//     return next[0];
+// }
+
+// int longestCommonSubsequence(string text1, string text2)
+// {
+
+//     // recursion
+//     // return solve(text1, 0, text2, 0);
+
+//     // recursion+memoisation
+//     // vector<vector<int>> dp(text1.length(), vector<int> (text2.length(), -1));
+//     // return solvemem(text1, 0, text2, 0, dp) ;
+
+//     //  tabulation
+//     return solvetab(text1, text2);
+
+//     // space opti
+//     return spaceopti(text1, text2);
+// }
+
+//  ************  LONGEST PALINDROMIC SUBSEQUENCE  ****************
+
+// int solve(string text1, int i, string text2, int j)
+// {
+//     if (i >= text1.size() || j >= text2.size())
+//         return 0;
+//     int ans = 0;
+//     if (text1[i] == text2[j])
+//         ans = 1 + solve(text1, i + 1, text2, j + 1);
+//     else
+//     {
+
+//         ans = max(solve(text1, i + 1, text2, j), solve(text1, i, text2, j + 1));
+//     }
+//     return ans;
+// }
+
+// int solvemem(string &text1, int i, string &text2, int j, vector<vector<int>> &dp)
+// {
+//     if (i >= text1.size() || j >= text2.size())
+//         return 0;
+//     if (dp[i][j] != -1)
+//         return dp[i][j];
+//     int ans = 0;
+//     if (text1[i] == text2[j])
+//         ans = 1 + solvemem(text1, i + 1, text2, j + 1, dp);
+//     else
+//     {
+
+//         ans = max(solvemem(text1, i + 1, text2, j, dp), solvemem(text1, i, text2, j + 1, dp));
+//     }
+//     return dp[i][j] = ans;
+// }
+
+// int solvetab(string &text1, string &text2)
+// {
+//     vector<vector<int>> dp(text1.size() + 1, vector<int>(text2.size() + 1, 0));
+//     for (int i = text1.size() - 1; i >= 0; i--)
+//     {
+//         for (int j = text2.size() - 1; j >= 0; j--)
+//         {
+//             int ans = 0;
+//             if (text1[i] == text2[j])
+//                 ans = 1 + dp[i + 1][j + 1];
+//             else
+//             {
+
+//                 ans = max(dp[i + 1][j], dp[i][j + 1]);
+//             }
+//             dp[i][j] = ans;
+//         }
+//     }
+//     return dp[0][0];
+// }
+
+// int spaceopti(string &text1, string &text2)
+// {
+//     vector<vector<int>> dp(text1.size() + 1, vector<int>(text2.size() + 1, 0));
+//     vector<int> curr(text2.size() + 1, 0), next(text2.size() + 1, 0);
+//     for (int i = text1.size() - 1; i >= 0; i--)
+//     {
+//         for (int j = text2.size() - 1; j >= 0; j--)
+//         {
+//             int ans = 0;
+//             if (text1[i] == text2[j])
+//                 ans = 1 + next[j + 1];
+//             else
+//             {
+
+//                 ans = max(next[j], curr[j + 1]);
+//             }
+//             curr[j] = ans;
+//         }
+//         next = curr;
+//     }
+//     return next[0];
+// }
+
+// int longestPalindromeSubseq(string s)
+// {
+
+//     string rev = s;
+//     reverse(rev.begin(), rev.end());
+//     // recursion
+//     // return solve(s, 0, rev, 0);
+
+//     // recursion+memoisation
+//     // vector<vector<int>> dp(s.length(), vector<int> (rev.length(), -1));
+//     // return solvemem(s, 0, rev, 0, dp) ;
+
+//     //  tabulation
+//     // return solvetab(s, rev);
+
+//     // space opti
+//     return spaceopti(s, rev);
+// }
+
+//  *******************(**EDIT DISTANCE**)Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.************
+// int solve(string &word1, int i, string &word2, int j)
+// {
+//     if (i >= word1.size())
+//         return word2.size() - j;
+//     if (j >= word2.size())
+//         return word1.size() - i;
+
+//     int ans = 0;
+//     if (word1[i] == word2[j])
+//         ans = solve(word1, i + 1, word2, j + 1);
+//     else
+//     {
+//         // insert
+//         int insertans = 1 + solve(word1, i, word2, j + 1);
+//         // delete
+//         int deleteans = 1 + solve(word1, i + 1, word2, j);
+//         // replace
+//         int replaceans = 1 + solve(word1, i + 1, word2, j + 1);
+//         ans = min(insertans, min(deleteans, replaceans));
+//     }
+//     return ans;
+// }
+
+// int solvemem(string &word1, int i, string &word2, int j, vector<vector<int>> &dp)
+// {
+//     if (i >= word1.size())
+//         return word2.size() - j;
+//     if (j >= word2.size())
+//         return word1.size() - i;
+//     if (dp[i][j] != -1)
+//         return dp[i][j];
+
+//     int ans = 0;
+//     if (word1[i] == word2[j])
+//         ans = solvemem(word1, i + 1, word2, j + 1, dp);
+//     else
+//     {
+//         // insert
+//         int insertans = 1 + solvemem(word1, i, word2, j + 1, dp);
+//         // delete
+//         int deleteans = 1 + solvemem(word1, i + 1, word2, j, dp);
+//         // replace
+//         int replaceans = 1 + solvemem(word1, i + 1, word2, j + 1, dp);
+//         ans = min(insertans, min(deleteans, replaceans));
+//     }
+//     return dp[i][j] = ans;
+// }
+
+// int solvetab(string &word1, string &word2)
+// {
+//     vector<vector<int>> dp(word1.length() + 1, vector<int>(word2.length() + 1, 0));
+//     for (int j = 0; j <= word2.length(); j++)
+//     {
+//         dp[word1.length()][j] = word2.length() - j;
+//     }
+//     for (int i = 0; i <= word1.length(); i++)
+//     {
+//         dp[i][word2.length()] = word1.length() - i;
+//     }
+
+//     for (int i = word1.length() - 1; i >= 0; i--)
+//     {
+//         for (int j = word2.length() - 1; j >= 0; j--)
+//         {
+//             int ans = 0;
+//             if (word1[i] == word2[j])
+//                 ans = dp[i + 1][j + 1];
+//             else
+//             {
+//                 // insert
+//                 int insertans = 1 + dp[i][j + 1];
+//                 // delete
+//                 int deleteans = 1 + dp[i + 1][j];
+//                 // replace
+//                 int replaceans = 1 + dp[i + 1][j + 1];
+//                 ans = min(insertans, min(deleteans, replaceans));
+//             }
+//             dp[i][j] = ans;
+//         }
+//     }
+//     return dp[0][0];
+// }
+
+// int spaceopti(string &word1, string &word2)
+// {
+//     vector<int> curr(word2.length() + 1, 0);
+//     vector<int> next(word2.length() + 1, 0);
+
+//     for (int j = 0; j < word2.length(); j++)
+//     {
+//         next[j] = word2.length() - j;
+//     }
+
+//     for (int i = word1.length() - 1; i >= 0; i--)
+//     {
+//         for (int j = word2.length() - 1; j >= 0; j--)
+//         {
+
+//             // catch here(this just next line is a base case)
+//             curr[word2.length()] = word1.length() - i;
+//             int ans = 0;
+//             if (word1[i] == word2[j])
+//                 ans = next[j + 1];
+//             else
+//             {
+//                 // insert
+//                 int insertans = 1 + curr[j + 1];
+//                 // delete
+//                 int deleteans = 1 + next[j];
+//                 // replace
+//                 int replaceans = 1 + next[j + 1];
+//                 ans = min(insertans, min(deleteans, replaceans));
+//             }
+//             curr[j] = ans;
+//         }
+//         next = curr;
+//     }
+//     return next[0];
+// }
+
+// int minDistance(string word1, string word2)
+// {
+//     if (word1.length() == 0)
+//         return word2.length();
+//     if (word2.length() == 0)
+//         return word1.length();
+
+//     // rec
+//     // return solve(word1, 0, word2, 0);
+
+//     // rec+mem
+//     // vector<vector<int>> dp(word1.length()+1, vector<int> (word2.length()+1, -1));
+//     // return solvemem(word1, 0, word2, 0, dp);
+
+//     // tabulation
+//     // return solvetab(word1, word2);
+
+//     // space opti
+//     return spaceopti(word1, word2);
+// }
+
+// ***********  Given a rows x cols binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.///////
+
+// vector<int> nextSmallerElement(vector<int> arr, int n)
+// {
+//     stack<int> s;
+//     s.push(-1);
+//     vector<int> ans(n);
+
+//     for (int i = n - 1; i >= 0; i--)
+//     {
+//         int curr = arr[i];
+//         while (s.top() != -1 && arr[s.top()] >= curr)
+//         {
+//             s.pop();
+//         }
+//         ans[i] = s.top();
+//         s.push(i);
+//     }
+//     return ans;
+// }
+
+// vector<int> prevSmallerElement(vector<int> arr, int n)
+// {
+//     stack<int> s;
+//     s.push(-1);
+//     vector<int> ans(n);
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         int curr = arr[i];
+//         while (s.top() != -1 && arr[s.top()] >= curr)
+//         {
+//             s.pop();
+//         }
+//         ans[i] = s.top();
+//         s.push(i);
+//     }
+//     return ans;
+// }
+
+// int largestRectangleArea(vector<int> &heights)
+// {
+//     int n = heights.size();
+//     vector<int> next(n);
+//     next = nextSmallerElement(heights, n);
+//     vector<int> prev(n);
+//     prev = prevSmallerElement(heights, n);
+
+//     int area = INT_MIN;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int l = heights[i];
+//         if (next[i] == -1)
+//         {
+//             next[i] = n;
+//         }
+//         int b = next[i] - prev[i] - 1;
+//         int newarea = l * b;
+//         area = max(area, newarea);
+//     }
+//     return area;
+// }
+
+// int maximalRectangle(vector<vector<char>> &matrix)
+// {
+//     int maxi = INT_MIN;
+
+//     vector<int> histogram(matrix[0].size(), 0);
+
+//     for (int i = 0; i < matrix.size(); i++)
+//     {
+//         for (int j = 0; j < histogram.size(); j++)
+//         {
+//             if (matrix[i][j] == '1')
+//                 histogram[j]++;
+//             else
+//                 histogram[j] = 0;
+//         }
+//         maxi = max(maxi, largestRectangleArea(histogram));
+//     }
+//     return maxi;
+// }
+
+// ************ WILD CARD MATCHING ***********************
+// Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+
+// '?' Matches any single character.
+// '*' Matches any sequence of characters (including the empty sequence).
+// The matching should cover the entire input string (not partial).
+
+// bool solve(string &s, string &p, int i, int j)
+// {
+//     if (i < 0 && j < 0)
+//         return true;
+//     if (j < 0 && i >= 0)
+//         return false;
+//     if (i < 0 && j >= 0)
+//     {
+//         for (int k = 0; k <= j; k++)
+//         {
+//             if (p[k] != '*')
+//                 return false;
+//         }
+//         return true;
+//     }
+//     bool ans;
+
+//     if (s[i] == p[j] || p[j] == '?')
+//         ans = solve(s, p, i - 1, j - 1);
+
+//     else if (p[j] == '*')
+//         ans = (solve(s, p, i, j - 1) || (solve(s, p, i - 1, j)));
+//     else
+//         ans = false;
+//     return ans;
+// }
+
+// bool solvemem(string &s, string &p, int i, int j, vector<vector<int>> &dp)
+// {
+//     if (i < 0 && j < 0)
+//         return true;
+//     if (j < 0 && i >= 0)
+//         return false;
+//     if (i < 0 && j >= 0)
+//     {
+//         for (int k = 0; k <= j; k++)
+//         {
+//             if (p[k] != '*')
+//                 return false;
+//         }
+//         return true;
+//     }
+//     if (dp[i][j] != -1)
+//         return dp[i][j];
+//     bool ans;
+
+//     if (s[i] == p[j] || p[j] == '?')
+//         ans = solvemem(s, p, i - 1, j - 1, dp);
+
+//     else if (p[j] == '*')
+//         ans = (solvemem(s, p, i, j - 1, dp) || (solvemem(s, p, i - 1, j, dp)));
+//     else
+//         ans = false;
+//     return dp[i][j] = ans;
+// }
+
+// bool solvetab(string &s, string &p)
+// {
+//     vector<vector<int>> dp(s.length() + 1, vector<int>(p.length() + 1, 0));
+//     dp[0][0] = true;
+
+//     for (int j = 1; j <= p.length(); j++)
+//     {
+//         bool flag = true;
+//         for (int k = 1; k <= j; k++)
+//         {
+//             if (p[k - 1] != '*')
+//             {
+//                 flag = false;
+//                 break;
+//             }
+//         }
+//         dp[0][j] = flag;
+//     }
+
+//     for (int i = 1; i <= s.length(); i++)
+//     {
+//         for (int j = 1; j <= p.length(); j++)
+//         {
+
+//             if (s[i - 1] == p[j - 1] || p[j - 1] == '?')
+//                 dp[i][j] = dp[i - 1][j - 1];
+
+//             else if (p[j - 1] == '*')
+//                 dp[i][j] = (dp[i][j - 1] || dp[i - 1][j]);
+//             else
+//                 dp[i][j] = false;
+//         }
+//     }
+//     return dp[s.length()][p.length()];
+// }
+
+// bool spaceopti(string &s, string &p)
+// {
+//     vector<int> curr(p.length() + 1, 0);
+//     vector<int> prev(p.length() + 1, 0);
+
+//     prev[0] = true;
+
+//     for (int j = 1; j <= p.length(); j++)
+//     {
+//         bool flag = true;
+//         for (int k = 1; k <= j; k++)
+//         {
+//             if (p[k - 1] != '*')
+//             {
+//                 flag = false;
+//                 break;
+//             }
+//         }
+//         prev[j] = flag;
+//     }
+
+//     for (int i = 1; i <= s.length(); i++)
+//     {
+//         for (int j = 1; j <= p.length(); j++)
+//         {
+
+//             if (s[i - 1] == p[j - 1] || p[j - 1] == '?')
+//                 curr[j] = prev[j - 1];
+
+//             else if (p[j - 1] == '*')
+//                 curr[j] = (curr[j - 1] || prev[j]);
+//             else
+//                 curr[j] = false;
+//         }
+//         prev = curr;
+//     }
+//     return prev[p.length()];
+// }
+
+// bool isMatch(string s, string p)
+// {
+//     // rec
+//     // return solve(s, p, s.length()-1, p.length()-1);
+
+//     // rec+mem
+//     // vector<vector<int>> dp(s.length()+1, vector<int>(p.length()+1, -1));
+//     // return solvemem(s, p, s.length()-1, p.length()-1, dp);
+
+//     //  tabulation
+//     // return solvetab(s, p);
+
+//     // space opti
+//     return spaceopti(s, p);
+// }
+
+// **************   GREEDY ALGORITHM***********
