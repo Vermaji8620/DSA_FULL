@@ -9809,6 +9809,60 @@
 //   //   return -1;
 // }
 
+// ------BELMANN -FORD ALGORITHM CODED BY ME ----------
+// #include <bits/stdc++.h>
+// #include <iostream>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+
+//     // Write your code here.
+//     int n = 4, m = 4;
+//     vector<vector<int>> edges = {{1, 2, 4}, {2, 4, 7}, {1, 3, 3}, {3, 4, -2}};
+//     int src = 1;
+//     int desc = 4;
+
+//     vector<int> ans(n + 1, 1e9);
+//     ans[src] = 0;
+//     for (int i = 1; i < n; i++)
+//     {
+//         for (int j = 0; j < m; j++)
+//         {
+//             int u = edges[j][0];
+//             int v = edges[j][1];
+//             int wt = edges[j][2];
+//             if (ans[u] + wt < ans[v] && ans[u] != 1e9)
+//             {
+//                 ans[v] = ans[u] + wt;
+//             }
+//         }
+//     }
+//     int flag = 0;
+//     for (int j = 0; j < m; j++)
+//     {
+//         int u = edges[j][0];
+//         int v = edges[j][1];
+//         int wt = edges[j][2];
+//         if (ans[u] + wt < ans[v] && ans[u] != 1e9)
+//         {
+//             flag = 1;
+//             ans[v] = ans[u] + wt;
+//         }
+//     }
+//     if (flag == 1)
+//         cout << "NP";
+//     else
+//     {
+//         // for (int i = 0; i <= n; i++)
+//         // {
+//         //     cout << ans[i] << " ,";
+//         // }
+//         cout << ans[desc];
+//     }
+//     return 0;
+// }
+
 //  *********** DYNAMIC PROGRAMMING *************
 //  USING TOP-DOWN APPROACH
 // #include "vector"
@@ -12970,3 +13024,491 @@
 // }
 
 // **************   GREEDY ALGORITHM***********
+//  N MEETINGS IN A ROOM
+//{ Driver Code Starts
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// // } Driver Code Ends
+// class Solution
+// {
+// public:
+//     // Function to find the maximum number of meetings that can
+//     // be performed in a meeting room.
+
+//     static bool cmp(pair<int, int> a, pair<int, int> b)
+//     {
+//         return a.second < b.second;
+//     }
+
+//     int maxMeetings(int start[], int end[], int n)
+//     {
+//         vector<pair<int, int>> v;
+//         for (int i = 0; i < n; i++)
+//         {
+//             pair<int, int> p = {start[i], end[i]};
+//             v.push_back(p);
+//         }
+//         sort(v.begin(), v.end(), cmp);
+
+//         int count = 1;
+//         int ansend = v[0].second;
+//         for (int i = 1; i < n; i++)
+//         {
+//             if (v[i].first > ansend)
+//             {
+//                 count++;
+//                 ansend = v[i].second;
+//             }
+//         }
+//         return count;
+//     }
+// };
+
+// //{ Driver Code Starts.
+// int main()
+// {
+//     int t;
+//     cin >> t;
+//     while (t--)
+//     {
+//         int n;
+//         cin >> n;
+//         int start[n], end[n];
+//         for (int i = 0; i < n; i++)
+//             cin >> start[i];
+
+//         for (int i = 0; i < n; i++)
+//             cin >> end[i];
+
+//         Solution ob;
+//         int ans = ob.maxMeetings(start, end, n);
+//         cout << ans << endl;
+//     }
+//     return 0;
+// }
+// // } Driver Code Ends
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//*******************   START IMPORTANT QUESTIONS   ********************************************
+// Convert BST to Min Heap
+// Input:       4
+//                 /   \
+//               2     6
+//             /  \   /  \
+//           1   3  5    7
+// Output:  1
+//                /   \
+//              2     5
+//            /  \   /  \
+//          3   4  6    7
+
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// class node
+// {
+// public:
+//     int data;
+//     node *left, *right;
+//     node(int data)
+//     {
+//         this->data = data;
+//         this->left = this->right = NULL;
+//     }
+// };
+
+// node *getnum(int num)
+// {
+//     node *makenode = new node(num);
+//     return makenode;
+// }
+
+// void getvctr(node *root, int v[], int &i)
+// {
+//     if (root == NULL)
+//         return;
+//     getvctr(root->left, v, i);
+//     v[i++] = (root->data);
+//     getvctr(root->right, v, i);
+// }
+
+// void nowmakepreorder(node *root, int arr[], int &index)
+// {
+
+//     if (root == NULL)
+//         return;
+//     root->data = arr[index++];
+//     nowmakepreorder(root->left, arr, index);
+//     nowmakepreorder(root->right, arr, index);
+// }
+
+// void nowgetpreorder(node *ro)
+// {
+//     if (ro == NULL)
+//         return;
+//     cout << ro->data << " ";
+//     nowgetpreorder(ro->left);
+//     nowgetpreorder(ro->right);
+// }
+
+// int main()
+// {
+//     node *root = new node(4);
+//     root->left = getnum(2);
+//     root->right = getnum(6);
+//     root->left->left = getnum(1);
+//     root->left->right = getnum(3);
+//     root->right->left = getnum(5);
+//     root->right->right = getnum(7);
+//     int sz = 7;
+//     int vctr[sz];
+//     int i = 0;
+//     getvctr(root, vctr, i);
+
+//     for (int i = 0; i < 7; i++)
+//     {
+//         cout << vctr[i] << " ";
+//     }
+//     int index = 0;
+//     nowmakepreorder(root, vctr, index);
+//     nowgetpreorder(root);
+//     return 0;
+// }
+
+//  Shortest Unique prefix for every word
+// Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
+
+// Example 1:
+
+// Input:
+// N = 4
+// arr[] = {"zebra", "dog", "duck", "dove"}
+// Output: z dog du dov
+// Explanation:
+// z => zebra
+// dog => dog
+// duck => du
+// dove => dov
+
+//  USING NORMAL APPROACH
+
+// #include <iostream>
+// #include <unordered_map>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+//     unordered_map<string, int> mappp;
+//     string arr[4] = {"zebra", "dog", "duck", "dove"};
+//     for (int i = 0; i < 4; i++)
+//     {
+//         string prefix = "";
+//         for (char ch : arr[i])
+//         {
+//             prefix += ch;
+//             mappp[prefix]++;
+//         }
+//     }
+//     for (int i = 0; i < 4; i++)
+//     {
+//         string prefix = "";
+//         // string str[];
+//         for (char ch : arr[i])
+//         {
+//             prefix += ch;
+//             if (mappp[prefix] == 1)
+//             {
+//                 // str->push_back(prefix);
+//                 (i != 3) ? cout << prefix << " ," : cout << prefix;
+//                 break;
+//             }
+//         }
+//     }
+//     return 0;
+// }
+
+// USING TRIE APPROACH
+
+// class trienode
+// {
+// public:
+//     trienode *children[26];
+//     int cnt;
+//     trienode()
+//     {
+//         for (int i = 0; i < 26; i++)
+//         {
+//             this->children[i] = NULL;
+//         }
+//         this->cnt = 0;
+//     }
+// };
+
+// class Solution
+// {
+// public:
+//     void insert_string(trienode *root, string &str)
+//     {
+
+//         trienode *temp = root;
+//         for (int i = 0; i < str.size(); i++)
+//         {
+//             int val = str[i] - 'a';
+//             if (temp->children[val] == NULL)
+//             {
+//                 temp->children[val] = new trienode();
+//             }
+//             temp = temp->children[val];
+//             temp->cnt++;
+//         }
+//     }
+
+//     string getstring(trienode *root, string &str)
+//     {
+//         string res = "";
+//         trienode *temp = root;
+//         for (int i = 0; i < str.size(); i++)
+//         {
+//             int val = str[i] - 'a';
+//             res += str[i];
+//             temp = temp->children[val];
+//             if (temp->cnt == 1)
+//                 return res;
+//         }
+//         return res;
+//     }
+
+//     vector<string> findPrefixes(string arr[], int n)
+//     {
+//         // code here
+//         trienode *root = new trienode();
+//         for (int i = 0; i < n; i++)
+//         {
+//             insert_string(root, arr[i]);
+//         }
+
+//         vector<string> ans;
+//         for (int i = 0; i < n; i++)
+//         {
+//             string strt = getstring(root, arr[i]);
+//             ans.push_back(strt);
+//         }
+//         return ans;
+//     }
+// };
+
+// third approach
+
+// #include <iostream>
+// using namespace std;
+
+// class trienode
+// {
+// public:
+//     trienode *child[26];
+//     bool is;
+//     trienode()
+//     {
+//         this->is = false;
+//         for (int i = 0; i < 26; i++)
+//         {
+//             this->child[i] = NULL;
+//         }
+//     }
+// };
+
+// void insert(trienode *node, string word)
+// {
+//     if (word.length() == 0)
+//     {
+//         node->is = true;
+//         return;
+//     }
+//     int index = word[0] - 'a';
+//     trienode *pointer;
+//     if (node->child[index] != NULL)
+//     {
+//         pointer = node->child[index];
+//     }
+//     else
+//     {
+//         pointer = new trienode();
+//         node->child[index] = pointer;
+//     }
+//     insert(pointer, word.substr(1));
+// }
+
+// bool found(trienode *node, string word)
+// {
+//     if ((word.length()) == 0)
+//         return node->is;
+//     int index = word[0] - 'a';
+//     trienode *child;
+//     if (node->child[index] != NULL)
+//     {
+//         child = node->child[index];
+//     }
+//     else
+//         return false;
+
+//     return found(child, word.substr(1));
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     trienode *node = new trienode();
+//     insert(node, "zebra");
+//     insert(node, "dog");
+//     insert(node, "duck");
+//     insert(node, "dove");
+//     cout << found(node, "duck");
+//     return 0;
+// }
+
+// CLONING A GRAPH
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+*/
+// class Solution
+// {
+// public:
+//     Node *clonenode(Node *node, unordered_map<Node *, Node *> &mapppp)
+//     {
+//         if (mapppp.find(node) != mapppp.end())
+//         {
+//             return mapppp[node];
+//         }
+
+//         Node *clonedNode = new Node(node->val);
+//         mapppp[node] = clonedNode;
+
+//         for (Node *neighbor : node->neighbors)
+//         {
+//             clonedNode->neighbors.push_back(clonenode(neighbor, mapppp));
+//         }
+
+//         return clonedNode;
+//     }
+
+//     Node *cloneGraph(Node *node)
+//     {
+//         if (node == nullptr)
+//             return nullptr;
+//         unordered_map<Node *, Node *> mapppp;
+//         return clonenode(node, mapppp);
+//     }
+// };
+
+// FLOYYD-WARSHALL GRAPH ALGORITHM-------
+// class Solution
+// {
+// public:
+//     void shortest_distance(vector<vector<int>> &matrix)
+//     {
+//         // Code here
+
+//         int n = matrix.size();
+//         int m = matrix[0].size();
+//         for (int i = 0; i < n; i++)
+//         {
+//             for (int j = 0; j < m; j++)
+//             {
+//                 if (matrix[i][j] == -1)
+//                     matrix[i][j] = 1e9;
+//             }
+//         }
+
+//         for (int k = 0; k < m; k++)
+//         {
+//             for (int i = 0; i < n; i++)
+//             {
+//                 for (int j = 0; j < m; j++)
+//                 {
+//                     matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+//                 }
+//             }
+//         }
+
+//         for (int i = 0; i < n; i++)
+//         {
+//             for (int j = 0; j < m; j++)
+//             {
+//                 if (matrix[i][j] == 1e9)
+//                     matrix[i][j] = -1;
+//             }
+//         }
+//     }
+// };
+
+//  NUMBER OF SPANNING TREESM POSSIBLE -------------
+// STEP 1: Create Adjacency Matrix for the given graph.
+// STEP 2: Replace all the diagonal elements with the degree of nodes. For eg. element at (1,1) position of adjacency matrix will be replaced by the degree of node 1, element at (2,2) position of adjacency matrix will be replaced by the degree of node 2, and so on.
+// STEP 3: Replace all non-diagonal 1’s with -1.
+// STEP 4: Calculate co-factor for any element.
+// STEP 5: The cofactor that you get is the total number of spanning tree for that graph.
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(int argc, char const *argv[])
+{
+    vector<vector<int>> graph = {{0, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 0}};
+    unordered_map<int, list<int>> mappp;
+    for (int i = 0; i < graph.size(); i++)
+    {
+        int u = graph[i]
+    }
+    return 0;
+}

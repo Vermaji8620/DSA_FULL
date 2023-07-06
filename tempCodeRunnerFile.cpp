@@ -1,52 +1,66 @@
+
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void go(int *arr, int sz, int k, vector<int> &vctr)
+class trienode
 {
-    int i = 0;
-    int j = 0;
-    int maxx = INT_MIN;
-    int minn = INT_MAX;
-    while (j <= sz)
+public:
+    trienode *child[26];
+    bool is;
+    trienode()
     {
-        if (j - i + 1 <= k)
+        this->is = false;
+        for (int i = 0; i < 26; i++)
         {
-            maxx = max(maxx, arr[j]);
-            minn = min(minn, arr[j]);
-            j++;
-        }
-        else
-        {
-            vctr.push_back(maxx + minn);
-            i++;
-            for (int p = i; p <= j; p++)
-            {
-                maxx = max(maxx, arr[j]);
-                minn = min(minn, arr[j]);
-            }
-            j++;
+            this->child[i] = NULL;
         }
     }
-}
+};
 
-int prit(vector<int> vcr, int count)
+void insert(trienode *node, string word)
 {
-    for (auto i : vcr)
+    if (word.length() == 0)
     {
-        count += i;
+        node->is = true;
+        return;
     }
-    return count;
+    int index = word[0] - 'a';
+    trienode *pointer;
+    if (node->child[index] != NULL)
+    {
+        pointer = node->child[index];
+    }
+    else
+    {
+        pointer = new trienode();
+        node->child[index] = pointer;
+    }
+    insert(pointer, word.substr(1));
 }
 
-int main()
+bool found(trienode *node, string word)
 {
-    int arr[7] = {2, 5, -1, 7, -3, -1, -2};
-    int size = 7;
-    int k = 4;
-    vector<int> vctr;
-    go(arr, size, k, vctr);
-    int count = 0;
-    cout << prit(vctr, count);
+    if ((word.length()) == 0)
+        return node->is;
+    int index = word[0] - 'a';
+    trienode *child;
+    if (node->child[index] != NULL)
+    {
+        child = node->child[index];
+    }
+    else
+        return false;
+
+    return found(child, word.substr(1));
+}
+
+int main(int argc, char const *argv[])
+{
+    trienode *node = new trienode();
+    insert(node, "zebra");
+    insert(node, "dog");
+    insert(node, "duck");
+    insert(node, "dove");
+
     return 0;
 }
