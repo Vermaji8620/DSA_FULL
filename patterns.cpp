@@ -13498,17 +13498,195 @@ public:
 // STEP 4: Calculate co-factor for any element.
 // STEP 5: The cofactor that you get is the total number of spanning tree for that graph.
 
-#include <iostream>
-#include <bits/stdc++.h>
-using namespace std;
+// #include <iostream>
+// #include <bits/stdc++.h>
+// using namespace std;
 
-int main(int argc, char const *argv[])
-{
-    vector<vector<int>> graph = {{0, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 0}};
-    unordered_map<int, list<int>> mappp;
-    for (int i = 0; i < graph.size(); i++)
-    {
-        int u = graph[i]
-    }
-    return 0;
-}
+// int main(int argc, char const *argv[])
+// {
+//     vector<vector<int>> graph = {{0, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 0}};
+//     unordered_map<int, list<int>> mappp;
+//     for (int i = 0; i < graph.size(); i++)
+//     {
+//         int u = graph[i]
+//     }
+//     return 0;
+// }
+
+// MINIMUM TIME TAKEN BY A JOB TO BE COMPLETED GIVEN BY A DIRECTED ACYCLIC GRAPH-------------
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class graph
+// {
+// public:
+//     unordered_map<int, list<int>> adj;
+
+//     void addedge(int u, int v, int point)
+//     {
+//         adj[u].push_back(v);
+//         if (point == 1)
+//         {
+//             adj[v].push_back(u);
+//         }
+//     }
+
+//     void print()
+//     {
+//         for (auto i : adj)
+//         {
+//             cout << i.first << "->";
+//             for (auto j : i.second)
+//             {
+//                 cout << j << " ";
+//             }
+//             cout << endl;
+//         }
+//     }
+
+//     void findedge(vector<int> &vctr)
+//     {
+//         for (auto i : adj)
+//         {
+//             for (auto j : i.second)
+//             {
+//                 vctr[j]++;
+//             }
+//         }
+//     }
+
+//     void finalansfunc(queue<int> q, vector<int> &minTime, vector<int> &finalans, vector<int> vctr)
+//     {
+//         while (!q.empty())
+//         {
+//             int front = q.front();
+//             q.pop();
+//             finalans.push_back(front);
+//             for (auto nghbr : adj[front])
+//             {
+//                 vctr[nghbr]--;
+//                 if (vctr[nghbr] == 0)
+//                 {
+//                     q.push(nghbr);
+//                 }
+//                 minTime[nghbr] = max(minTime[nghbr], minTime[front] + 1); // Assume each job takes 1 unit of time
+//             }
+//         }
+//     }
+// };
+
+// int main()
+// {
+//     graph g;
+//     int n = 7, e = 7;
+//     g.addedge(1, 2, 0);
+//     g.addedge(2, 3, 0);
+//     g.addedge(2, 4, 0);
+//     g.addedge(2, 5, 0);
+//     g.addedge(3, 6, 0);
+//     g.addedge(4, 6, 0);
+//     g.addedge(5, 7, 0);
+//     g.print();
+
+//     vector<int> vctr(n);
+//     g.findedge(vctr);
+//     queue<int> q;
+//     for (int i = 0; i < vctr.size(); i++)
+//     {
+//         if (vctr[i] == 0)
+//         {
+//             q.push(i);
+//         }
+//     }
+
+//     vector<int> minTime(n);
+//     vector<int> finalans;
+
+//     g.finalansfunc(q, minTime, finalans, vctr);
+
+//     cout << "Minimum time taken by each job:\n";
+//     for (auto j : minTime)
+//     {
+//         cout << j << " ";
+//     }
+//     cout << endl;
+
+//     cout << "Order of jobs:\n";
+//     for (auto j : finalans)
+//     {
+//         cout << j << " ";
+//     }
+//     cout << endl;
+
+//     return 0;
+// }
+
+//  CHECKING FOR A BIPARTITE GRAPH
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool bipartitechck(unordered_map<int, list<int>> &adj, int node, int color[])
+// {
+//     queue<int> q;
+//     color[node] = 0;
+//     q.push(node);
+//     while (!q.empty())
+//     {
+//         int front = q.front();
+//         q.pop();
+//         for (auto nghbr : adj[front])
+//         {
+//             if (color[nghbr] == -1)
+//             {
+//                 color[nghbr] = 1 - color[front];
+//                 q.push(nghbr);
+//             }
+//             else if (color[nghbr] == color[front])
+//                 return false;
+//         }
+//     }
+//     return true;
+// }
+
+// bool check(unordered_map<int, list<int>> &adj, int n)
+// {
+//     int color[n];
+//     memset(color, -1, sizeof color);
+//     // for (int i = 0; i < n; i++)
+//     //     color[i] = -1;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (color[i] == -1)
+//         {
+//             if (!bipartitechck(adj, i, color))
+//                 return false;
+//         }
+//     }
+//     return true;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     int n, m, u, v;
+//     cout << "enter number of vertices" << endl;
+//     cin >> n;
+//     cout << "enter number of edges" << endl;
+//     cin >> m;
+//     unordered_map<int, list<int>> adj(n);
+//     for (int i = 0; i < m; i++)
+//     {
+//         cin >> u >> v;
+//         adj[u].push_back(v);
+//         adj[v].push_back(u);
+//     }
+
+//     if (check(adj, n))
+//     {
+//         cout << true;
+//     }
+//     else
+//     {
+//         cout << false;
+//     }
+//     return 0;
+// }
