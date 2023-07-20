@@ -13690,3 +13690,269 @@ public:
 //     }
 //     return 0;
 // }
+
+//  FIND THE MAXIMUM DISTANCE IN DAG(Directed Acyclic Graph)
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class graph
+// {
+// public:
+//     unordered_map<int, list<pair<int, int>>> adj;
+//     void addEdge(int start, int end, int weight)
+//     {
+//         adj[start].push_back({end, weight});
+//     }
+
+//     // void print()
+//     // {
+//     //     for (auto i : adj)
+//     //     {
+//     //         cout << i.first << " -> ";
+//     //         for (auto j : i.second)
+//     //         {
+//     //             cout << j.first << "-- " << j.second << " / ";
+//     //         }
+//     //         cout << endl;
+//     //     }
+//     // }
+
+//     void findtopo(int node, stack<pair<int, int>> &sta, unordered_map<int, bool> &visited, vector<int> &dist)
+//     {
+//         visited[node] = true;
+//         auto nghbr = adj[node].begin();
+//         for (auto nghbr : adj[node])
+//         {
+//             if (!visited[nghbr.first])
+//             {
+//                 findtopo(nghbr.first, sta, visited, dist);
+//             }
+//         }
+//         sta.push({node, dist[node]});
+//     }
+
+//     void find(stack<pair<int, int>> &sta, unordered_map<int, bool> &visited, vector<int> &dist)
+//     {
+//         for (int i = 0; i < 6; i++)
+//         {
+//             if (!visited[i])
+//             {
+//                 findtopo(i, sta, visited, dist);
+//             }
+//         }
+//     }
+
+//     void findist(stack<pair<int, int>> &sta, vector<int> &dist)
+//     {
+//         while (!sta.empty())
+//         {
+//             pair<int, int> top = sta.top();
+//             sta.pop();
+//             if (dist[top.first] != INT_MIN)
+//             {
+//                 for (auto nghbr : adj[top.first])
+//                 {
+//                     if (dist[top.first] + nghbr.second > dist[nghbr.first])
+//                     {
+//                         dist[nghbr.first] = dist[top.first] + nghbr.second;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// };
+
+// int main(int argc, char const *argv[])
+// {
+//     graph g;
+//     g.addEdge(0, 1, 5);
+//     g.addEdge(0, 2, 3);
+//     g.addEdge(1, 3, 6);
+//     g.addEdge(1, 2, 2);
+//     g.addEdge(2, 4, 4);
+//     g.addEdge(2, 5, 2);
+//     g.addEdge(2, 3, 7);
+//     g.addEdge(3, 5, 1);
+//     g.addEdge(3, 4, -1);
+//     g.addEdge(4, 5, -2);
+//     int source = 1;
+
+//     vector<int> dist(6, INT_MIN);
+//     dist[source] = 0;
+
+//     stack<pair<int, int>> sta;
+//     sta.push({source, 0});
+
+//     for (int i = 0; i < 6; i++)
+//     {
+//         cout << dist[i] << "_";
+//     }
+
+//     unordered_map<int, bool> visited(false);
+
+//     g.find(sta, visited, dist);
+
+//     g.findist(sta, dist);
+
+//     cout << endl;
+//     for (int i = 0; i < 6; i++)
+//     {
+//         cout << dist[i] << "_";
+//     }
+//     return 0;
+// }
+
+//   JOURNEY TO THE MOON (PAIR MAKINGN PROBLEM)
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class graph
+// {
+// public:
+//     unordered_map<int, list<int>> adj;
+
+//     void addedge(int u, int v)
+//     {
+//         adj[u].push_back(v);
+//         adj[v].push_back(u);
+//     }
+
+//     void traversee(unordered_map<int, bool> &visited, int node, int &count)
+//     {
+//         visited[node] = true;
+//         for (auto nghbr : adj[node])
+//         {
+//             if (!visited[nghbr])
+//             {
+//                 count++;
+//                 traversee(visited, nghbr, count);
+//             }
+//         }
+//     }
+// };
+
+// int main(int argc, char const *argv[])
+// {
+//     graph g;
+//     unordered_map<int, bool> visited;
+//     int n = 5, e = 3;
+//     g.addedge(0, 1);
+//     g.addedge(2, 3);
+//     g.addedge(0, 4);
+//     queue<int> q;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (!visited[i])
+//         {
+//             int c_component = 1;
+//             g.traversee(visited, i, c_component);
+//             q.push(c_component);
+//         }
+//     }
+//     int sum = 0;
+//     int totsum = 0;
+//     while (!q.empty())
+//     {
+//         int top = q.front();
+//         totsum += top;
+//         q.pop();
+//         sum += (top * (top - 1) / 2);
+//     }
+//     cout << (totsum * (totsum - 1) / 2) - sum;
+//     return 0;
+// }
+
+//  FLIGHTS WITH K STOPS -------
+//
+// class Solution
+// {
+// public:
+//     int findactualdist(unordered_map<int, list<pair<int, int>>> &adj, int src, int dst, int k, int sum, int takeminn, int cntt)
+//     {
+//         if (src == dst)
+//         {
+//             if (cntt - 1 <= k)
+//             {
+//                 takeminn = min(takeminn, sum);
+//             }
+//             return takeminn;
+//         }
+
+//         if (cntt > k)
+//         {
+//             return takeminn;
+//         }
+
+//         for (auto nghbr : adj[src])
+//         {
+//             sum += nghbr.second;
+//             cntt++;
+//             takeminn = findactualdist(adj, nghbr.first, dst, k, sum, takeminn, cntt);
+//             sum -= nghbr.second;
+//             cntt--;
+//             AC
+//         }
+//         return takeminn;
+//     }
+
+//     int findCheapestPrice(int n, vector<vector<int>> &flights, int src, int dst, int k)
+//     {
+//         unordered_map<int, list<pair<int, int>>> adj;
+
+//         for (int i = 0; i < flights.size(); i++)
+//         {
+//             int u = flights[i][0];
+//             int v = flights[i][1];
+//             int wt = flights[i][2];
+//             adj[u].push_back({v, wt});
+//         }
+
+//         int takeminn = 1e9;
+//         int cntt = 0;
+//         int sum = 0;
+//         return (findactualdist(adj, src, dst, k, sum, takeminn, cntt)) == 1e9 ? -1 : findactualdist(adj, src, dst, k, sum, takeminn, cntt);
+//     }
+// };
+
+// ------------optimised approach------------
+// class Solution
+// {
+// public:
+//     int findCheapestPrice(int n, vector<vector<int>> &flights, int src, int dst, int k)
+//     {
+//         vector<vector<pair<int, int>>> adj(n);
+//         for (auto flight : flights)
+//         {
+//             // flight[0] represent node i, flight[1] represent neighbor node of node i, flight[2] represent cost between node i to neighbor node
+//             adj[flight[0]].push_back({flight[1], flight[2]});
+//         }
+//         // it will store [node, cost]
+//         queue<pair<int, int>> q;
+//         q.push({src, 0});
+//         // it will store minimum cost to reach each node
+//         vector<int> minCost(n, INT_MAX);
+//         int stops = 0;
+//         while (!q.empty() && stops <= k)
+//         {
+//             int size = q.size();
+//             while (size--)
+//             {
+//                 auto [currNode, cost] = q.front();
+//                 q.pop();
+//                 for (auto &[neighbour, price] : adj[currNode])
+//                 {
+//                     if (price + cost < minCost[neighbour])
+//                     {
+//                         minCost[neighbour] = price + cost;
+//                         q.push({neighbour, minCost[neighbour]});
+//                     }
+//                 }
+//             }
+//             stops++;
+//         }
+//         if (minCost[dst] == INT_MAX)
+//             return -1;
+//         return minCost[dst];
+//     }
+// };
