@@ -13956,3 +13956,165 @@ public:
 //         return minCost[dst];
 //     }
 // };
+
+// Next Permutation(v.v.imp qstn)
+// class Solution
+// {
+// public:
+//     void nextPermutation(vector<int> &nums)
+//     {
+//         int ind = -1;
+//         int n = nums.size();
+//         for (int i = n - 2; i >= 0; i--)
+//         {
+//             if (nums[i] < nums[i + 1])
+//             {
+//                 ind = i;
+//                 break;
+//             }
+//         }
+//         if (ind == -1)
+//         {
+//             reverse(nums.begin(), nums.end());
+//             return;
+//         }
+
+//         for (int i = n - 1; i > ind; i--)
+//         {
+//             if (nums[i] > nums[ind])
+//             {
+//                 swap(nums[i], nums[ind]);
+//                 break;
+//             }
+//         }
+
+//         reverse(nums.begin() + ind + 1, nums.end());
+//     }
+// };
+
+// Given three arrays sorted in increasing order. Find the elements that are common in all three arrays.
+// Note: can you take care of the duplicates without using any additional Data Structure?
+// https://practice.geeksforgeeks.org/problems/common-elements1132/1
+
+// O(N) TC & O(N) SC working code---------
+// vector<int> commonElements(int A[], int B[], int C[], int n1, int n2, int n3)
+// {
+//     map<int, pair<bool, int>> mappp;
+//     // int maxi= INT_MIN;
+//     vector<int> v;
+//     for (int i = 0; i < n1; i++)
+//     {
+//         if (!mappp[A[i]].first)
+//         {
+//             mappp[A[i]].second++;
+//             mappp[A[i]].first = true;
+//         }
+//     }
+//     for (int i = 0; i < n1; i++)
+//         mappp[A[i]].first = false;
+
+//     for (int i = 0; i < n2; i++)
+//     {
+//         if (!mappp[B[i]].first)
+//         {
+//             mappp[B[i]].second++;
+//             mappp[B[i]].first = true;
+//         }
+//     }
+//     for (int i = 0; i < n2; i++)
+//         mappp[B[i]].first = false;
+
+//     for (int i = 0; i < n3; i++)
+//     {
+//         if (!mappp[C[i]].first)
+//         {
+//             mappp[C[i]].second++;
+//             mappp[C[i]].first = true;
+//         }
+//     }
+//     for (int i = 0; i < n3; i++)
+//         mappp[C[i]].first = false;
+
+//     for (const auto &entry : mappp)
+//     {
+
+//         int key = entry.first;
+//         int val = entry.second.second;
+//         if (val == 3)
+//             v.push_back(key);
+//     }
+//     sort(v.begin(), v.end());
+//     return v;
+// }
+
+//  OPTIMISED APPROACH-------(three pointer approach)
+// vector<int> commonElements(int A[], int B[], int C[], int n1, int n2, int n3)
+// {
+//     int i = 0, j = 0, k = 0;
+//     vector<int> v;
+//     set<int> s;
+//     while (i <= n1 && j <= n2 && k <= n3)
+//     {
+//         if (A[i] == B[j] && B[j] == C[k])
+//         {
+//             s.insert(A[i]);
+//             i++;
+//             j++;
+//             k++;
+//             continue;
+//         }
+//         if (A[i] <= B[j] && A[i] <= C[k])
+//         {
+//             i++;
+//             continue;
+//         }
+
+//         if (B[j] <= A[i] && B[j] <= C[k])
+//         {
+//             j++;
+//             continue;
+//         }
+
+//         if (C[k] <= A[i] && C[k] <= B[j])
+//         {
+//             k++;
+//             continue;
+//         }
+//     }
+//     for (set<int>::iterator it = s.begin(); it != s.end(); ++it)
+//     {
+//         v.push_back(*it);
+//     }
+//     return v;
+// }
+
+#include <iostream>
+using namespace std;
+
+int ff(int nums[], int n, int sum)
+{
+    int maxi = INT_MIN;
+    for (int i = 0; i < n - 1; i++)
+    {
+        sum = nums[i];
+        for (int j = i + 1; j < n; j++)
+        {
+            if (j < n-1)
+            {
+                sum *= nums[j];
+            }
+            maxi = max(maxi, sum);
+            // cout << maxi << ", ";
+        }
+    }
+    return maxi;
+}
+
+int main(int argc, char const *argv[])
+{
+    int nums[1] = {-2};
+    int n = 1;
+    int sum = 1;
+    cout << ff(nums, n, sum);
+    return 0;
+}
