@@ -14088,33 +14088,80 @@ public:
 //     return v;
 // }
 
-#include <iostream>
-using namespace std;
+// #include <iostream>
+// using namespace std;
 
-int ff(int nums[], int n, int sum)
-{
-    int maxi = INT_MIN;
-    for (int i = 0; i < n - 1; i++)
-    {
-        sum = nums[i];
-        for (int j = i + 1; j < n; j++)
-        {
-            if (j < n-1)
-            {
-                sum *= nums[j];
-            }
-            maxi = max(maxi, sum);
-            // cout << maxi << ", ";
-        }
-    }
-    return maxi;
-}
+// int ff(int nums[], int n, int sum)
+// {
+//     int maxi = INT_MIN;
+//     for (int i = 0; i < n - 1; i++)
+//     {
+//         sum = nums[i];
+//         for (int j = i + 1; j < n; j++)
+//         {
+//             if (j < n-1)
+//             {
+//                 sum *= nums[j];
+//             }
+//             maxi = max(maxi, sum);
+//             // cout << maxi << ", ";
+//         }
+//     }
+//     return maxi;
+// }
 
-int main(int argc, char const *argv[])
-{
-    int nums[1] = {-2};
-    int n = 1;
-    int sum = 1;
-    cout << ff(nums, n, sum);
-    return 0;
-}
+// int main(int argc, char const *argv[])
+// {
+//     int nums[1] = {-2};
+//     int n = 1;
+//     int sum = 1;
+//     cout << ff(nums, n, sum);
+//     return 0;
+// }
+
+//  . Find Pivot Index
+//  naive appro..
+// int pivotIndex(vector<int> &nums)
+// {
+//     int n = nums.size();
+//     for (int i = 0; i < n; i++)
+//     {
+//         int sumprev = 0, sumnext = 0;
+//         for (int j = 0; j < n; j++)
+//         {
+//             if (j < i)
+//             {
+//                 sumprev += nums[j];
+//             }
+//             else if (j > i)
+//             {
+//                 sumnext += nums[j];
+//             }
+//         }
+//         if (sumprev == sumnext)
+//             return i;
+//     }
+//     return -1;
+// }
+
+// optimal approach
+// int pivotIndex(vector<int> &nums)
+// {
+//     int sum = 0;
+//     for (int i : nums)
+//         sum += i;
+//     int n = nums.size();
+//     int diffsum = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (sum - nums[i] == diffsum)
+//         {
+//             return i;
+//         }
+//         sum -= nums[i];
+//         diffsum += nums[i];
+//     }
+//     return -1;
+// }
+
+
