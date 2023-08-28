@@ -14164,4 +14164,21 @@ public:
 //     return -1;
 // }
 
+//Zero Sum Subarrays
 
+
+// long long int findSubarray(vector<long long int> &arr, int n)
+// {
+
+//     long long int cnt=0;
+//     for(int i=0; i<n-1; i++){
+//         long long int sum =arr[i]; if(arr[i]==0)   cnt+=1 ;
+//         for(int j=i+1; j<n; j++){
+//             sum+= arr[j];
+//             if(sum==0)  cnt+=1;
+//         }
+//     }
+
+//     if(arr[n-1]== 0)    cnt+=1;
+//     return cnt;
+// }
