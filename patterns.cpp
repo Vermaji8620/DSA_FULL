@@ -14224,3 +14224,48 @@ public:
 //     return 0;
 // }
 
+//  SPOJ----------DOUBLE HELIX PROBLEM
+// #include <iostream>
+// using namespace std;
+
+// int main(int argc, char const *argv[])
+// {
+//     int n = 13, m = 11;
+//     int arr1[n] = {3, 5, 7, 9, 20, 25, 30, 40, 55, 56, 57, 60, 62};
+//     int arr2[m] = {1, 4, 7, 11, 14, 25, 44, 47, 55, 57, 100};
+//     int i = 0;
+//     int j = 0;
+//     int ans1 = 0, ans2 = 0;
+//     int ans3 = 0;
+//     while (i < n && j < m)
+//     {
+//         if (arr1[i] < arr2[j])
+//         {
+//             ans1 += arr1[i];
+//             i++;
+//         }
+//         else if (arr1[i] > arr2[j])
+//         {
+//             ans2 += arr2[j++];
+//         }
+//         else
+//         {
+//             ans3 += max(ans1, ans2) + arr1[i];
+//             i++;
+//             j++;
+//             ans1 = 0;
+//             ans2 = 0;
+//         }
+//     }
+//     while (i < n)
+//     {
+//         ans1 += arr1[i++];
+//     }
+//     while (j < m)
+//     {
+//         ans2 += arr2[j++];
+//     }
+//     ans3 += max(ans2, ans1);
+//     cout << ans3;
+//     return 0;
+// }
