@@ -14269,3 +14269,45 @@ public:
 //     cout << ans3;
 //     return 0;
 // }
+
+// SUBSUMS SPOJ
+
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// int solve(int arr[], int index, vector<int> vctr, int count, int a, int b, int n)
+// {
+//     if (index >= n)
+//     {
+//         int sum = 0;
+//         for (int i = 0; i < vctr.size(); i++)
+//         {
+//             sum += vctr[i];
+//         }
+//         if (sum >= a && sum <= b)
+//             return 1;
+//         return 0;
+//     }
+
+//     vctr.push_back(arr[index]);
+//     int count1 = solve(arr, index + 1, vctr, count, a, b, n);
+
+//     vctr.pop_back();
+//     int count2 = solve(arr, index + 1, vctr, count, a, b, n);
+
+//     return count1 + count2;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     int n = 3;
+//     int arr[n] = {1, -2, 3};
+//     int a = -1;
+//     int b = 2;
+//     int index = 0;
+//     vector<int> vctr;
+//     int count = 0;
+//     cout << solve(arr, index, vctr, count, a, b, n);
+//     return 0;
+// }
