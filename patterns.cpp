@@ -14164,8 +14164,7 @@ public:
 //     return -1;
 // }
 
-//Zero Sum Subarrays
-
+// Zero Sum Subarrays
 
 // long long int findSubarray(vector<long long int> &arr, int n)
 // {
@@ -14182,3 +14181,46 @@ public:
 //     if(arr[n-1]== 0)    cnt+=1;
 //     return cnt;
 // }
+
+//  SPOJ........ROTI PARATHA PROBLEM--------------
+// #include <iostream>
+// using namespace std;
+
+// bool find(int arr[], int n, int mid, int paratha)
+// {
+//     int par = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int time = arr[i];
+//         int j = 2;
+//         while (time <= mid)
+//         {
+//             par++;
+//             time += arr[i] * j;
+//             j += 1;
+//         }
+//         if (par >= paratha)
+//             return 1;
+//     }
+//     return 0;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     int n = 8;
+//     int arr[n] = {1, 1, 1, 1, 1, 1, 1, 1};
+//     int paratha = 8;
+//     int start = 0;
+//     int end = 1e9;
+//     while (start <= end)
+//     {
+//         int mid = start + (end - start) / 2;
+//         if (find(arr, n, mid, paratha))
+//             end = mid - 1;
+//         else
+//             start = mid + 1;
+//     }
+//     cout << start;
+//     return 0;
+// }
+
