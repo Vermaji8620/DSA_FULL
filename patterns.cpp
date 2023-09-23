@@ -14350,3 +14350,41 @@ public:
 //     cout << find(s, sta);
 //     return 0;
 // }
+
+// stacks using queue(iterative approach)
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// void thestack(int ele, queue<int> &q1, queue<int> q2)
+// {
+//     q2.push(ele);
+//     while (!q1.empty())
+//     {
+//         q2.push(q1.front());
+//         q1.pop();
+//     }
+//     while (!q2.empty())
+//     {
+//         q1.push(q2.front());
+//         q2.pop();
+//     }
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     queue<int> q1;
+//     queue<int> q2;
+//     int arr[4] = {3, 4, 2, 1};
+//     for (int i = 0; i < 4; i++)
+//     {
+//         thestack(arr[i], q1, q2);
+//     }
+//     cout << q1.front() << endl;
+//     while (!q1.empty())
+//     {
+//         cout << q1.front() << " ";
+//         q1.pop();
+//     }
+//     return 0;
+// }
