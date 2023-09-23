@@ -14351,7 +14351,7 @@ public:
 //     return 0;
 // }
 
-// stacks using queue(iterative approach)
+// stacks using queue(iterative approach)(  TC----O(n)   ///       SC-->O(n))
 // #include <iostream>
 // #include <queue>
 // using namespace std;
@@ -14379,6 +14379,40 @@ public:
 //     for (int i = 0; i < 4; i++)
 //     {
 //         thestack(arr[i], q1, q2);
+//     }
+//     cout << q1.front() << endl;
+//     while (!q1.empty())
+//     {
+//         cout << q1.front() << " ";
+//         q1.pop();
+//     }
+//     return 0;
+// }
+
+// stacks using queue(optimised approach)(  TC----O(n)   ///       SC--O(n))
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// void thestack(int ele, queue<int> &q1)
+// {
+//     q1.push(ele);
+//     int size = q1.size();
+//     while (size != 1)
+//     {
+//         q1.push(q1.front());
+//         q1.pop();
+//         size--;
+//     }
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     queue<int> q1;
+//     int arr[4] = {3, 4, 2, 1};
+//     for (int i = 0; i < 4; i++)
+//     {
+//         thestack(arr[i], q1);
 //     }
 //     cout << q1.front() << endl;
 //     while (!q1.empty())
