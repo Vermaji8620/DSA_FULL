@@ -14312,3 +14312,41 @@ public:
 //     return 0;
 // }
 
+// REDUNTANT BRAKETS
+
+// #include <iostream>
+// #include <stack>
+// using namespace std;
+
+// bool find(string s, stack<char> sta)
+// {
+//     for (int i = 0; i < s.length(); i++)
+//     {
+//         char ch = s[i];
+//         if (ch != ')')
+//         {
+//             sta.push(ch);
+//         }
+//         else
+//         {
+//             bool chck = true;
+//             while (!sta.empty() && sta.top() != '(')
+//             {
+//                 chck = false;
+//                 sta.pop();
+//             }
+//             if (chck)
+//                 return true;
+//             sta.pop();
+//         }
+//     }
+//     return false;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     stack<char> sta;
+//     string s = "((a)+b)";
+//     cout << find(s, sta);
+//     return 0;
+// }
