@@ -14422,3 +14422,176 @@ public:
 //     }
 //     return 0;
 // }
+
+// queue using stack(naive approach)(  TC----O(n)   ///       SC--O(2n) ~ O(n))
+
+// #include <iostream>
+// #include <stack>
+// using namespace std;
+
+// void qusingstack(int elem, stack<int> &sta1, stack<int> &sta2)
+// {
+//     while (!sta1.empty())
+//     {
+//         sta2.push(sta1.top());
+//         sta1.pop();
+//     }
+//     sta1.push(elem);
+//     while (!sta2.empty())
+//     {
+//         sta1.push(sta2.top());
+//         sta2.pop();
+//     }
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     int arr[4] = {4, 3, 2, 5};
+//     stack<int> sta1;
+//     stack<int> sta2;
+//     for (int i = 0; i < 4; i++)
+//     {
+//         qusingstack(arr[i], sta1, sta2);
+//     }
+//     cout << sta1.top() << endl;
+//     while (!sta1.empty())
+//     {
+//         cout << sta1.top();
+//         sta1.pop();
+//     }
+
+//     return 0;
+// }
+
+// LRU CACHE IMPLEMENTATION
+// class LRUCache
+// {
+// public:
+//     class Node
+//     {
+//     public:
+//         int key;
+//         int val;
+//         Node *next;
+//         Node *prev;
+//         Node(int keyy, int valuee)
+//         {
+//             key = keyy;
+//             val = valuee;
+//             next = NULL;
+//             prev = NULL;
+//         }
+//     };
+//     Node *head = new Node(-1, -1);
+//     Node *tail = new Node(-1, -1);
+//     int cap;
+//     unordered_map<int, Node *> m;
+
+//     LRUCache(int capacity)
+//     {
+//         cap = capacity;
+//         head->next = tail;
+//         tail->prev = head;
+//     }
+
+//     void addnode(Node *newnode)
+//     {
+//         Node *temp = head->next;
+//         newnode->next = temp;
+//         newnode->prev = head;
+//         head->next = newnode;
+//         temp->prev = newnode;
+//     }
+
+//     void deletenode(Node *delnode)
+//     {
+//         Node *delnext = delnode->next;
+//         Node *delprev = delnode->prev;
+//         delprev->next = delnext;
+//         delnext->prev = delprev;
+//     }
+
+//     int get(int key)
+//     {
+//         if (m.find(key) != m.end())
+//         {
+//             Node *resnode = m[key];
+//             int res = resnode->val;
+//             m.erase(key);
+//             deletenode(resnode);
+//             addnode(resnode);
+//             m[key] = head->next;
+//             return res;
+//         }
+//         return -1;
+//     }
+
+//     void put(int key, int value)
+//     {
+//         if (m.find(key) != m.end())
+//         {
+//             Node *existinguser = m[key];
+//             m.erase(key);
+//             deletenode(existinguser);
+//         }
+//         if (m.size() == cap)
+//         {
+//             m.erase(tail->prev->key);
+//             deletenode(tail->prev);
+//         }
+
+//         addnode(new Node(key, value));
+//         m[key] = head->next;
+//     }
+// };
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
+
+// Sum of minimum and maximum elements of all subarrays of size k.
+
+// #include <iostream>
+// using namespace std;
+
+// int find(int *arr, int n, int k)
+// {
+//     int i = 0;
+//     int j = 0;
+//     int sum = 0;
+//     int maxx = INT_MIN;
+//     int minn = INT_MAX;
+//     while (j < n)
+//     {
+//         while (j - i + 1 < k)
+//         {
+//             maxx = max(maxx, arr[j]);
+//             minn = min(minn, arr[j]);
+//             j++;
+//         }
+//         if (arr[j] > maxx)
+//         {
+//             maxx = arr[j];
+//         }
+//         if (arr[j] < minn)
+//         {
+//             minn = arr[j];
+//         }
+//         sum += maxx + minn;
+//         i++;
+//         j++;
+//     }
+//     return sum;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     int arr[7] = {2, 5, -1, 7, -3, -1, -2};
+//     int k = 4;
+//     cout << find(arr, 7, k);
+//     return 0;
+// }
+
