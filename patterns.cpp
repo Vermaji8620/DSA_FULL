@@ -14595,3 +14595,34 @@ public:
 //     return 0;
 // }
 
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<string> find(string str, string &empty, vector<string> &vctr)
+{
+    if (str.length() == 0)
+    {
+        vctr.push_back(empty);
+        return vctr;
+    }
+    char store = str[0];
+    str.erase(str.begin(), str.begin() + 1);
+    find(str, empty, vctr);
+    empty += store;
+    find(str, empty, vctr);
+    empty.pop_back();
+    return vctr;
+}
+
+int main(int argc, char const *argv[])
+{
+    string str = "abc";
+    string empty = "";
+    vector<string> vctr;
+    cout << "iiii" << endl;
+    vector<string> ans = find(str, empty, vctr);
+    for (auto i : ans)
+        cout << i << " ";
+    return 0;
+}
