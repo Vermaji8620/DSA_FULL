@@ -14627,38 +14627,66 @@ public:
 //     return 0;
 // }
 
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// vector<vector<int>> find(vector<int> arr, vector<int> final, vector<vector<int>> finalans, int index)
+// {
+//     if (index >= arr.size())
+//     {
+//         finalans.push_back(final);
+//         return finalans;
+//     }
+//     final.push_back(arr[index]);
+//     finalans = find(arr, final, finalans, index + 1);
+//     final.pop_back();
+//     finalans = find(arr, final, finalans, index + 1);
+//     return finalans;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     vector<int> arr = {1, 2, 3};
+//     vector<int> final;
+//     vector<vector<int>> finalans;
+//     int index = 0;
+//     vector<vector<int>> answer = find(arr, final, finalans, index);
+//     for (vector<int> a : answer)
+//     {
+//         for (int nghbr : a)
+//         {
+//             cout << nghbr << " ";
+//         }
+//         cout << endl;
+//     }
+//     return 0;
+// }
+
 #include <iostream>
-#include <vector>
 using namespace std;
 
-vector<vector<int>> find(vector<int> arr, vector<int> final, vector<vector<int>> finalans, int index)
+void find(string str, string empty)
 {
-    if (index >= arr.size())
+    if (str.length() == 0)
     {
-        finalans.push_back(final);
-        return finalans;
+        cout << empty << " ";
+        return;
     }
-    final.push_back(arr[index]);
-    finalans = find(arr, final, finalans, index + 1);
-    final.pop_back();
-    finalans = find(arr, final, finalans, index + 1);
-    return finalans;
+    char store = str[0];
+    for (int i = 0; i <= empty.length(); i++)
+    {
+        string a = empty.substr(0, i);
+        string b = empty.substr(i, empty.length());
+        find(str.substr(1), a + store + b);
+    }
+    return;
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
-    vector<int> arr = {1, 2, 3};
-    vector<int> final;
-    vector<vector<int>> finalans;
-    int index = 0;
-    vector<vector<int>> answer = find(arr, final, finalans, index);
-    for (vector<int> a: answer)
-    {
-        for (int nghbr : a)
-        {
-            cout << nghbr << " ";
-        }
-        cout << endl;
-    }
+    string str = "abc";
+    string empty = "";
+    find(str, empty);
     return 0;
 }
