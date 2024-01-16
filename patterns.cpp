@@ -3368,12 +3368,12 @@
 //         return;
 //     }
 //     // exclude
-//     solve(str, output, index + 1, ans);
+//     solve(str, output, index + 1, ans, vis);
 
 //     // include
 //     char element = str[index];
 //     output.push_back(element);
-//     solve(str, output, index + 1, ans);
+//     solve(str, output, index + 1, ans, vis);
 // }
 
 // int main()
@@ -3382,7 +3382,7 @@
 //     vector<string> ans;
 //     string output = "";
 //     int index = 0;
-//     solve(str, output, index, ans);
+//     solve(str, output, index, ans, vis);
 //     vector<string>::iterator itert = ans.begin();
 //     for (itert = ans.begin(); itert < ans.end(); itert++)
 //     {
@@ -3406,12 +3406,12 @@
 //     }
 
 //     // exclude
-//     solve(nums, output, index + 1, ans);
+//     solve(nums, output, index + 1, ans, vis);
 
 //     // include
 //     int element = nums[index];
 //     output.push_back(element);
-//     solve(nums, output, index + 1, ans);
+//     solve(nums, output, index + 1, ans, vis);
 // }
 
 // int main()
@@ -3420,7 +3420,7 @@
 //     vector<vector<int>> ans;
 //     vector<int> output;
 //     int index = 0;
-//     solve(nums, output, index, ans);
+//     solve(nums, output, index, ans, vis);
 //     return 0;
 // }
 
@@ -3588,7 +3588,7 @@
 //     for (int i = index; i < str.length(); i++)
 //     {
 //         swap(str[i], str[index]);
-//         solve(str, index + 1, ans);
+//         solve(str, index + 1, ans, vis);
 //         swap(str[i], str[index]);
 //     }
 // }
@@ -3598,7 +3598,7 @@
 //     string str = "abc";
 //     int index = 0;
 //     vector<string> ans;
-//     solve(str, index, ans);
+//     solve(str, index, ans, vis);
 //     vector<string>::iterator iter;
 //     for (iter = ans.begin(); iter != ans.end(); iter++)
 //     {
@@ -7279,24 +7279,24 @@
 //     void travleft(Node *root, vector<int>&ans){
 //         if((root==NULL) || (root->left==NULL && root->right==NULL))   return;
 //         ans.push_back(root->data);
-//         if(root->left)  travleft(root->left, ans);
-//         else    travleft(root->right, ans);
+//         if(root->left)  travleft(root->left, ans, vis);
+//         else    travleft(root->right, ans, vis);
 //     }
 
 //     void travleaf(Node *root, vector<int> & ans){
 //         if(root==NULL)  return;
 //         if(root->left==NULL && root->right==NULL) {ans.push_back(root->data); return ;}
-//         travleaf(root->left, ans);
-//         travleaf(root->right, ans);
+//         travleaf(root->left, ans, vis);
+//         travleaf(root->right, ans, vis);
 //     }
 
 //     void travright(Node *root, vector<int> &ans){
 //        if(root==NULL || (root->right==NULL && root->left==NULL))    return;
 //
 //         if(root->right)
-//             travright(root->right, ans);
+//             travright(root->right, ans, vis);
 //         else
-//             travright(root->left, ans);
+//             travright(root->left, ans, vis);
 //         ans.push_back(root->data);
 //     }
 // public:
@@ -7309,10 +7309,10 @@
 
 //         travleft(root->left,ans);
 
-//         travleaf(root->left, ans);
-//         travleaf(root->right, ans);
+//         travleaf(root->left, ans, vis);
+//         travleaf(root->right, ans, vis);
 
-//         travright(root->right, ans);
+//         travright(root->right, ans, vis);
 //         return ans;
 //     }
 // };
@@ -8440,7 +8440,7 @@
 //     string first = arr[0];
 //     string ans = "";
 
-//     t->lcp(first, ans);
+//     t->lcp(first, ans, vis);
 //     return ans;
 // }
 
@@ -9974,7 +9974,7 @@
 //   for (int i = 0; i < num.size(); i++) {
 //     int ans = solve(num, x - num[i]);
 //     if (ans != INT_MAX)
-//       mini = min(mini, 1 + ans);
+//       mini = min(mini, 1 + ans, vis);
 //   }
 //   return mini;
 // }
@@ -9992,7 +9992,7 @@
 //   for (int i = 0; i < num.size(); i++) {
 //     int ans = solve(num, x - num[i]);
 //     if (ans != INT_MAX)
-//       mini = min(mini, 1 + ans);
+//       mini = min(mini, 1 + ans, vis);
 //   }
 //   dp[x] = mini;
 //   return mini;
@@ -10769,7 +10769,7 @@
 //         if (mat[i][j] == 1)
 //         {
 //             ans = 1 + min(diagonal, min(right, down));
-//             maxi = max(maxi, ans);
+//             maxi = max(maxi, ans, vis);
 //             return ans;
 //         }
 //          else{
@@ -10888,7 +10888,7 @@
 //     //     for(int i= start+1; i<=end-1; i++)
 //     //     {
 //     //         int ans= values[start]*values[i]*values[end]+ solve(values, start, i)+ solve(values, i, end);
-//     //         minn=min(minn, ans);
+//     //         minn=min(minn, ans, vis);
 //     //     }
 //     //     return minn;
 //     // }
@@ -10900,7 +10900,7 @@
 //     //     for(int i= start+1; i<=end-1; i++)
 //     //     {
 //     //         int ans= values[start] * values[i] * values[end] + solvemem(values, start, i, dp)+ solvemem(values, i, end, dp);
-//     //         minn=min(minn, ans);
+//     //         minn=min(minn, ans, vis);
 //     //     }
 //     //     dp[start][end]=minn;
 //     //     return dp[start][end];
@@ -10915,7 +10915,7 @@
 //                 for(int k=i+1; k<=j-1; k++)
 //                 {
 //                     int ans= values[i]*values[j]*values[k]+dp[i][k]+dp[k][j];
-//                     minn= min(minn, ans);
+//                     minn= min(minn, ans, vis);
 //                 }
 //                 dp[i][j]= minn;
 //             }
@@ -14777,17 +14777,33 @@ public:
 #include <vector>
 using namespace std;
 
-void find(int row, int col, string p, vector<string> &ans)
+void find(int row, int col, string p, vector<string> &ans, vector<vector<bool>> vis)
 {
-    if (row == 0 || col == 0)
+    if (row < 1 || row > 3 || col < 1 || col > 3)
         return;
     if (row == 1 && col == 1)
     {
         ans.push_back(p);
+        vis[row][col] = 0;
         return;
     }
-    find(row - 1, col, p + 'd', ans);
-    find(row, col - 1, p + 'r', ans);
+    vis[row][col] = 1;
+    if (row >= 1 && row <= 3 && col + 1 >= 1 && col + 1 <= 3 && !vis[row][col + 1])
+    {
+        find(row, col + 1, p + 'l', ans, vis);
+    }
+    if (row >= 1 && row <= 3 && col - 1 >= 1 && col - 1 <= 3 && !vis[row][col - 1])
+    {
+        find(row, col - 1, p + 'r', ans, vis);
+    }
+    if (row + 1 >= 1 && row + 1 <= 3 && col >= 1 && col <= 3 && !vis[row + 1][col])
+    {
+        find(row + 1, col, p + 'u', ans, vis);
+    }
+    if (row - 1 >= 1 && row - 1 <= 3 && col >= 1 && col <= 3 && !vis[row - 1][col])
+    {
+        find(row - 1, col, p + 'd', ans, vis);
+    }
     return;
 }
 
@@ -14797,7 +14813,8 @@ int main()
     int col = 3;
     string p;
     vector<string> final;
-    find(row, col, p, final);
+    vector<vector<bool>> vis(4, vector<bool>(4, false));
+    find(row, col, p, final, vis);
     for (string a : final)
     {
         cout << a << "  ";
