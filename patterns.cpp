@@ -14720,3 +14720,29 @@ public:
 //     find(str, empty);
 //     return 0;
 // }
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void find(string p, int num)
+{
+    if (num == 0)
+    {
+        cout << p << " ";
+        return;
+    }
+    for (int i = 0; i < num; i++)
+    {
+        find(p + to_string(i + 1), num - (i + 1));
+    }
+    return;
+}
+
+int main(int argc, char const *argv[])
+{
+    string p;
+    int num = 4;
+    find(p, num);
+    return 0;
+}
