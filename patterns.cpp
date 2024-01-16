@@ -14663,30 +14663,60 @@ public:
 //     return 0;
 // }
 
-#include <iostream>
-using namespace std;
+// #include <iostream>
+// using namespace std;
 
-void find(string str, string empty)
-{
-    if (str.length() == 0)
-    {
-        cout << empty << " ";
-        return;
-    }
-    char store = str[0];
-    for (int i = 0; i <= empty.length(); i++)
-    {
-        string a = empty.substr(0, i);
-        string b = empty.substr(i, empty.length());
-        find(str.substr(1), a + store + b);
-    }
-    return;
-}
+// void find(string str, string empty)
+// {
+//     if (str.length() == 0)
+//     {
+//         cout << empty << " ";
+//         return;
+//     }
+//     char store = str[0];
+//     for (int i = 0; i <= empty.length(); i++)
+//     {
+//         string a = empty.substr(0, i);
+//         string b = empty.substr(i, empty.length());
+//         find(str.substr(1), a + store + b);
+//     }
+//     return;
+// }
 
-int main()
-{
-    string str = "abc";
-    string empty = "";
-    find(str, empty);
-    return 0;
-}
+// int main()
+// {
+//     string str = "abc";
+//     string empty = "";
+//     find(str, empty);
+//     return 0;
+// }
+
+// #include <iostream>
+// using namespace std;
+
+// void find(string str, string empty)
+// {
+//     if (str.length() == 0)
+//     {
+//         cout << empty << " ";
+//         return;
+//     }
+//     int index = str[0] - '0';
+//     for (int i = 3 * (index - 1); i < 3 * index; i++)
+//     {
+//         char store = (char)(i + 'a');
+//         // jab aise empty k andar me, add kr dete hai, aur fir call marte hai, to empty pura ka pura change ho jata hai, isislye fir usme se pop_back() krna pdega, kyunki recursion se wo handle nahhi hua hai, wo explicitly modify kiya gaya hai,
+//         // empty += store;          //      agar aise krna hai to baad me pop_back() krna hga
+//         find(str.substr(1), empty + store);
+//         // empty.pop_back()             //  ya to aise karo, ya fir empty+store ka calll maro, direct passing as argument
+//     }
+//     return;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     string str = "12";
+//     string empty = "";
+//     find(str, empty);
+//     return 0;
+// }
