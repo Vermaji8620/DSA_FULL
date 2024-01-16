@@ -14721,28 +14721,53 @@ public:
 //     return 0;
 // }
 
+// combination of digits to make target
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// void find(string p, int num)
+// {
+//     if (num == 0)
+//     {
+//         cout << p << " ";
+//         return;
+//     }
+//     for (int i = 0; i < num; i++)
+//     {
+//         find(p + to_string(i + 1), num - (i + 1));
+//     }
+//     return;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     string p;
+//     int num = 4;
+//     find(p, num);
+//     return 0;
+// }
+
+//  total number of ways to reach a particular point in a 3x3 matrix
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void find(string p, int num)
+int find(int row, int col)
 {
-    if (num == 0)
-    {
-        cout << p << " ";
-        return;
-    }
-    for (int i = 0; i < num; i++)
-    {
-        find(p + to_string(i + 1), num - (i + 1));
-    }
-    return;
+    if (row == 0 || col == 0)
+        return 0;
+    if (row == 1 && col == 1)
+        return 1;
+
+    int l = find(row - 1, col);
+    int r = find(row, col - 1);
+    return l + r;
 }
 
 int main(int argc, char const *argv[])
 {
-    string p;
-    int num = 4;
-    find(p, num);
+    int row = 3;
+    int col = 3;
+    cout << find(row, col);
     return 0;
 }
