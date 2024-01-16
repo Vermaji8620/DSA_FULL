@@ -14749,25 +14749,58 @@ public:
 // }
 
 //  total number of ways to reach a particular point in a 3x3 matrix
+// #include <iostream>
+// using namespace std;
+
+// int find(int row, int col)
+// {
+//     if (row == 0 || col == 0)
+//         return 0;
+//     if (row == 1 && col == 1)
+//         return 1;
+
+//     int l = find(row - 1, col);
+//     int r = find(row, col - 1);
+//     return l + r;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     int row = 3;
+//     int col = 3;
+//     cout << find(row, col);
+//     return 0;
+// }
+
+// total direction of ways to reach a particular point in a 3x3 matrix
 #include <iostream>
+#include <vector>
 using namespace std;
 
-int find(int row, int col)
+void find(int row, int col, string p, vector<string> &ans)
 {
     if (row == 0 || col == 0)
-        return 0;
+        return;
     if (row == 1 && col == 1)
-        return 1;
-
-    int l = find(row - 1, col);
-    int r = find(row, col - 1);
-    return l + r;
+    {
+        ans.push_back(p);
+        return;
+    }
+    find(row - 1, col, p + 'd', ans);
+    find(row, col - 1, p + 'r', ans);
+    return;
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
     int row = 3;
     int col = 3;
-    cout << find(row, col);
+    string p;
+    vector<string> final;
+    find(row, col, p, final);
+    for (string a : final)
+    {
+        cout << a << "  ";
+    }
     return 0;
 }
