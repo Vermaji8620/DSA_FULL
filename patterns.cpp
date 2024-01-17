@@ -14773,51 +14773,87 @@ public:
 // }
 
 // total direction of ways to reach a particular point in a 3x3 matrix
-#include <iostream>
-#include <vector>
-using namespace std;
+// #include <iostream>
+// #include <vector>
+// using namespace std;
 
-void find(int row, int col, string p, vector<string> &ans, vector<vector<bool>> vis)
-{
-    if (row < 1 || row > 3 || col < 1 || col > 3)
-        return;
-    if (row == 1 && col == 1)
-    {
-        ans.push_back(p);
-        vis[row][col] = 0;
-        return;
-    }
-    vis[row][col] = 1;
-    if (row >= 1 && row <= 3 && col + 1 >= 1 && col + 1 <= 3 && !vis[row][col + 1])
-    {
-        find(row, col + 1, p + 'l', ans, vis);
-    }
-    if (row >= 1 && row <= 3 && col - 1 >= 1 && col - 1 <= 3 && !vis[row][col - 1])
-    {
-        find(row, col - 1, p + 'r', ans, vis);
-    }
-    if (row + 1 >= 1 && row + 1 <= 3 && col >= 1 && col <= 3 && !vis[row + 1][col])
-    {
-        find(row + 1, col, p + 'u', ans, vis);
-    }
-    if (row - 1 >= 1 && row - 1 <= 3 && col >= 1 && col <= 3 && !vis[row - 1][col])
-    {
-        find(row - 1, col, p + 'd', ans, vis);
-    }
-    return;
-}
+// void find(int row, int col, string p, vector<string> &ans, vector<vector<bool>> vis)
+// {
+//     if (row < 1 || row > 3 || col < 1 || col > 3)
+//         return;
+//     if (row == 1 && col == 1)
+//     {
+//         ans.push_back(p);
+//         vis[row][col] = 0;
+//         return;
+//     }
+//     vis[row][col] = 1;
+//     if (row >= 1 && row <= 3 && col + 1 >= 1 && col + 1 <= 3 && !vis[row][col + 1])
+//     {
+//         find(row, col + 1, p + 'l', ans, vis);
+//     }
+//     if (row >= 1 && row <= 3 && col - 1 >= 1 && col - 1 <= 3 && !vis[row][col - 1])
+//     {
+//         find(row, col - 1, p + 'r', ans, vis);
+//     }
+//     if (row + 1 >= 1 && row + 1 <= 3 && col >= 1 && col <= 3 && !vis[row + 1][col])
+//     {
+//         find(row + 1, col, p + 'u', ans, vis);
+//     }
+//     if (row - 1 >= 1 && row - 1 <= 3 && col >= 1 && col <= 3 && !vis[row - 1][col])
+//     {
+//         find(row - 1, col, p + 'd', ans, vis);
+//     }
+//     vis[row][col] = 0;
+//     return;
+// }
 
-int main()
-{
-    int row = 3;
-    int col = 3;
-    string p;
-    vector<string> final;
-    vector<vector<bool>> vis(4, vector<bool>(4, false));
-    find(row, col, p, final, vis);
-    for (string a : final)
-    {
-        cout << a << "  ";
-    }
-    return 0;
-}
+// int main()
+// {
+//     int row = 3;
+//     int col = 3;
+//     string p;
+//     vector<string> final;
+//     vector<vector<bool>> vis(4, vector<bool>(4, false));
+//     find(row, col, p, final, vis);
+//     for (string a : final)
+//     {
+//         cout << a << "  ";
+//     }
+//     return 0;
+// }
+
+// total direction of ways to reach a particular point in a 3x3 matrix
+// (coded again, with minimal approach)
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// void find(string p, int row, int col, vector<vector<int>> &vis)
+// {
+//     if (row < 1 || row > 3 || col < 1 || col > 3 || vis[row][col])
+//         return;
+//     if (row == 1 && col == 1)
+//     {
+//         vis[row][col] = 0;
+//         cout << p << "  ";
+//         return;
+//     }
+//     vis[row][col] = 1;
+//     find(p + 'u', row + 1, col, vis);
+//     find(p + 'd', row - 1, col, vis);
+//     find(p + 'l', row, col + 1, vis);
+//     find(p + 'r', row, col - 1, vis);
+//     vis[row][col] = 0;
+//     return;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+//     string p = "";
+//     int row = 3;
+//     int col = 3;
+//     vector<vector<int>> vis(4, vector<int>(4, 0));
+//     find(p, row, col, vis);
+//     return 0;
+// }
