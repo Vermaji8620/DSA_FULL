@@ -14963,3 +14963,46 @@ public:
 //     }
 //     return 0;
 // }
+
+// Find the K-th Permutation Sequence of first N natural numbers
+
+// #include <iostream>
+// #include <vector>
+// #include <unordered_map>
+// #include <algorithm>
+// using namespace std;
+
+// void solve(string s, int index, int n, vector<string> &ans)
+// {
+//     if (index >= n)
+//     {
+//         ans.push_back(s);
+//         return;
+//     }
+
+//     for (int i = index; i < n; i++)
+//     {
+//         swap(s[index], s[i]);
+//         solve(s, index + 1, n, ans);
+//         swap(s[index], s[i]);
+//     }
+//     return;
+// }
+
+// int main(int argc, char const *argv[])
+// {
+
+//     int n = 2, k = 1;
+//     string s;
+//     for (int i = 1; i <= n; i++)
+//     {
+//         s += to_string(i);
+//     }
+
+//     vector<string> ansfinal;
+//     solve(s, 0, n, ansfinal);
+//     sort(ansfinal.begin(), ansfinal.end());
+//     cout << ansfinal[k-1] << " ";
+
+//     return 0;
+// }
