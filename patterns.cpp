@@ -14857,3 +14857,55 @@ public:
 //     find(p, row, col, vis);
 //     return 0;
 // }
+
+// Longest Possible Route in a Matrix with Hurdles
+
+
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// void solve(int grid[3][10], int n, int m, vector<vector<bool>> &vis, int srcx, int srcy, int distx, int disty, int &maxx, int count)
+// {
+//     if (srcx < 0 || srcy < 0 || srcx >= n || srcy >= m || vis[srcx][srcy] == 1 || grid[srcx][srcy] == 0)
+//     {
+//         return;
+//     }
+//     if (srcx == distx && srcy == disty && grid[distx][disty] == 1)
+//     {
+//         maxx = max(maxx, count);
+//         return;
+//     }
+//     vis[srcx][srcy] = 1;
+//     solve(grid, n, m, vis, srcx - 1, srcy, distx, disty, maxx, count + 1);
+//     solve(grid, n, m, vis, srcx + 1, srcy, distx, disty, maxx, count + 1);
+//     solve(grid, n, m, vis, srcx, srcy - 1, distx, disty, maxx, count + 1);
+//     solve(grid, n, m, vis, srcx, srcy + 1, distx, disty, maxx, count + 1);
+//     vis[srcx][srcy] = 0;
+//     return;
+// }
+
+// int main()
+// {
+//     int grid[3][10] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//                        {1, 1, 0, 1, 1, 0, 1, 1, 0, 1},
+//                        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+//     if (grid[0][0] == 0)
+//     {
+//         cout << "impossible to move from here" << endl;
+//         return 1;
+//     }
+//     vector<vector<bool>> vis(3, vector<bool>(10, false));
+//     int maxx = INT_MIN;
+//     int distx = 1;
+//     int disty = 7;
+//     if (grid[distx][disty] == 0)
+//     {
+//         cout << " destination itself cant be landed upon";
+//         return 2;
+//     }
+//     solve(grid, 3, 10, vis, 0, 0, distx, disty, maxx, 0);
+//     cout << endl;
+//     cout << maxx << endl;
+//     return 0;
+// }
