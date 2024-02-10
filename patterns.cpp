@@ -14860,7 +14860,6 @@ public:
 
 // Longest Possible Route in a Matrix with Hurdles
 
-
 // #include <iostream>
 // #include <vector>
 // using namespace std;
@@ -14907,5 +14906,60 @@ public:
 //     solve(grid, 3, 10, vis, 0, 0, distx, disty, maxx, 0);
 //     cout << endl;
 //     cout << maxx << endl;
+//     return 0;
+// }
+
+// Print all possible paths from top left to bottom right of a mXn matrix
+
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// void solve(int grid[2][2], int distx, int disty, vector<vector<bool>> &vis, int srcx, int srcy, vector<int> str, vector<vector<int>> &finalans)
+// {
+//     if (srcx < 0 || srcy < 0 || srcx >= distx || srcy >= disty || vis[srcx][srcy] == 1)
+//     {
+//         return;
+//     }
+//     if (srcx == distx - 1 && srcy == disty - 1)
+//     {
+
+//         str.push_back(grid[srcx][srcy]);
+//         finalans.push_back(str);
+//         str.pop_back();
+//         return;
+//     }
+//     vis[srcx][srcy] = 1;
+//     str.push_back(grid[srcx][srcy]);
+
+//     solve(
+//         grid, distx, disty, vis, srcx + 1, srcy, str, finalans);
+//     solve(
+//         grid, distx, disty, vis, srcx, srcy + 1, str, finalans);
+
+//     vis[srcx][srcy] = 0;
+//     str.pop_back();
+//     return;
+// }
+
+// int main()
+// {
+
+//     int distx = 2;
+//     int disty = 2;
+//     int grid[2][2] = {{1, 2}, {3, 4}};
+//     vector<vector<bool>> vis(2, vector<bool>(2, false));
+//     vector<int> str;
+//     vector<vector<int>> finalans;
+//     solve(grid, distx, disty, vis, 0, 0, str, finalans);
+//     cout << endl;
+//     for (const auto &entry : finalans)
+//     {
+//         for (const auto &i : entry)
+//         {
+//             cout << i << " ";
+//         }
+//         cout << endl;
+//     }
 //     return 0;
 // }
